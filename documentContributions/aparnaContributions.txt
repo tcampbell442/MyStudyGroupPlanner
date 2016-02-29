@@ -1,0 +1,14 @@
+---
+SRS
+---
+- Wrote use cases 10-13
+
+---
+SDD
+---
+
+-----
+Other
+-----
+- Typed up the requirements notes from our first meeting with the client on 2/18/16.
+- Came up with a name for our application, and designed two different logos for it.
