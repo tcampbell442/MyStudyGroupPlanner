@@ -1,0 +1,9 @@
+Team Meetings:
+- 2/15 (4-5:30pm): Met on Google Docs to fully expand ideas for the project.
+- 2/23 (5:30-9:30pm): Met in a Harbor Hall study room to draw out our application design ideas on a whiteboard.
+- 2/25 (7-8pm): Met in the Library to decide on the use cases and do some of them together. 
+- 3/1 (4-5:15pm): Met in the Library to work on the spiral 1 documents and split the work up.
+- 3/2 (4-5pm): Met in the Library to finalize the technologies we will be using for the app. Worked on the spiral 1 demo PowerPoint.
+
+Meetings with Client:
+- 2/18 (7-9pm): Met with the client to finalize the project idea and gather requirements.
