@@ -2,4 +2,7 @@ SRS:
 -use cases(Create a group, Leave a group, join a group, remove user) 
 
 SDD:
--flowchart
+-Overall setup and layout
+-introduction
+-Requirements Matrix
+
