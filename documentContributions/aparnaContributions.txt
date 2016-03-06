@@ -1,14 +1,22 @@
 ---
 SRS
 ---
-- Wrote use cases 10-13
+- Wrote use cases 10-13, 24-37
+- Created use case diagrams 10-13, 25-31
 
 ---
 SDD
 ---
+- Diagrams of the models, user views, and admin views
+
+---
+CIR
+---
+- Introduction
 
 -----
 Other
 -----
 - Typed up the requirements notes from our first meeting with the client on 2/18/16.
 - Came up with a name for our application, and designed two different logos for it.
+- Requirements and technology slides in the Spiral 1 Demo PPT.
