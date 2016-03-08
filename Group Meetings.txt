@@ -5,6 +5,7 @@ Team Meetings:
 - 3/1 (4-5:15pm): Met in the Library to work on the spiral 1 documents and split the work up.
 - 3/2 (4-5pm): Met in the Library to finalize the technologies we will be using for the app. Worked on the spiral 1 demo PowerPoint.
 - 3/3 (6-7pm): Met in the Library to prepare our documents for the client meeting.
+- 3/7 (4-5:15pm): Met in the Library to draw the architectural design and models diagrams on a whiteboard. Decided on who will be presenting which part of the spiral 1	demo PowerPoint. 
 
 Meetings with Client:
 - 2/18 (7-9pm): Met with the client to finalize the project idea and gather requirements.
