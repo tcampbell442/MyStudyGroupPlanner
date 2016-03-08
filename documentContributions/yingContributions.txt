@@ -2,8 +2,19 @@
 SRS:
   1) Introduction
   2) Use case diagrams for use cases
-     1, 2, 16-23
+     1, 2, 16-23, 32-37
   3) Use cases 16-19
+-------------------------------------
+
+-------------------------------------
+SDD:
+  1) Architecture Diagram
+-------------------------------------
+
+-------------------------------------
+UI Design:
+  Revised Sandy's mockup after second
+   meeting with client.
 -------------------------------------
 
 -------------------------------------
