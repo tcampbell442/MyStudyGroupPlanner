@@ -9,10 +9,9 @@ class AngularTest(object):
     def index(self):
         return open('html/index.html')
 
-if __name__ == '__main__':
+if __name__ == '__main__':	
 	
-	#cherrypy.config.upate(
-    #{'server.socket_host': '0.0.0.0'} )  
+	#cherrypy.server.socket_host = '0.0.0.0'
 	
 	HERE = os.path.dirname(os.path.abspath(__file__))
 	
