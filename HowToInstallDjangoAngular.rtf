@@ -24,7 +24,7 @@
 \ls2\ilvl0\cf0 {\listtext	2)	}Next install python, pip, and npm\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
 \ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}sudo apt-get update\
-{\listtext	\uc0\u8259 	}sudo apt-get install python python-pip\
+{\listtext	\uc0\u8259 	}sudo apt-get install python python-pip npm\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	3)	}change directories to the myStudyGroup directory\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
@@ -32,30 +32,31 @@
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	4)	}use pip to install python requirements\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
-\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ sudo pup install -r requirements.txt\
+\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ sudo pip install -r requirements.txt\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	5)	}use npm to install bower\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
-\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ sudo nam install -g bower\
+\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ sudo npm install -g bower\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	6)	}run npm\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
-\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ sudo nam install\
+\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ sudo npm install\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	7)	}create a symlink to install bower \
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
 \ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}
 \f1\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 sudo ln -s /usr/bin/nodejs /usr/bin/node
-\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	8)	}run bower install\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
-\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ sudo bower install\
+\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ bower install\
 {\listtext	\uc0\u8259 	}if you have trouble installing use the following command and retry $
 \f1\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 sudo chown -R \'93username\'94:\'94username\'94 /home/\'93username\'94/.config/configstore/\
-\ls2\ilvl1\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8259 	}Note replace username with your username
+sudo chown -R \'93username\'94:\'94username\'94 /home/\'93username\'94/.config/configstore/\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
+\ls2\ilvl1\cf2 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8259 	}Note replace username with your username
 \f0\fs24 \cf0 \cb1 \
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	9)	}migrate the sql tables\
