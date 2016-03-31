@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html ng-app="admin">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </head>
+  <body ng-controller="AdminController as admin">
+    <div align="right">
+      <button>Logout</button>
+    </div>    
+
+    <div>
+      <img src="Logo.png">
+      <br><br>
+    </div>
+
+    <section ng-controller="PanelController as panel">
+      <ul class="nav nav-pills">
+        <li ng-class="{ active:panel.isSelected(1)}"> 
+          <a href ng-click="panel.selectTab(1)">View Report</a> 
+        </li>
+        <li ng-class="{ active:panel.isSelected(2)} "> 
+          <a href ng-click="panel.selectTab(2)">Add Study Location</a> 
+        </li>
+        <li ng-class="{ active:panel.isSelected(3)} "> 
+          <a href ng-click="panel.selectTab(3)">Search</a> 
+        </li>
+        <li ng-class="{ active:panel.isSelected(4)} "> 
+          <a href ng-click="panel.selectTab(4)">Delete</a> 
+        </li>
+      </ul>
+
+      <div class="panel" ng-show="panel.isSelected(1)">
+        <br>
+        <table style="width:25%">
+          <tr>
+            <th>Report Code</th>
+            <th>Date Submitted</th> 
+            <th></th>
+          </tr>
+          <tr ng-repeat="item in admin.items" align="center">
+            <td>{{item.code}}</td>
+            <td>{{item.date}}</td> 
+            <td><button>VIEW</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="panel" ng-show="panel.isSelected(2)">
+
+        <form name="RoomForm" ng-controller="RoomController as roomCtrl" novalidate>
+          <label>Location:</label>
+          <br>Building
+          <input ng-model="roomCtrl.rooms.building" required></textarea>
+          <br>
+          <br>Room Number
+          <input ng-model="roomCtrl.rooms.room" required></textarea>
+          <br><br>
+          <label>Max Capacity: </label>
+          <input ng-model="roomCtrl.rooms.capacity" required></textarea>
+          <br><br>
+          <button>Clear</button>
+          <input type="submit" value="Save" />
+        </form>    
+      </div>
+
+      <div class="panel" ng-show="panel.isSelected(3)">
+        <br>
+        <form name="SearchUserForm" ng-controller="SearchUserController as searchUserCtrl" novalidate>
+          <label>Username:</label>
+          <input ng-model="searchUserCtrl.users.username" required></textarea>
+          <br><br>
+          <input type="submit" value="Search" />
+        </form>    
+
+      </div>
+      <div class="panel" ng-show="panel.isSelected(4)">
+        <br>
+        <button>Delete Database?</button>
+      </div>
+    </section>
+
+  </body>
+</html>
