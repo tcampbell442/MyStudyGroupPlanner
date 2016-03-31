@@ -17,5 +17,11 @@
       controllerAs: 'vm',
       templateUrl: '/static/templates/authentication/register.html'
     }).otherwise('/');
+    
+    $routeProvider.when('/home', {
+      controller: 'HomeController', 
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/home.html'
+    }).otherwise('/');
   }
 })();
