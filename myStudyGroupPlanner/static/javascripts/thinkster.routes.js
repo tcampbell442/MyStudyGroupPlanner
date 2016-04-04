@@ -32,6 +32,10 @@
       controller: "modalController",
       controllerAs:"vm",
       templateUrl:'/static/templates/modal.html'
+    }).when('/adminHome', {
+      controller: 'AdminHomeController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/adminHome.html'
     }).otherwise('/');
   }
 })();
