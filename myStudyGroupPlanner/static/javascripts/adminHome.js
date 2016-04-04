@@ -43,8 +43,13 @@
 	vm.isSelected = function(checkTab){
 	    return vm.tab === checkTab;
 	}
-	
-	vm.rooms = {};
-	vm.users = {};
+
+	vm.studyLocation = {
+	    building: "",
+	    roomNum: "",
+	    maxCapacity: ""
+	}
+
+	vm.username = "";
     }
 })();

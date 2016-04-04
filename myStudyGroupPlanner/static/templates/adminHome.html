@@ -32,11 +32,24 @@
   </div>
 
   <div ng-show="vm.isSelected(2)">
-    <h1>Tab 2</h1>  
+    <div style="margin:10px;">Building:  
+      <input type="text" ng-model="vm.studyLocation.building" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
+    </div>
+
+    <div style="margin:10px;">Room Number:
+      <input type="text" ng-model="vm.studyLocation.roomNum" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
+    </div>
+
+    <div style="margin:10px;">Max Capacity:
+      <input type="text" ng-model="vm.studyLocation.maxCapacity" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
+    </div>
+
   </div>
 
   <div ng-show="vm.isSelected(3)">
-    <h1>Tab 3</h1>  
+    <div style="margin:10px;">Username:  
+      <input type="text" ng-model="vm.username" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
+    </div>
   </div>
 
   <div ng-show="vm.isSelected(4)">
