@@ -13,19 +13,21 @@
   */
   function config($routeProvider) {
     $routeProvider.when('/register', {
-      controller: 'RegisterController', 
+      controller: 'RegisterController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/authentication/register.html'
     }).when('/login', {
   controller: 'LoginController',
   controllerAs: 'vm',
   templateUrl: '/static/templates/authentication/login.html'
-}).otherwise('/');
-    
-    $routeProvider.when('/home', {
-      controller: 'HomeController', 
+}).when('/home', {
+      controller: 'HomeController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/home.html'
+    }).when('/groupMember',{
+      controller: 'groupMemberController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/groupMember.html'
     }).otherwise('/');
   }
 })();
