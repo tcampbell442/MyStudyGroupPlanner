@@ -24,6 +24,7 @@ var Authentication = {
   getAuthenticatedAccount: getAuthenticatedAccount,
   isAuthenticated: isAuthenticated,
   login: login,
+  logout: logout,
   register: register,
   setAuthenticatedAccount: setAuthenticatedAccount,
   unauthenticate: unauthenticate
@@ -58,10 +59,10 @@ function register(email, password, username) {
 
   /**
   * @name registerErrorFn
-  * @desc Log "Epic failure!" to the console
+  * @desc Log "register failure!" to the console
   */
   function registerErrorFn(data, status, headers, config) {
-    console.error('Epic failure!');
+    console.error('register failure!');
   }
 }
 
@@ -90,10 +91,10 @@ function login(email, password) {
 
   /**
    * @name loginErrorFn
-   * @desc Log "Epic failure!" to the console
+   * @desc Log "login failure!" to the console
    */
   function loginErrorFn(data, status, headers, config) {
-    console.error('Epic failure!');
+    console.error('Login failure!');
   }
 }
 
@@ -141,6 +142,35 @@ function setAuthenticatedAccount(account) {
  */
 function unauthenticate() {
   delete $cookies.authenticatedAccount;
+}
+
+/**
+ * @name logout
+ * @desc Try to log the user out
+ * @returns {Promise}
+ * @memberOf thinkster.authentication.services.Authentication
+ */
+function logout() {
+  return $http.post('/api/v1/auth/logout/')
+    .then(logoutSuccessFn, logoutErrorFn);
+
+  /**
+   * @name logoutSuccessFn
+   * @desc Unauthenticate and redirect to index with page reload
+   */
+  function logoutSuccessFn(data, status, headers, config) {
+    Authentication.unauthenticate();
+
+    window.location = '/';
+  }
+
+  /**
+   * @name logoutErrorFn
+   * @desc Log "Logout failure!" to the console
+   */
+  function logoutErrorFn(data, status, headers, config) {
+    console.error('Logout failure!');
+  }
 }
 
 
