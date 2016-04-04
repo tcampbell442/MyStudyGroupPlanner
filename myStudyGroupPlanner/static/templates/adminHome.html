@@ -15,7 +15,20 @@
   </ul>
 
   <div ng-show="vm.isSelected(1)">
-    <h1>Tab 1</h1>
+    <br>
+    <center>
+    <table style="width:75%">
+      <tr>
+	<th>Report Code</th>
+	<th>Date Submitted</th>
+	<th></th>
+      </tr>
+      <tr ng-repeat="report in vm.reports" align="center">
+	<td>{{report.code}}</td>
+	<td>{{report.date}}</td>
+	<td><button>VIEW</button></td>
+      </tr>
+    </table>
   </div>
 
   <div ng-show="vm.isSelected(2)">
@@ -28,7 +41,6 @@
 
   <div ng-show="vm.isSelected(4)">
     <br>
-    <h1>Tab 4</h1>
     <button>Delete Database?</button>
   </div>
 
