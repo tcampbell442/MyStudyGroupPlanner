@@ -1,12 +1,12 @@
 /**
 * Home controller
-* @namespace thinkster.authentication.controllers
+* @namespace myStudyGroupPlanner.authentication.controllers
 */
 (function () {
   'use strict';
 
   angular
-    .module('thinkster')
+    .module('myStudyGroupPlanner')
     .controller('HomeController', HomeController);
 
   HomeController.$inject = ['$location', '$scope', 'Authentication'];

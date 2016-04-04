@@ -2,7 +2,7 @@
     'use strict';
     
     angular
-	.module('thinkster')
+	.module('myStudyGroupPlanner')
 	.controller('AdminHomeController', AdminHomeController);
     
     AdminHomeController.$inject = ['$location', '$scope', 'Authentication'];

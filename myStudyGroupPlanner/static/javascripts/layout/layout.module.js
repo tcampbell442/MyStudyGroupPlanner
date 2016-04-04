@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('thinkster.layout', [
-      'thinkster.layout.controllers'
+    .module('myStudyGroupPlanner.layout', [
+      'myStudyGroupPlanner.layout.controllers'
     ]);
 
   angular
-    .module('thinkster.layout.controllers', []);
+    .module('myStudyGroupPlanner.layout.controllers', []);
 })();

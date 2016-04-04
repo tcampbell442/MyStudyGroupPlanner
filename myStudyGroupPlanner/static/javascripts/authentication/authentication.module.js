@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('thinkster.authentication', [
-      'thinkster.authentication.controllers',
-      'thinkster.authentication.services'
+    .module('myStudyGroupPlanner.authentication', [
+      'myStudyGroupPlanner.authentication.controllers',
+      'myStudyGroupPlanner.authentication.services'
     ]);
 
   angular
-    .module('thinkster.authentication.controllers', []);
+    .module('myStudyGroupPlanner.authentication.controllers', []);
 
   angular
-    .module('thinkster.authentication.services', ['ngCookies']);
+    .module('myStudyGroupPlanner.authentication.services', ['ngCookies']);
 })();
