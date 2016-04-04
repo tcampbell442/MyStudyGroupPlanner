@@ -1,33 +1,21 @@
 <div style="float:left; width:550px; margin:60px;">
   <ul class="nav nav-pills">
     <li ng-class="{ active:vm.isSelected(1)}"> 
-      <a href ng-click="vm.selectTab(1)">View Report</a> 
+      <a href="/adminHome" ng-click="vm.selectTab(1)">View Report</a> 
     </li>
     <li ng-class="{ active:vm.isSelected(2)} "> 
-      <a href ng-click="vm.selectTab(2)">Add Study Location</a> 
+      <a href="/adminHome" ng-click="vm.selectTab(2)">Add Study Location</a> 
     </li>
     <li ng-class="{ active:vm.isSelected(3)} "> 
-      <a href ng-click="vm.selectTab(3)">Search</a> 
+      <a href="/adminHome" ng-click="vm.selectTab(3)">Search</a> 
     </li>
     <li ng-class="{ active:vm.isSelected(4)} "> 
-      <a href ng-click="vm.selectTab(4)">Delete</a> 
+      <a href="/adminHome" ng-click="vm.selectTab(4)">Delete</a> 
     </li>
   </ul>
 
   <div ng-show="vm.isSelected(1)">
-    <br>
-    <table style="width:25%">
-      <tr>
-        <th>Report Code</th>
-        <th>Date Submitted</th> 
-        <th></th>
-      </tr>
-      <tr ng-repeat="report in vm.reports" align="center">
-        <td>{{report.code}}</td>
-        <td>{{report.date}}</td> 
-        <td><button>VIEW</button></td>
-      </tr>
-    </table>
+    <h1>Tab 1</h1>
   </div>
 
   <div ng-show="vm.isSelected(2)">
@@ -40,6 +28,7 @@
 
   <div ng-show="vm.isSelected(4)">
     <br>
+    <h1>Tab 4</h1>
     <button>Delete Database?</button>
   </div>
 
