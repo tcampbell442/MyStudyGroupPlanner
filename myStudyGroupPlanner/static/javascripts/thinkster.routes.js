@@ -28,6 +28,10 @@
       controller: 'groupMemberController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/groupMember.html'
+    }).when('/modal',{
+      controller: "modalController",
+      controllerAs:"vm",
+      templateUrl:'/static/templates/modal.html'
     }).otherwise('/');
   }
 })();
