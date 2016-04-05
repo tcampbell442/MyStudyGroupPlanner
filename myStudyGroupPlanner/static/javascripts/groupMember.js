@@ -18,6 +18,6 @@
     var vm = this;
 
     vm.GroupName = "GroupName1";
-    vm.GroupMembers = "Sean Murren", "Siqi Lin", "Tyler Campbell", "Aparna Kaliappan", "Ying Zhang"];
+    vm.GroupMembers = "Sean Murren", "Siqi Lin", "Tyler Campbell", "Aparna Kaliappan", "Ying Zhang";
 
 })
