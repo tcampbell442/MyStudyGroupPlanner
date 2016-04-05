@@ -1,5 +1,5 @@
 /**
-* Home controller
+* GroupMemberController controller
 * @namespace myStudyGroupPlanner.authentication.controllers
 */
 (function () {
@@ -7,17 +7,18 @@
 
   angular
     .module('myStudyGroupPlanner')
-    .controller('HomeController', HomeController);
+    .controller('GroupMemberController', GroupMemberController);
 
-  HomeController.$inject = ['$location', '$scope', 'Authentication'];
+  GroupMemberController.$inject = ['$location', '$scope', 'Authentication'];
 
   /**
-  * @namespace HomeController
+  * @namespace
   */
-  function HomeController($location, $scope, Authentication) {
+  function GroupMemberController($location, $scope, Authentication) {
     var vm = this;
 
-    vm.GroupName = "GroupName1";
-    vm.GroupMembers = "Sean Murren", "Siqi Lin", "Tyler Campbell", "Aparna Kaliappan", "Ying Zhang";
+    vm.groupName = "GroupName1";
+
+    vm.members = ["Siqi Lin", "Tyler Campbell", "Sean Murren", "Aparna Kaliappan"];
 
 })
