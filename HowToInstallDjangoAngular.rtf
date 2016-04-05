@@ -103,18 +103,18 @@ We can start by logging into an interactive session with our database software b
 \cf6 \cb7 \strokec6 mysql -u root -p\
 \pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
 \cf8 \cb9 \strokec8 You will be prompted for the administrative password you selected during installation. Afterwards, you will be given a prompt.\
-First, we will create a database for our Django project. Each project should have its own isolated database for security reasons. We will call our database \cf11 \cb7 \strokec11 myproject\cf8 \cb9 \strokec8  in this guide, but it's always better to select something more descriptive. We'll set the default type for the database to UTF-8, which is what Django expects:\
+First, we will create a database for our Django project. Each project should have its own isolated database for security reasons. We will call our database \cf11 \cb7 \strokec11 myStudy Group Planner\cf8 \cb9 \strokec8 in this guide, but it's always better to select something more descriptive. We'll set the default type for the database to UTF-8, which is what Django expects:\
 \pard\pardeftab720\sl440\partightenfactor0
-\cf6 \cb7 \strokec6 CREATE DATABASE \cf11 \strokec11 myproject\cf6 \strokec6  CHARACTER SET UTF8;\
+\cf6 \cb7 \strokec6 CREATE DATABASE \cf11 \strokec11 myStudyGroupPlanner\cf6 \strokec6  CHARACTER SET UTF8;\
 \pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
 \cf8 \cb9 \strokec8 Remember to end all commands at an SQL prompt with a semicolon.\
 Next, we will create a database user which we will use to connect to and interact with the database. Set the password to something strong and secure:\
 \pard\pardeftab720\sl440\partightenfactor0
-\cf6 \cb7 \strokec6 CREATE USER \cf11 \strokec11 myprojectuser\cf6 \strokec6 @localhost IDENTIFIED BY '\cf11 \strokec11 password\cf6 \strokec6 ';\
+\cf6 \cb7 \strokec6 CREATE USER \cf11 \strokec11 myStudyGroupUser\cf6 \strokec6 @localhost IDENTIFIED BY \'91\cf11 \strokec11 Password\cf6 \strokec6 ';\
 \pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
 \cf8 \cb9 \strokec8 Now, all we need to do is give our database user access rights to the database we created:\
 \pard\pardeftab720\sl440\partightenfactor0
-\cf6 \cb7 \strokec6 GRANT ALL PRIVILEGES ON \cf11 \strokec11 myproject\cf6 \strokec6 .* TO \cf11 \strokec11 myprojectuser\cf6 \strokec6 @localhost;\
+\cf6 \cb7 \strokec6 GRANT ALL PRIVILEGES ON \cf11 \strokec11 myStudyGroupPlanner\cf6 \strokec6 .* TO \cf11 \strokec11 myStudyGroupUser\cf6 \strokec6 @localhost;\
 \pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
 \cf8 \cb9 \strokec8 Flush the changes so that they will be available during the current session:\
 \pard\pardeftab720\sl440\partightenfactor0
@@ -128,4 +128,6 @@ Next, we will create a database user which we will use to connect to and interac
 \fs38 \cf8 \cb9 \strokec8 \
 
 \fs24 Next install mysql client\
-- sudo pip install mysqlclient}
+- sudo pip install mysqlclient\
+\
+Finally go back to step 3 and continue the installation}
