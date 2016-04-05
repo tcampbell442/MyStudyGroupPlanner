@@ -1,6 +1,9 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf130
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Consolas;}
-{\colortbl;\red255\green255\blue255;\red26\green27\blue29;\red234\green234\blue234;}
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;\f2\fnil\fcharset0 Consolas;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red38\green38\blue38;\red26\green27\blue29;
+\red234\green234\blue234;\red38\green38\blue38;\red0\green0\blue0;\red0\green0\blue0;\red255\green255\blue255;
+\red34\green34\blue34;\red211\green34\blue44;}
 {\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
 {\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\})}{\leveltext\leveltemplateid101\'02\'00);}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid102\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}}
 {\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
@@ -21,10 +24,14 @@
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
 \ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ git clone https://github.com/UMBC-CMSC447/Section-1-Team-2.git\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
-\ls2\ilvl0\cf0 {\listtext	2)	}Next install python, pip, and npm\
+\ls2\ilvl0\cf0 {\listtext	2)	}Next install python, pip, npm, and mysql\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
 \ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}sudo apt-get update\
-{\listtext	\uc0\u8259 	}sudo apt-get install python python-pip npm\
+{\listtext	\uc0\u8259 	}sudo apt-get install python python-pip npm 
+\f1\fs28 \cf2 \expnd0\expndtw0\kerning0
+python-dev mysql-server libmysqlclient-dev\
+\ls2\ilvl1
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8259 	}follow the commands for installing the mariaDB database at the bottom of the page\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	3)	}change directories to the myStudyGroup directory\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
@@ -45,7 +52,7 @@
 \ls2\ilvl0\cf0 {\listtext	7)	}create a symlink to install bower \
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
 \ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}
-\f1\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\f2\fs26 \cf4 \cb5 \expnd0\expndtw0\kerning0
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 \f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
@@ -53,15 +60,16 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
 \ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ bower install\
 {\listtext	\uc0\u8259 	}if you have trouble installing use the following command and retry $
-\f1\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\f2\fs26 \cf4 \cb5 \expnd0\expndtw0\kerning0
 sudo chown -R \'93username\'94:\'94username\'94 /home/\'93username\'94/.config/configstore/\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
-\ls2\ilvl1\cf2 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8259 	}Note replace username with your username
+\ls2\ilvl1\cf4 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8259 	}Note replace username with your username
 \f0\fs24 \cf0 \cb1 \
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	9)	}migrate the sql tables\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
-\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ python manage.py migrate\
+\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}$ python manage.py makemigrations\
+{\listtext	\uc0\u8259 	}$ python manage.py migrate\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
 \ls2\ilvl0\cf0 {\listtext	10)	}run the django server\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural\partightenfactor0
@@ -70,4 +78,54 @@ sudo chown -R \'93username\'94:\'94username\'94 /home/\'93username\'94/.config/c
 \ls2\ilvl0\cf0 {\listtext	11)	}open up your web browser and navigate to localhost:8000\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 \cf0 \
-your server should now be working and you can begin your development I am currently in the process of refactoring everything named \'93myStudyGroupPlanner.* and \'93thinkser-django-angular-boilerplate\'94 to see what I did from the tutorial visit {\field{\*\fldinst{HYPERLINK "https://myStudyGroupPlanner.io/django-angularjs-tutorial#updating-user-profiles"}}{\fldrslt https://myStudyGroupPlanner.io/django-angularjs-tutorial#updating-user-profiles}}.}
+your server should now be working and you can begin your development I am currently in the process of refactoring everything named \'93thinkster.* and \'93thinkser-django-angular-boilerplate\'94 to see what I did from the tutorial visit {\field{\*\fldinst{HYPERLINK "https://thinkster.io/django-angularjs-tutorial#updating-user-profiles"}}{\fldrslt https://thinkster.io/django-angularjs-tutorial#updating-user-profiles}}.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\qc\partightenfactor0
+
+\b \cf0 Maria DB installation
+\b0 \
+\
+\pard\pardeftab720\sl440\partightenfactor0
+\cf6 \cb7 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec6 sudo mysql_secure_installation\
+\pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
+\cf8 \cb9 \strokec8 You'll be asked for the administrative password you set for MariaDB during installation. Afterwards, you'll be asked a series of questions. Besides the first question, asking you to choose another administrative password, select yes for each question.\
+With the installation and initial database configuration out of the way, we can move on to create our database and database user.\
+\pard\pardeftab720\sl570\partightenfactor0
+\cf8 \
+\pard\pardeftab720\li240\ri240\sl640\sa200\partightenfactor0
+\cf10 \strokec10 Create a Database and Database User\kerning1\expnd0\expndtw0 \
+\pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
+\cf8 \expnd0\expndtw0\kerning0
+\strokec8 The remainder of this guide can be followed as-is regardless of whether you installed MySQL or MariaDB.\
+We can start by logging into an interactive session with our database software by typing the following (the command is the same regardless of which database software you are using):\
+\pard\pardeftab720\sl440\partightenfactor0
+\cf6 \cb7 \strokec6 mysql -u root -p\
+\pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
+\cf8 \cb9 \strokec8 You will be prompted for the administrative password you selected during installation. Afterwards, you will be given a prompt.\
+First, we will create a database for our Django project. Each project should have its own isolated database for security reasons. We will call our database \cf11 \cb7 \strokec11 myproject\cf8 \cb9 \strokec8  in this guide, but it's always better to select something more descriptive. We'll set the default type for the database to UTF-8, which is what Django expects:\
+\pard\pardeftab720\sl440\partightenfactor0
+\cf6 \cb7 \strokec6 CREATE DATABASE \cf11 \strokec11 myproject\cf6 \strokec6  CHARACTER SET UTF8;\
+\pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
+\cf8 \cb9 \strokec8 Remember to end all commands at an SQL prompt with a semicolon.\
+Next, we will create a database user which we will use to connect to and interact with the database. Set the password to something strong and secure:\
+\pard\pardeftab720\sl440\partightenfactor0
+\cf6 \cb7 \strokec6 CREATE USER \cf11 \strokec11 myprojectuser\cf6 \strokec6 @localhost IDENTIFIED BY '\cf11 \strokec11 password\cf6 \strokec6 ';\
+\pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
+\cf8 \cb9 \strokec8 Now, all we need to do is give our database user access rights to the database we created:\
+\pard\pardeftab720\sl440\partightenfactor0
+\cf6 \cb7 \strokec6 GRANT ALL PRIVILEGES ON \cf11 \strokec11 myproject\cf6 \strokec6 .* TO \cf11 \strokec11 myprojectuser\cf6 \strokec6 @localhost;\
+\pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
+\cf8 \cb9 \strokec8 Flush the changes so that they will be available during the current session:\
+\pard\pardeftab720\sl440\partightenfactor0
+\cf6 \cb7 \strokec6 FLUSH PRIVILEGES;\
+\pard\pardeftab720\li240\ri240\sl560\sa440\partightenfactor0
+\cf8 \cb9 \strokec8 Exit the SQL prompt to get back to your regular shell session:\
+\pard\pardeftab720\sl440\partightenfactor0
+\cf6 \cb7 \strokec6 exit\
+\pard\pardeftab720\sl570\partightenfactor0
+
+\fs38 \cf8 \cb9 \strokec8 \
+
+\fs24 Next install mysql client\
+- sudo pip install mysqlclient}
