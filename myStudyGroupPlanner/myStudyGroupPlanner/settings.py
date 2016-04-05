@@ -61,10 +61,22 @@ WSGI_APPLICATION = 'myStudyGroupPlanner.wsgi.application'
 
 import dj_database_url
 
+#DATABASES = {
+#    'default': dj_database_url.config(
+#        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+#    )
+#}
+
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'myStudyGroupPlanner',
+        'USER': 'myStudyGroupUser',
+        'PASSWORD': 'Password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
 
 # Internationalization
