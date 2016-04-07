@@ -1,0 +1,35 @@
+<head>
+  <link rel="stylesheet" href="../styleSheets/styles.css">
+</head>
+<div class="member">
+  <h3>GroupName01</h3>
+
+  <div class="meetings">
+    <div class="calendar">
+      Placeholder for calendar
+    </div>
+    <div class="upcoming_events">
+      Placeholder for upcoming events
+    </div>
+  </div>
+  <div class="memberList">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr ng-repeat="member in vm.members">
+        <td>{{member}}</td>
+        <td><button type="button">Report</button></td>
+        <td><button type="button">Message</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <button>Message Group</button>
+    <button>Leave Group</button>
+  </div>
+
+</div>

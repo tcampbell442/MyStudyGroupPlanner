@@ -16,5 +16,7 @@
        vm.buildings = ["Information Technology of Engineering",
                       "Sherman Hall","Arts and Humanities",
                       "Biological Science"];
+      vm.selectedRoom ="";
+      vm.rooms = ["102","202","303","505"];
      }
 })();

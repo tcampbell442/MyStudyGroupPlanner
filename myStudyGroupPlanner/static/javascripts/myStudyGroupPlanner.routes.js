@@ -36,6 +36,10 @@
       controller: 'AdminHomeController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/adminHome.html'
+    }).when('/groupCreator', {
+      controller: 'GroupCreatorController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/groupCreator.html'
     }).otherwise('/home');
   }
 })();
