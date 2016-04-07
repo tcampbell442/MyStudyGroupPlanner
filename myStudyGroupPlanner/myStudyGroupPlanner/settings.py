@@ -26,6 +26,13 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = '/login/'
+
+LOGIN_EXEMPT_URLS = (
+ r'^register$',
+ r'^api/v1/auth/login/$',
+ r'^api/v1/account/$'
+) 
 
 # Application definition
 
@@ -49,6 +56,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.LoginRequiredMiddleware',
 )
 
 ROOT_URLCONF = 'myStudyGroupPlanner.urls'
