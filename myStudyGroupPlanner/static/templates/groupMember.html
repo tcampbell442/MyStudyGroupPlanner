@@ -1,1 +1,54 @@
-<h3>GroupName</h3>
+<style>
+  div.calendar{
+     height:200px;
+     width:400px;
+     border:3px
+     solid black;
+     float:left;
+}
+ div.upcoming_events{
+     height:200px;
+     width:400px;
+     border:3px
+     solid black;
+     float:left;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    clear: left;
+}
+</style>
+  <div class="member">
+  <h3>GroupName01</h3>
+
+  <div class="meetings">
+    <div class="calendar">
+      Placeholder for calendar
+    </div>
+
+    <div class="upcoming_events">
+      Placeholder for upcoming events
+    </div>
+  </div>
+  <div class="memberList">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr ng-repeat="member in vm.members">
+        <td>{{member}}</td>
+        <td><button type="button">Report</button></td>
+        <td><button type="button">Message</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <button>Message Group</button>
+    <button>Leave Group</button>
+  </div>
+
+</div>

@@ -25,7 +25,7 @@
       controllerAs: 'vm',
       templateUrl: '/static/templates/home.html'
     }).when('/groupMember',{
-      controller: 'groupMemberController',
+      controller: 'GroupMemberController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/groupMember.html'
     }).when('/modal',{
