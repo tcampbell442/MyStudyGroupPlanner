@@ -20,5 +20,6 @@
     vm.groupName = "GroupName1";
 
     vm.members = ["Siqi Lin", "Tyler Campbell", "Sean Murren", "Aparna Kaliappan"];
+  }
 
-})
+})();
