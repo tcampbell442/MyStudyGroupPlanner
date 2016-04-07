@@ -16,12 +16,32 @@
           <h4 class="modal-title">Create Meeeting</h4>
         </div>
         <div class="modal-body">
-          <form>
-
-            <input type="date" name="bday">
-            <input type="submit">
-
-
+          <form name="meetingForm">
+            Date:
+            <input type="date" name="date" ng-model="meetingDate" class="glyphicon glyphicon-calendar">
+            <span ng-show="meetingFrom.date.$required">
+              The date is required
+            </span>
+            <br>
+            <div class="timeSelection">
+              Time:
+              <input type="time" ng-model="startTime" >
+              <span>to </span>
+              <input type="time" ng-model="endTime">
+            </div>
+            Location:
+            <div>
+              <select ng-model="selectedBuilding">
+              <option value="" disabled selected hidden>Select Building</option>
+              <option ng-repeat="building in vm.buildings">{{building}}</option>
+              </select>
+            </div>
+            <div>
+              <select ng-model="selectedRoom">
+                <option value="" disabled selected hidden>Select Room</option>
+                <option ng-repeat="room in vm.rooms">{{room}}</option>
+              </select>
+            </div>
 
           </form>
 
