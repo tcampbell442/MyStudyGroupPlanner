@@ -36,6 +36,6 @@
       controller: 'AdminHomeController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/adminHome.html'
-    }).otherwise('/');
+    }).otherwise('/home');
   }
 })();
