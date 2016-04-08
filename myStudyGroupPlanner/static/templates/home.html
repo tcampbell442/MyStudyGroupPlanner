@@ -111,14 +111,12 @@
 		</ul>
 	</div>
 	<!--CALENDAR-->
-	<div style="height:175px; border-style:solid; border-width:3px; padding:10px">
-		<h5>
-		<div>.</div>
-		<div>.</div>
-		<div>Calendar placeholder</div>
-		<div>.</div>
-		<div>.</div>
-		</h5>
+	<div style="height:230px; border-style:solid; border-width:3px; padding:5px">
+		
+			<div pickadate ng-model="vm.date" format="mm/dd/yyyy"></div>
+			<!-- The below line will be commented out, just here now to show that it's working-->
+			<div class="selected-date">Selected date is {{vm.date || '(no date selected)'}}</div>
+		
 	</div>
 	<!--MEETINGS-->
 	<div style="border-style:solid; border-width:3px; padding:10px; height:150px; overflow:hidden; overflow-y:scroll;">

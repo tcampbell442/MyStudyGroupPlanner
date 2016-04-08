@@ -17,6 +17,8 @@
   function HomeController($location, $scope, Authentication) {
     var vm = this;
 	
+	vm.date = new Date();
+	
 	/** Variable used to track activated tab */
     vm.tab = 1;
     /** Variable tracks if search results should be showed */

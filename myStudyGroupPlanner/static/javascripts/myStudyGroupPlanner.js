@@ -6,7 +6,8 @@
       'myStudyGroupPlanner.routes',
       'myStudyGroupPlanner.authentication',
       'myStudyGroupPlanner.config',
-      'myStudyGroupPlanner.layout'
+      'myStudyGroupPlanner.layout',
+      'pickadate'
     ]);
 
   angular
