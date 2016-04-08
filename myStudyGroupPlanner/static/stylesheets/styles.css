@@ -1,21 +1,40 @@
-div.calendar{
+div.calendar, div.upcoming_events{
    height:200px;
    width:400px;
    border:3px
    solid black;
    float:left;
-   margin: 8px 10px
+   position: relative;
+   margin: 8px 10px;
  }
-div.upcoming_events{
-   height:200px;
-   width:400px;
-   border:3px
-   solid black;
-   float: left;
-   margin: 8px 10px
-}
+
+ div.upcoming_events{
+   margin: 8px 30px;
+ }
+
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
-  clear: left;
+  margin: 8px 10px;
+}
+
+div.members{
+  position: absolute;
+  top: 280px;
+}
+
+th, td{
+  padding: 5px;
+}
+
+table, div.messageGroup, div.leaveGroup{
+  float: left;
+}
+
+div.messageGroup{
+  margin: 20px 20px;
+}
+
+div.leaveGroup{
+  margin: 20px 5px;
 }
