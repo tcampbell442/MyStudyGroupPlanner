@@ -4,6 +4,66 @@
 <div class="member">
   <h3>GroupName01</h3>
 
+  <div class="container">
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#meetingModal">Create Meeting</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="meetingModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Create Meeeting</h4>
+          </div>
+          <div class="modal-body">
+            <form name="meetingForm" role="form">
+              Date:
+              <input type="date" name="date" ng-model="meetingDate" class="glyphicon glyphicon-calendar">
+              <span ng-show="meetingFrom.date.$required">
+                The date is required
+              </span>
+              <br>
+              <div class="timeSelection">
+                Time:
+                <input type="time" ng-model="startTime" >
+                <span>to </span>
+                <input type="time" ng-model="endTime">
+              </div>
+              Location:
+              <div class="locationSelection">
+                <select ng-model="selectedBuilding">
+                <option value="" disabled selected hidden>Select Building</option>
+                <option ng-repeat="building in vm.buildings">{{building}}</option>
+                </select>
+              </div>
+              <div class="locationSelection">
+                <select ng-model="selectedRoom">
+                  <option value="" disabled selected hidden>Select Room</option>
+                  <option ng-repeat="room in vm.rooms">{{room}}</option>
+                </select>
+              </div>
+              Comment:
+              <br />
+              <input type="text" id="meetingNotes">
+            </form>
+
+          </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <div class="meetings">
     <div class="calendar">
       Placeholder for calendar
@@ -21,8 +81,8 @@
       </tr>
       <tr ng-repeat="member in vm.members">
         <td>{{member}}</td>
-        <td><button type="button">Report</button></td>
         <td><button type="button">Message</button></td>
+        <td><button type="button">Report</button></td>
       </tr>
     </table>
   </div>
@@ -30,6 +90,7 @@
   <div>
     <button>Message Group</button>
     <button>Leave Group</button>
+    <button>Delete Group</button>
   </div>
 
 </div>
