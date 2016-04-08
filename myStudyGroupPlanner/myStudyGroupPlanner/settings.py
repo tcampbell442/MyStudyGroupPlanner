@@ -31,7 +31,7 @@ LOGIN_URL = '/login/'
 LOGIN_EXEMPT_URLS = (
  r'^register$',
  r'^api/v1/auth/login/$',
- r'^api/v1/account/$'
+ r'^api/v1/accounts/$'
 ) 
 
 # Application definition
