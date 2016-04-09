@@ -29,7 +29,7 @@
    <div ng-show="vm.isSelected(1)">
     <br>
     <center>
-    <table style="width:75%">
+    <table style="width:60%">
       <tr>
 	<th>Report Code</th>
 	<th>Date Submitted</th>
@@ -38,7 +38,7 @@
       <tr ng-repeat="report in vm.reports" align="center">
 	<td>{{report.code}}</td>
 	<td>{{report.date}}</td>
-	<td><button>VIEW</button></td>
+	<td><button class="btn btn-info btn-xs">VIEW</button></td>
       </tr>
     </table>
   </div>
@@ -65,8 +65,26 @@
   </div>
 
   <div ng-show="vm.isSelected(4)">
-    <br>
-    <button>Delete Database?</button>
+    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteAllModal">Delete Database</button>
+    
+    <!-- Modal -->
+    <div id="deleteAllModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal">&times;</button>
+	    <h4 class="modal-title"><b>Warning</b></h4>
+	  </div>
+	  <div class="modal-body">
+	    <h4>Are you sure you want to delete the database and its contents?</h4>
+	    <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+	    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+	  </div>
+	</div>
+      </div>
+    </div>
   </div>
 
 </div>
