@@ -14,7 +14,19 @@
     </li>
   </ul>
 
-  <div ng-show="vm.isSelected(1)">
+  <irontec-simple-chat
+     messages="vm.messages"
+     username="vm.username"
+     input-placeholder-text="You can write here"
+     submit-button-text="Send your message"
+     title="Super Awesome Chat"
+     theme="material"
+     submit-function="vm.sendMessage"
+     visible="vm.visible"
+     expand-on-new="vm.expandOnNew">
+  </irontec-simple-chat>  
+
+   <div ng-show="vm.isSelected(1)">
     <br>
     <center>
     <table style="width:75%">
@@ -48,7 +60,7 @@
 
   <div ng-show="vm.isSelected(3)">
     <div style="margin:10px;">Username:  
-      <input type="text" ng-model="vm.username" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
+      <input type="text" ng-model="vm.usernameTemp" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
   </div>
 
@@ -58,3 +70,5 @@
   </div>
 
 </div>
+
+
