@@ -38,12 +38,40 @@
       <tr ng-repeat="report in vm.reports" align="center">
 	<td>{{report.code}}</td>
 	<td>{{report.date}}</td>
-	<td><button class="btn btn-info btn-xs">VIEW</button></td>
+	<td><button class="btn btn-info btn-xs" data-toggle="modal" data-target="#reportViewModal">VIEW</button></td>
+	<!-- Modal -->
+	<div id="reportViewModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h4 class="modal-title"><b>Report</b></h4>
+	      </div>
+	      <div class="modal-body">
+		<h4>Report Submitted By: </h4>
+		<h4>Report Regarding: </h4>
+		<h4>Submitted Message: </h4>
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
       </tr>
     </table>
   </div>
 
   <div ng-show="vm.isSelected(2)">
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Building
+	<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+	<li ng-repeat="building in vm.buildings">{{building}}</li>
+      </ul>
+    </div>
+
     <div style="margin:10px;">Building:  
       <input type="text" ng-model="vm.studyLocation.building" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>

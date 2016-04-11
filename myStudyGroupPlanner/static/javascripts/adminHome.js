@@ -19,21 +19,33 @@
 	    {
 		code: "111",
 		date: "mm/dd/yyyy",
+		reporter: "User 1",
+		recipient: "User 2",
+		message: "This user was not participating in group discussions.",
 	    },
 	    
 	    {
 		code: "222",
 		date: "mm/dd/yyyy",
+		reporter: "User 3", 
+		recipient: "User 4",
+		message: "This user was unnecessarily reporting other users.",
 	    },
 	    
 	    {
 		code: "333",
 		date: "mm/dd/yyyy",
+		reporter: "User 5",
+		recipient: "User 6",
+		message: "This user is not attending any meetings.",
 	    },
 	    
 	    {
 		code: "444",
 		date: "mm/dd/yyyy",
+		reporter: "User 7",
+		recipient: "User 8",
+		message: "This user is being disruptive.",
 	    }];
 	
 	vm.selectTab = function(setTab){
@@ -78,6 +90,8 @@
 		'content': 'Hello!'
 	    }
 	];
+
+	vm.buildings = ["Sherman", "ITE", "Engineering", "Biology"];
 
 	vm.username = 'username1';
 	
