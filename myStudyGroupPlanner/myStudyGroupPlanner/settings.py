@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'compressor',
     'authentication',
     'building',
+    'meeting',
 )
 
 MIDDLEWARE_CLASSES = (
