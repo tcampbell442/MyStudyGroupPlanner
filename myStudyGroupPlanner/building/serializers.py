@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from building.models import Room, Hour, Day
+from building.models import Building, Room, Hour, Day
 
 class HoursSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,8 +17,14 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
 	model = Room
-	field = ('id', 'name', 'room_num', 'hours')
+	field = ('id', 'room_num', 'hours', 'days')
 
+class BuildingSerializer(serializers.ModelSerializer):
+    rooms = RoomSerializer(many=True, read_only=True)
+
+    class Meta:
+	model =Building
+	field = ('id','name', 'abrv', 'rooms')
 
     #def create(self, validated_data):
 #	room = Room.objects.create(**validated_data)
