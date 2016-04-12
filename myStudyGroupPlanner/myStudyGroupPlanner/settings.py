@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'authentication',
     'building',
     'meeting',
+    'group',
 )
 
 MIDDLEWARE_CLASSES = (

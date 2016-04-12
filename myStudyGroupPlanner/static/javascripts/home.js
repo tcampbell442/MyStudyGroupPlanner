@@ -9,12 +9,12 @@
     .module('myStudyGroupPlanner')
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$location', '$scope', 'Authentication'];
+  HomeController.$inject = ['$location', '$scope', 'Authentication', '$http'];
 
   /**
   * @namespace HomeController
   */
-  function HomeController($location, $scope, Authentication) {
+  function HomeController($location, $scope, Authentication, $http) {
     var vm = this;
 	
 	vm.date = new Date();
@@ -51,7 +51,15 @@
 	
 
 	/**  Hardcoded Groups tab data.  CHANGE TO DJANGO MODEL DATA */
-	vm.currentGroups = ["GroupName0", "GroupName1", "GroupName2"];
+	/**vm.currentGroups = ["GroupName0", "GroupName1", "GroupName2"];*/
+	$http({method: 'GET', 
+		url: 'http://127.0.0.1:8000/api/group/'})
+		.then(function(response){
+			vm.currentGroups = response.data;
+		},
+		function(response){
+			/**vm.status = "failed";*/
+	});
 	/**  Hardcoded Upcoming Meetings tab data.  CHANGE TO DJANGO MODEL DATA */
 	vm.calendarDate = "March 5";
 	vm.currentMeetings = [["MeetingName1", "GroupName1", "Time 7:00pm to 12:00am"], ["MeetingName2", "GroupName3", "Time 6:00pm to 9:00pm"]];

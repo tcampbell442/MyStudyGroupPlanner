@@ -106,9 +106,12 @@
 	<!--GROUPS-->
 	<div style="border-style:solid; border-width:3px; padding:10px">
 		<h3>Current Groups</h3>
+		
 		<ul ng-repeat="group in vm.currentGroups">
-			<li>{{group}}</li>
+			<li>{{group["className"]}}</li>
 		</ul>
+		
+	
 	</div>
 	<!--CALENDAR-->
 	<div style="height:230px; border-style:solid; border-width:3px; padding:5px">
