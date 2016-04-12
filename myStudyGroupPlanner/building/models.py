@@ -12,12 +12,12 @@ DAYS_OF_WEEK = (
 )
 
 class Room(models.Model):
-    name = models.CharField(max_length=16, unique=True, blank=True)
-    room_num = models.CharField(max_length=3, blank=True, unique=True)
+    name = models.CharField(max_length=16, blank=True)
+    room_num = models.CharField(max_length=3, blank=True)
     #hours = models.ForeignKey(Hours, on_delete=models.CASCADE, related_name='hours', blank=True, null=True)
     #days = models.ForeignKey(Day, on_delete=models.CASCADE)
 
-class Hours(models.Model):
+class Hour(models.Model):
     room = models.ForeignKey(Room, related_name="hours", null=True)
     start_hour = models.TimeField(blank=True, default=datetime.time())
     end_hour = models.TimeField(blank=True, default=datetime.time())
