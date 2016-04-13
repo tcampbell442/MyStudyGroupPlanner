@@ -16,19 +16,19 @@
 		<div ng-show="vm.isSelected(1) && vm.showSearchResults===false">
 			<h3>Class</h3>
 			<center>
-			<div><select ng-model="selectedSubject">
+			<div><select ng-model="vm.selectedSubject">
 				<option value="" disabled selected hidden>Subject</option>
 				<option ng-repeat="subject in vm.subjects">{{subject}}</option>
 			</select></div>
-			<div><select ng-model="selectedClass">
+			<div><select ng-model="vm.selectedClass">
 				<option value="" disabled selected hidden>Class</option>
 				<option ng-repeat="class in vm.classes">{{class}}</option>
 			</select></div>
-			<div><select ng-model="selectedSection">
+			<div><select ng-model="vm.selectedSection">
 				<option value="" disabled selected hidden>Section</option>
 				<option ng-repeat="section in vm.sections">{{section}}</option>
 			</select></div>
-			<div><input type="radio"/> Open groups only</div>
+			<div><input type="radio" ng-model="vm.selectedOpen" value="Open"/> Open groups only</div>
 			<div><h3><button ng-click="vm.showSearchResults=true" class="btn btn-primary btn-sm"> Search </button></h3></div>
 			</center>
 		</div>
@@ -86,7 +86,8 @@
 	</div>
 	<!--SEARCH RESULTS-->
 	<div ng-show="vm.isSelected(1) && vm.showSearchResults===true">
-		<h5>Search results for subject/class#/section</h5>
+		<h3>Search results</h3>
+		
 		<table style="width:100%; border:1px solid black;">
 		<tr>
 			<th>ID</th>
@@ -95,13 +96,13 @@
 			<th># Members</th>
 			<th>Type</th>
 		</tr>
-			<tr ng-repeat="group in vm.searchResults" style="border:1px solid black;">
-				<td>{{group[0]}}</td>
-				<td>{{group[1]}}</td>
-				<td>{{group[2]}}</td>
-				<td>{{group[3]}}</td>
-				<td>{{group[4]}}</td>
-				<td><button > {{group[5]}} </button></td>
+			<tr ng-repeat="group in vm.currentGroups | filter:vm.selectedClass | filter:vm.selectedSubject | filter:vm.selectedSection | filter:vm.selectedOpen" style="border:1px solid black;">
+				<td>{{group["id"]}}</td>
+				<td>{{group["groupName"]}}</td>
+				<td>{{group["groupOwner"]}}</td>
+				<td>{{group["memberCount"]}}</td>
+				<td>{{group["access"]}}</td>
+				<td><button > Join </button></td>
 			</tr>
 		</table>
 		<div align="center"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-md"> New Search </button></div>

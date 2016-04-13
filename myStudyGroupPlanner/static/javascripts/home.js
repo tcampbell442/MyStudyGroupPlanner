@@ -19,7 +19,12 @@
 	
 	vm.date = new Date();
 	vm.status = "";
-	vm.user = "";
+	
+	/** search parameters/filters */
+	vm.selectedSubject = "";
+	vm.selectedClass = "";
+	vm.selectedSection = "";
+	vm.selectedOpenOnly = "";
 	
 	/** Variable used to track activated tab */
     vm.tab = 1;
@@ -95,8 +100,23 @@
 		},
 		function(response){
 			vm.status = "Failed to create group.";
-	});
+		});
 	}
+	/** Requests all groups from database.  
+		ALL GROUPS ALREADY CONTAINED IN vm.currentGroups
+		FOR NOW FILTERING IS DONE ON FRONT END WITH ANGULARJS
+		TO SHOW ONLY RELEVAVENT GROUPS */
+	/**vm.searchGroups = function() {
+		$http({method: 'GET', 
+			   url: '/api/group/'})
+		.then(function(response){
+			vm.currentGroups = response.data;
+		},
+		function(response){
+			vm.status = "Failed to create group.";
+		});
+	}*/
+	
 	/**  */
 
   }
