@@ -1,3 +1,60 @@
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: #000;  /*Sets the text hover color on navbar*/
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >
+ a:hover, .navbar-default .navbar-nav > .active > a:focus {
+color: white; /*BACKGROUND color for active*/
+background-color: ##2CC19A;
+}
+
+  .navbar-default {
+    background-color: #2CC19A;
+    border-color: #030033;
+}
+
+  .dropdown-menu > li > a:hover,
+   .dropdown-menu > li > a:focus {
+    color: #262626;
+   text-decoration: none;
+  background-color: #66CCFF;  /*change color of links in drop down here*/
+   }
+
+ .nav > li > a:hover,
+ .nav > li > a:focus {
+    text-decoration: none;
+    background-color: silver; /*Change rollover cell color here*/
+  }
+
+
+
+.indexBody{
+  background-image: url("weather.png");
+}
+.center-pills { display: inline-block; }
+
+select {
+   margin: 5px;
+    border: 1px solid #111;
+   background: transparent;
+   width: 150px;
+   padding: 5px 35px 5px 5px;
+   margin: left;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   height: 35px;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+    background: url(http://www.thebookclubproject.org/wp-content/uploads/2015/09/favicon-v21.gif) 96% / 15% no-repeat #eee;
+}
+/*target Internet Explorer 9 and Internet Explorer 10:*/
+@media screen and (min-width:0\0) {
+    select {
+        background:none;
+        padding: 5px;
+    }
+}
 div.calendar, div.upcoming_events{
    height:200px;
    width:400px;
