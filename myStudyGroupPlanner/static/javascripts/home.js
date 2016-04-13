@@ -31,14 +31,14 @@
     /** Variable tracks if search results should be showed */
     vm.showSearchResults = false;
     /** Create Group Tab variables */
-    vm.createGroup = {
+    vm.groupFields = {
     	groupIdentifier: 0,
     	groupName: "",
     	groupSubject: "",
     	groupClass: "", 
     	groupSection: "",
     	groupMaxMembers: 30,
-    	groupAccessType: 2,  /** 0 private, 1 closed, 2 public */
+    	groupAccessType: "Open",  /** private, closed, public */
     	groupPermissionLevel: 0  /** 0 creator, 1 creator/creator nominated, 2 anyone */
     }
     /** Join Private Group Tab variables */
@@ -51,10 +51,6 @@
 	vm.classes = ["CMSC101", "CMSC102", "CMSC201", "CMSC202", "CMSC313", "CMSC331", "CMSC447"];
 	vm.selectedSection = "";	
 	vm.sections = ["001", "002", "003", "004"];
-	
-	/** Hardcoded Search Result data.  CHANGE TO DJANGO MODEL DATA */
-	vm.searchResults = [["98423", "Gary's Study Group", "Gary", "10", "open", "join"], 
-						["46634", "CMSC447-002 Main", "Sue", "30", "closed", "request"]];
 	
 
 	/**  Get groups DJANGO MODEL DATA --- ***MOVE TO A FUNCTION*** */
@@ -81,18 +77,20 @@
 	/** Create New Group with user as the group owner */
 	vm.createGroup = function() {
 		
+		var user = Authentication.getAuthenticatedAccount();
+		
 		$http({method: 'POST', 
 		url: '/api/group/',
 		data: {
-			groupName: vm.createGroup.groupName,
-			subject: vm.createGroup.groupSubject,
-			className: vm.createGroup.groupClass,
-			section: vm.createGroup.groupSection,
-			groupOwner: "PLACEHOLDER",
+			groupName: vm.groupFields.groupName,
+			subject: vm.groupFields.groupSubject,
+			className: vm.groupFields.groupClass,
+			section: vm.groupFields.groupSection,
+			groupOwner: user.username,
 			memberCount: 1,
-			totalMembersAllowed: vm.createGroup.groupMaxMembers,
-			meetingPermissions: vm.createGroup.groupPermissionLevel,
-			access: vm.createGroup.groupAccessType
+			totalMembersAllowed: vm.groupFields.groupMaxMembers,
+			meetingPermissions: vm.groupFields.groupPermissionLevel,
+			access: vm.groupFields.groupAccessType
 			}
 		})
 		.then(function(response){

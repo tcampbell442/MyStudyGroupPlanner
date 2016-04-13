@@ -37,36 +37,37 @@
 	<div class="createTabs">
 		<div ng-show="vm.isSelected(2)">
 			<h5 style="margin-top:25px; margin-bottom:35px;">
-			<div style="margin:10px;">Group Name:  <input type="text" ng-model="vm.createGroup.groupName" style="height:26px;margin-left:5px; padding-left:3px;"></textarea></div>
+			<div style="margin:10px;">Group Name:  
+			<input type="text" ng-model="vm.groupFields.groupName" style="height:26px;margin-left:5px; padding-left:3px;"></textarea></div>
 			<div style="margin:10px;">
 				Class Info:
-				<select ng-model="vm.createGroup.groupSubject">
+				<select ng-model="vm.groupFields.groupSubject">
 					<option value="" disabled selected hidden>Subject</option>
 					<option ng-repeat="subject in vm.subjects">{{subject}}</option>
 				</select>
-				<select ng-model="vm.createGroup.groupClass">
+				<select ng-model="vm.groupFields.groupClass">
 					<option value="" disabled selected hidden>Class</option>
 					<option ng-repeat="class in vm.classes">{{class}}</option>
 				</select>
-				<select ng-model="vm.createGroup.groupSection">
+				<select ng-model="vm.groupFields.groupSection">
 					<option value="" disabled selected hidden>Section</option>
 					<option ng-repeat="section in vm.sections">{{section}}</option>
 				</select>
 			</div>
 			<div style="margin:10px;">Maximum Number of Members
-				 <input type="text" ng-model="vm.createGroup.groupMaxMembers" style="height:26px; width:40px; margin-left:5px; padding-left:3px;"></textarea>
+				 <input type="text" ng-model="vm.groupFields.groupMaxMembers" style="height:26px; width:40px; margin-left:5px; padding-left:3px;"></textarea>
 				 (default:30)</div>
 			<div style="margin:10px;">Access Type</div>
 			<div style="margin:10px;">
-				<input type="radio" name="setAccess" ng-model="vm.createGroup.groupAccessType" value="2" style="margin-left:24px;"/> Open
-				<input type="radio" name="setAccess" ng-model="vm.createGroup.groupAccessType" value="1" style="margin-left:24px;"/> Closed
-				<input type="radio" name="setAccess" ng-model="vm.createGroup.groupAccessType" value="0" style="margin-left:24px;"/> Private
+				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Open" style="margin-left:24px;"/> Open
+				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Closed" style="margin-left:24px;"/> Closed
+				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Public" style="margin-left:24px;"/> Private
 			</div>
 			<div style="margin:10px;">Meeting Permission for Members</div>
 			<div style="margin:10px;">
-				<input type="radio" name="setPerms" ng-model="vm.createGroup.groupPermissionLevel" value="2" style="margin-left:24px;"/> Anyone
-				<input type="radio" name="setPerms" ng-model="vm.createGroup.groupPermissionLevel" value="1" style="margin-left:24px;"/> Creator Nominated & Creator
-				<input type="radio" name="setPerms" ng-model="vm.createGroup.groupPermissionLevel" value="0" style="margin-left:24px;"/> Creator Only
+				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="2" style="margin-left:24px;"/> Anyone
+				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="1" style="margin-left:24px;"/> Creator Nominated & Creator
+				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="0" style="margin-left:24px;"/> Creator Only
 			</div>
 			<div style="margin:30px;" align="center">
 				<button class="btn btn-primary btn-sm" ng-click="vm.selectTab(1)"> Cancel </button>
