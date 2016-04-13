@@ -18,20 +18,27 @@
     var vm = this;
 	
 	vm.date = new Date();
+	vm.status = "";
+	
+	/** search parameters/filters */
+	vm.selectedSubject = "";
+	vm.selectedClass = "";
+	vm.selectedSection = "";
+	vm.selectedOpenOnly = "";
 	
 	/** Variable used to track activated tab */
     vm.tab = 1;
     /** Variable tracks if search results should be showed */
     vm.showSearchResults = false;
     /** Create Group Tab variables */
-    vm.createGroup = {
+    vm.groupFields = {
     	groupIdentifier: 0,
     	groupName: "",
     	groupSubject: "",
     	groupClass: "", 
     	groupSection: "",
     	groupMaxMembers: 30,
-    	groupAccessType: 2,  /** 0 private, 1 closed, 2 public */
+    	groupAccessType: "Open",  /** private, closed, public */
     	groupPermissionLevel: 0  /** 0 creator, 1 creator/creator nominated, 2 anyone */
     }
     /** Join Private Group Tab variables */
@@ -45,13 +52,8 @@
 	vm.selectedSection = "";	
 	vm.sections = ["001", "002", "003", "004"];
 	
-	/** Hardcoded Search Result data.  CHANGE TO DJANGO MODEL DATA */
-	vm.searchResults = [["98423", "Gary's Study Group", "Gary", "10", "open", "join"], 
-						["46634", "CMSC447-002 Main", "Sue", "30", "closed", "request"]];
-	
 
-	/**  Hardcoded Groups tab data.  CHANGE TO DJANGO MODEL DATA */
-	/**vm.currentGroups = ["GroupName0", "GroupName1", "GroupName2"];*/
+	/**  Get groups DJANGO MODEL DATA --- ***MOVE TO A FUNCTION*** */
 	$http({method: 'GET', 
 		url: '/api/group/'})
 		.then(function(response){
@@ -72,8 +74,48 @@
 	vm.isSelected = function(checkTab) {
 		return vm.tab === checkTab;
 	}
-	/**  */
+	/** Create New Group with user as the group owner */
+	vm.createGroup = function() {
+		
+		var user = Authentication.getAuthenticatedAccount();
+		
+		$http({method: 'POST', 
+		url: '/api/group/',
+		data: {
+			groupName: vm.groupFields.groupName,
+			subject: vm.groupFields.groupSubject,
+			className: vm.groupFields.groupClass,
+			section: vm.groupFields.groupSection,
+			groupOwner: user.username,
+			memberCount: 1,
+			totalMembersAllowed: vm.groupFields.groupMaxMembers,
+			meetingPermissions: vm.groupFields.groupPermissionLevel,
+			access: vm.groupFields.groupAccessType
+			}
+		})
+		.then(function(response){
+			vm.status = "Group Created";
+		},
+		function(response){
+			vm.status = "Failed to create group.";
+		});
+	}
+	/** Requests all groups from database.  
+		ALL GROUPS ALREADY CONTAINED IN vm.currentGroups
+		FOR NOW FILTERING IS DONE ON FRONT END WITH ANGULARJS
+		TO SHOW ONLY RELEVAVENT GROUPS */
+	/**vm.searchGroups = function() {
+		$http({method: 'GET', 
+			   url: '/api/group/'})
+		.then(function(response){
+			vm.currentGroups = response.data;
+		},
+		function(response){
+			vm.status = "Failed to create group.";
+		});
+	}*/
 	
+	/**  */
 
   }
 })();
