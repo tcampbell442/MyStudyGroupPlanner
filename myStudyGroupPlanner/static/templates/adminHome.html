@@ -1,16 +1,19 @@
+<head>
+  <link rel="stylesheet" href="../styleSheets/styles.css">
+</head>
 <div style="float:left; width:550px; margin:60px;">
   <ul class="nav nav-pills">
-    <li ng-class="{ active:vm.isSelected(1)}"> 
-      <a href="/adminHome" ng-click="vm.selectTab(1)">View Report</a> 
+    <li ng-class="{ active:vm.isSelected(1)}">
+      <a href="/adminHome" ng-click="vm.selectTab(1)">View Report</a>
     </li>
-    <li ng-class="{ active:vm.isSelected(2)} "> 
-      <a href="/adminHome" ng-click="vm.selectTab(2)">Add Study Location</a> 
+    <li ng-class="{ active:vm.isSelected(2)} ">
+      <a href="/adminHome" ng-click="vm.selectTab(2)">Add Study Location</a>
     </li>
-    <li ng-class="{ active:vm.isSelected(3)} "> 
-      <a href="/adminHome" ng-click="vm.selectTab(3)">Search</a> 
+    <li ng-class="{ active:vm.isSelected(3)} ">
+      <a href="/adminHome" ng-click="vm.selectTab(3)">Search</a>
     </li>
-    <li ng-class="{ active:vm.isSelected(4)} "> 
-      <a href="/adminHome" ng-click="vm.selectTab(4)">Delete</a> 
+    <li ng-class="{ active:vm.isSelected(4)} ">
+      <a href="/adminHome" ng-click="vm.selectTab(4)">Delete</a>
     </li>
   </ul>
 
@@ -24,7 +27,7 @@
      submit-function="vm.sendMessage"
      visible="vm.visible"
      expand-on-new="vm.expandOnNew">
-  </irontec-simple-chat>  
+  </irontec-simple-chat>
 
   <div ng-show="vm.isSelected(1)">
     <div class="container">
@@ -46,7 +49,7 @@
 	      <!-- Modal -->
 	      <div id="reportViewModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-		  
+
 		  <!-- Modal content-->
 		  <div class="modal-content">
 		    <div class="modal-header">
@@ -84,29 +87,29 @@
     </ul>
     </div>
 
-    <div style="margin:10px;">Building:  
+    <div class=location>Building:
       <input type="text" ng-model="vm.studyLocation.building" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
 
-    <div style="margin:10px;">Room Number:
+    <div class=location>Room Number:
       <input type="text" ng-model="vm.studyLocation.roomNum" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
 
-    <div style="margin:10px;">Max Capacity:
+    <div class=location>Max Capacity:
       <input type="text" ng-model="vm.studyLocation.maxCapacity" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
 
   </div>
 
   <div ng-show="vm.isSelected(3)">
-    <div style="margin:10px;">Username:  
+    <div style="margin:10px;">Username:
       <input type="text" ng-model="vm.usernameTemp" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
   </div>
 
   <div ng-show="vm.isSelected(4)">
     <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteAllModal">Delete Database</button>
-    
+
     <!-- Modal -->
     <div id="deleteAllModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -128,5 +131,3 @@
   </div>
 
 </div>
-
-
