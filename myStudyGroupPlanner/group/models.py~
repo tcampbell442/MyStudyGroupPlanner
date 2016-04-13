@@ -1,13 +1,17 @@
 from django.db import models
+from authentication.models import Account
 
 class Group(models.Model):
 	
-	#groupName = models.CharField(max_length=20)
+	groupName = models.CharField(max_length=20)
 	subject = models.CharField(max_length=30)
 	className = models.CharField(max_length=30)
 	section = models.IntegerField()
 	groupOwner = models.CharField(max_length=30)
 	memberCount = models.IntegerField()
 	totalMembersAllowed = models.IntegerField()
-	#meetingPermissions = models.CharField(max_length=20)
+	meetingPermissions = models.CharField(max_length=20)
 	access = models.CharField(max_length=10)
+	
+	# ADDED FOREIGN KEY TO ACCOUNT
+	users = models.ForeignKey(Account, related_name="user", null=True)

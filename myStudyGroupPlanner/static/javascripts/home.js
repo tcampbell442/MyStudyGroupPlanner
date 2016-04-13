@@ -18,6 +18,8 @@
     var vm = this;
 	
 	vm.date = new Date();
+	vm.status = "";
+	vm.user = "";
 	
 	/** Variable used to track activated tab */
     vm.tab = 1;
@@ -50,8 +52,7 @@
 						["46634", "CMSC447-002 Main", "Sue", "30", "closed", "request"]];
 	
 
-	/**  Hardcoded Groups tab data.  CHANGE TO DJANGO MODEL DATA */
-	/**vm.currentGroups = ["GroupName0", "GroupName1", "GroupName2"];*/
+	/**  Get groups DJANGO MODEL DATA --- ***MOVE TO A FUNCTION*** */
 	$http({method: 'GET', 
 		url: '/api/group/'})
 		.then(function(response){
@@ -72,8 +73,31 @@
 	vm.isSelected = function(checkTab) {
 		return vm.tab === checkTab;
 	}
+	/** Create New Group with user as the group owner */
+	vm.createGroup = function() {
+		
+		$http({method: 'POST', 
+		url: '/api/group/',
+		data: {
+			groupName: vm.createGroup.groupName,
+			subject: vm.createGroup.groupSubject,
+			className: vm.createGroup.groupClass,
+			section: vm.createGroup.groupSection,
+			groupOwner: "PLACEHOLDER",
+			memberCount: 1,
+			totalMembersAllowed: vm.createGroup.groupMaxMembers,
+			meetingPermissions: vm.createGroup.groupPermissionLevel,
+			access: vm.createGroup.groupAccessType
+			}
+		})
+		.then(function(response){
+			vm.status = "Group Created";
+		},
+		function(response){
+			vm.status = "Failed to create group.";
+	});
+	}
 	/**  */
-	
 
   }
 })();
