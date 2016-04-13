@@ -74,8 +74,14 @@
 	<span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-	<li ng-repeat="building in vm.buildings">{{building}}</li>
+	<li ng-repeat="building in vm.StudyLocation">{{building["name"]}}</li>
       </ul>
+    </div>
+
+    <div>
+    <ul ng-repeat="building in vm.studyLocations">
+  	  <li>{{building["name"]}}</li>
+    </ul>
     </div>
 
     <div style="margin:10px;">Building:  

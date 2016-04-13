@@ -53,7 +53,7 @@
 	/**  Hardcoded Groups tab data.  CHANGE TO DJANGO MODEL DATA */
 	/**vm.currentGroups = ["GroupName0", "GroupName1", "GroupName2"];*/
 	$http({method: 'GET', 
-		url: 'http://127.0.0.1:8000/api/group/'})
+		url: '/api/group/'})
 		.then(function(response){
 			vm.currentGroups = response.data;
 		},

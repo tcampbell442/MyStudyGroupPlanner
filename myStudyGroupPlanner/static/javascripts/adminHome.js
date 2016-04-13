@@ -5,13 +5,15 @@
 	.module('myStudyGroupPlanner')
 	.controller('AdminHomeController', AdminHomeController);
     
-    AdminHomeController.$inject = ['$location', '$scope', 'Authentication'];
+    AdminHomeController.$inject = ['$location', '$scope', 'Authentication', '$http'];
     
     /**
      * @namespace AdminHomeController
      */
-    function AdminHomeController($location, $scope, Authentication) {
+    function AdminHomeController($location, $scope, Authentication, $http) {
 	var vm = this;
+	vm.selectedStudyLocation = null;
+	vm.studyLocations = [];
 	
 	vm.tab = 1;
       
@@ -56,11 +58,21 @@
 	    return vm.tab === checkTab;
 	}
 
+	/**
 	vm.studyLocation = {
 	    building: "",
 	    roomNum: "",
 	    maxCapacity: ""
 	}
+	**/
+
+	$http({method: 'GET',
+		url: '/api/building/'
+		}).then(function(response){
+			vm.studyLocations = response.data;
+		},
+		function(response){
+	});
 
 	vm.usernameTemp = "";
 
@@ -91,7 +103,7 @@
 	    }
 	];
 
-	vm.buildings = ["Sherman", "ITE", "Engineering", "Biology"];
+	//vm.buildings = ["Sherman", "ITE", "Engineering", "Biology"];
 
 	vm.username = 'username1';
 	

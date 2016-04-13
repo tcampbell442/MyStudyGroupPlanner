@@ -22,7 +22,7 @@ class RoomList(generics.ListCreateAPIView):
 		serializer = RoomSerializer(rooms, many=Ture)
 		return Response(serializer.data)
 
-	elif request.meother =='POST':
+	elif request.method =='POST':
 		serializer = RoomSerializer(data=request.DATA)
 		if serializer.is_valid():
 			serializer.save()
@@ -69,7 +69,7 @@ class BuildingList(generics.ListCreateAPIView):
                 serializer = BuildingSerializer(buildings, many=Ture)
                 return Response(serializer.data)
 
-        elif request.meother =='POST':
+        elif request.method =='POST':
                 serializer = BuildingSerializer(data=request.DATA)
                 if serializer.is_valid():
                         serializer.save()
