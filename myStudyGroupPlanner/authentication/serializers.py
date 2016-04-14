@@ -9,12 +9,12 @@ from report.serializers import ReportSerializer
 class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
     confirm_password = serializers.CharField(write_only=True, required=False)
-    #reports = ReportSerializer(many=True, required=False)
+    reports = ReportSerializer(many=True, required=False)
     class Meta:
         model = Account
         fields = ('id', 'email', 'username', 'created_at', 'updated_at',
                   'first_name', 'last_name', 'tagline', 'password',
-                  'confirm_password')
+                  'confirm_password','reports')
         read_only_fields = ('created_at', 'updated_at',)
 
 	password = serializers.CharField(write_only=True, required=False)
