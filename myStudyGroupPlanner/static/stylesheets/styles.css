@@ -26,7 +26,14 @@ background-color: #2CC19A;
     background-color: silver; /*Change rollover cell color here*/
   }
 
-
+.navbar-brand{
+    height: 40;
+    width: 250px;
+    background-image:url("Logo.png");
+    background-repeat: no-repeat;
+    background-size: 180px, 10px;
+    background-position: 10px;
+}
 
 .indexBody{
   background-image: url("weather.png");
@@ -35,7 +42,7 @@ background-color: #2CC19A;
 
 select {
    margin: 5px;
-    border: 1px solid #111;
+   border: 1px solid #111;
    background: transparent;
    width: 150px;
    padding: 5px 35px 5px 5px;
@@ -139,6 +146,6 @@ table, .messageGroup, .leaveGroup{
   align: center;
 }
 
-.create,.location,.accessType,.permLevle{
+.create,.location,.accessType,.permLevel{
   margin: 10px;
 }
