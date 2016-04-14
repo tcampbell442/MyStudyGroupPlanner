@@ -7,7 +7,7 @@ from rest_framework_nested import routers
 
 from authentication.views import AccountViewSet, LoginView, LogoutView
 from building.views import RoomList, RoomDetail
-from group.views import GroupList, GroupDetail
+from group.views import GroupList, GroupDetail, UserList, UserDetail
 from meeting.views import MeetingList, MeetingDetail
 from report.views import ReportList, ReportDetail
 
