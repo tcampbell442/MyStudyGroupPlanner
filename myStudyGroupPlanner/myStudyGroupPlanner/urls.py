@@ -28,6 +28,9 @@ urlpatterns = patterns(
 	url(r'^api/meeting/$', MeetingList.as_view(), name='meetingList'),
 	url(r'^api/meeting/(?P<pk>[0-9]+)/$', MeetingDetail.as_view(), name='meetingDetail'),
 
+	url(r'^api/group/user/$', UserList.as_view(), name='userList'),
+        url(r'^api/group/user/(?P<pk>[0-9]+)/$', UserDetail.as_view(), name='userDetail'),
+
 	#url(r'^api/account/$', AccountList.as_view(), name='accountList'),
 
     url(r'^api/report/$', ReportList.as_view(), name='reportList'),
