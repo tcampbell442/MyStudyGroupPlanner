@@ -40,9 +40,9 @@
 	<!--CREATE GROUP TAB-->
 	<div class="createTabs" ng-show="vm.isSelected(2)">
 			<form role="form" name="createGroups">
-			Group Name:
+			<b>Group Name: </b>
 			<input type="text" class="from-control" id="groupName" ng-model="vm.groupFields.groupName"><br>
-			Class Info:
+			<b>Class Info: </b>
 			<div>
 				<select ng-model="vm.groupFields.groupSubject">
 					<option value="" disabled selected hidden>Subject</option>
@@ -57,15 +57,15 @@
 					<option ng-repeat="section in vm.sections">{{section}}</option>
 				</select>
 			</div>
-			Maximum Number of Members
-			<input type="number" class="form-control" id="MaxMbrs" ng-model="vm.groupFields.groupMaxMembers"><br>
-			Access Type
+			<b>Maximum Number of Members: </b>
+			<input type="number" class="from-control" id="maxmbrs" ng-model="vm.groupFields.groupMaxMembers">(Default of 30 members per group)<br>
+			<b>Access Type</b>
 			<div class="accessType">
 				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Open" style="margin-left:24px;"/> Open
 				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Closed" style="margin-left:24px;"/> Closed
 				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Public" style="margin-left:24px;"/> Private
 			</div>
-			Meeting Permission for Members
+			<b>Meeting Permission for Members</b>
 			<div class="permLevel">
 				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="2" style="margin-left:24px;"/> Anyone
 				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="1" style="margin-left:24px;"/> Creator Nominated & Creator

@@ -55,7 +55,7 @@ select {
         padding: 5px;
     }
 }
-div.calendar, div.upcoming_events{
+.calendar, .upcoming_events{
    height:250px;
    width:400px;
    border:3px solid black;
@@ -64,7 +64,7 @@ div.calendar, div.upcoming_events{
    margin: 8px 10px;
  }
 
- div.upcoming_events{
+.upcoming_events{
    margin: 8px 30px;
  }
 
@@ -74,7 +74,7 @@ table, th, td {
   margin: 8px 10px;
 }
 
-div.members{
+.members{
   position: absolute;
   top: 310px;
 }
@@ -83,24 +83,24 @@ th, td{
   padding: 5px;
 }
 
-table, div.messageGroup, div.leaveGroup{
+table, .messageGroup, .leaveGroup{
   float: left;
 }
 
-div.messageGroup{
+.messageGroup{
   margin: 20px 20px;
 }
 
-div.leaveGroup{
+.leaveGroup{
   margin: 20px 5px;
 }
 
-div.createTab{
+.createTab{
   margin-top: 25px;
   margin-bottom: 35px;
 }
 
-div.homeCalendar{
+.homeCalendar{
   height:230px;
   border: 3px solid black;
   padding:5px
