@@ -1,5 +1,9 @@
+<head>
+  <link rel="stylesheet" href="../styleSheets/styles.css">
+</head>
 <!--LEFT COLUMN CONTENT: TABS-->
-<div >
+<div>
+	<div class=tabs>
 	<ul class="nav nav-pills center-pills" role="tablist">
 		<li ng-class="{active:vm.isSelected(1)}">
 			<a href="/home" ng-click="vm.selectTab(1)">Search</a>
@@ -34,13 +38,12 @@
 		</div>
 	</div>
 	<!--CREATE GROUP TAB-->
-	<div class="createTabs">
-		<div ng-show="vm.isSelected(2)">
-			<h5 style="margin-top:25px; margin-bottom:35px;">
-			<div style="margin:10px;">Group Name:  
-			<input type="text" ng-model="vm.groupFields.groupName" style="height:26px;margin-left:5px; padding-left:3px;"></textarea></div>
-			<div style="margin:10px;">
-				Class Info:
+	<div class="createTabs" ng-show="vm.isSelected(2)">
+			<form role="form" name="createGroups">
+			Group Name:
+			<input type="text" class="from-control" id="groupName" ng-model="vm.groupFields.groupName"><br>
+			Class Info:
+			<div>
 				<select ng-model="vm.groupFields.groupSubject">
 					<option value="" disabled selected hidden>Subject</option>
 					<option ng-repeat="subject in vm.subjects">{{subject}}</option>
@@ -54,42 +57,39 @@
 					<option ng-repeat="section in vm.sections">{{section}}</option>
 				</select>
 			</div>
-			<div style="margin:10px;">Maximum Number of Members
-				 <input type="text" ng-model="vm.groupFields.groupMaxMembers" style="height:26px; width:40px; margin-left:5px; padding-left:3px;"></textarea>
-				 (default:30)</div>
-			<div style="margin:10px;">Access Type</div>
-			<div style="margin:10px;">
+			Maximum Number of Members
+			<input type="number" class="form-control" id="MaxMbrs" ng-model="vm.groupFields.groupMaxMembers"><br>
+			Access Type
+			<div class="accessType">
 				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Open" style="margin-left:24px;"/> Open
 				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Closed" style="margin-left:24px;"/> Closed
 				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Public" style="margin-left:24px;"/> Private
 			</div>
-			<div style="margin:10px;">Meeting Permission for Members</div>
-			<div style="margin:10px;">
+			Meeting Permission for Members
+			<div class="permLevel">
 				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="2" style="margin-left:24px;"/> Anyone
 				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="1" style="margin-left:24px;"/> Creator Nominated & Creator
 				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="0" style="margin-left:24px;"/> Creator Only
 			</div>
-			<div style="margin:30px;" align="center">
+			<div class="button">
 				<button class="btn btn-primary btn-sm" ng-click="vm.selectTab(1)"> Cancel </button>
-				<button class="btn btn-primary btn-sm" ng-click="vm.createGroup()" style="margin-left:30px;"> Create Group </button>
+				<button class="btn btn-primary btn-sm" ng-click="vm.createGroup()"> Create Group </button>
 				{{vm.status}}
 			</div>
-			</h5>
-		</div>
+		</form>
 	</div>
 
 	<!--JOIN PRIVATE GROUP TAB-->
-	<div ng-show="vm.isSelected(3)">
-		<h4 style="margin-top:50px; margin-bottom:35px;">Group Access Code:
+	<div class="GroupAccessCode" ng-show="vm.isSelected(3)">
+			Group Access Code:
 			<input type="text" ng-model="vm.privateCodeToSubmit" placeholder="Type Code Here" style="height:28px;margin-left:15px; padding-left:3px;"></textarea>
-		</h4>
-		<div align="center"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-sm"> Join </button></div>
+		<div class="button"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-sm"> Join </button></div>
 	</div>
 	<!--SEARCH RESULTS-->
 	<div ng-show="vm.isSelected(1) && vm.showSearchResults===true">
 		<h3>Search results</h3>
-		
-		<table style="width:100%; border:1px solid black;">
+
+		<table>
 		<tr>
 			<th>ID</th>
 			<th>Name</th>
@@ -110,9 +110,9 @@
 	</div>
 </div>
 <!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->
-<div style="float:right; width:300px; margin:10px;">
+<div class="information">
 	<!--GROUPS-->
-	<div style="border-style:solid; border-width:3px; padding:10px">
+	<div class="currentGrps">
 		<h3>Current Groups</h3>
 
 		<ul ng-repeat="group in vm.currentGroups">
@@ -120,9 +120,9 @@
 		</ul>
 
 
-	</div>
+	</div class="homeCalendar">
 	<!--CALENDAR-->
-	<div style="height:230px; border-style:solid; border-width:3px; padding:5px">
+	<div class="currentGrps">
 
 			<div pickadate ng-model="vm.date" format="mm/dd/yyyy"></div>
 			<!-- The below line will be commented out, just here now to show that it's working-->
@@ -130,10 +130,11 @@
 
 	</div>
 	<!--MEETINGS-->
-	<div style="border-style:solid; border-width:3px; padding:10px; height:150px; overflow:hidden; overflow-y:scroll;">
+	<div class="meetingDetail">
 		<div>{{vm.calendarDate}}</div>
 		<ul ng-repeat="meetingInfo in vm.currentMeetings" style="list-style: none; padding:0px;">
 			<li ng-repeat="info in meetingInfo">{{info}}</li>
 		</ul>
 	</div>
+</div>
 </div>

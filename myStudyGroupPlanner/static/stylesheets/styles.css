@@ -139,6 +139,6 @@ div.homeCalendar{
   align: center;
 }
 
-.create,.location{
+.create,.location,.accessType,.permLevle{
   margin: 10px;
 }
