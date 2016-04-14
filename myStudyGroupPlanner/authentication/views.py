@@ -1,7 +1,8 @@
 import json
 
 from rest_framework import permissions, viewsets
-
+from rest_framework import generics
+from rest_framework.decorators import api_view
 from authentication.models import Account
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
@@ -74,3 +75,17 @@ class LogoutView(views.APIView):
         logout(request)
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+# class AccountList(generics.ListAPIView):
+#     serializer_class = AccountSerializer
+#     queryset = Account.objects.all()
+#     def get_queryset(self):
+#         username = self.request.query_params.get('username', None)
+#         if username is not None:
+#             queryset = queryset.filter(username_id=username)
+#         return queryset
+
+# class AccountListView(generics.ListAPIView):
+#     queryset = Account.objects.all()
+#     serializer = AccountSerializer
+#     filter_backends = (filters.SearchFilter,)

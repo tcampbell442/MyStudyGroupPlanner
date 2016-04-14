@@ -32,7 +32,7 @@ LOGIN_EXEMPT_URLS = (
  r'^register$',
  r'^api/v1/auth/login/$',
  r'^api/v1/accounts/$'
-) 
+)
 
 # Application definition
 
@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'building',
     'meeting',
     'group',
+    'report',
 )
 
 MIDDLEWARE_CLASSES = (
