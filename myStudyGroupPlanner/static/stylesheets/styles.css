@@ -71,6 +71,19 @@ select {
    margin: 8px 10px;
  }
 
+ .creatorCalendar, .creatorUpcoming_events{
+    height:250px;
+    width:400px;
+    border:3px solid black;
+    position: relative;
+    margin: 8px 10px;
+  }
+
+  .creatorEvents{
+    width:400px;
+    float:right;
+  }
+
 .upcoming_events{
    margin: 8px 30px;
  }
