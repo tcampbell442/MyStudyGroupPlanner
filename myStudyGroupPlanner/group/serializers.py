@@ -1,9 +1,13 @@
 from rest_framework import serializers
 from group.models import Group
+#from authentication.serializers import AccountSerializer
 
 class GroupSerializer(serializers.ModelSerializer):
 
-    class Meta:
+	# ADDED THIS LINE FOR GROUP FOREIGN KEY RELATIONSHIP
+	#users = AccountSerializer(many=True, read_only=True)
+
+	class Meta:
 		model = Group
 		field = ('subject', 
 				 'className', 

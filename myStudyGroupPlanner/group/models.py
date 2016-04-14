@@ -11,3 +11,6 @@ class Group(models.Model):
 	totalMembersAllowed = models.IntegerField()
 	meetingPermissions = models.CharField(max_length=20)
 	access = models.CharField(max_length=10)
+	
+	# ADDED FOREIGN KEY TO ACCOUNT
+	#users = models.ManyToManyField(Account)

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
+from group.models import Group
 
 class AccountManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
@@ -39,6 +40,10 @@ class Account(AbstractBaseUser):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    # ADDED FOREIGN KEY TO GROUP
+    groups = models.ManyToManyField(Group)
+    #userGroups = models.ForeignKey(Group, related_name="groups", null=True)
 
     objects = AccountManager()
 

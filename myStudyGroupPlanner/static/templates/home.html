@@ -16,19 +16,19 @@
 		<div ng-show="vm.isSelected(1) && vm.showSearchResults===false">
 			<h3>Class</h3>
 			<center>
-			<div><select ng-model="selectedSubject">
+			<div><select ng-model="vm.selectedSubject">
 				<option value="" disabled selected hidden>Subject</option>
 				<option ng-repeat="subject in vm.subjects">{{subject}}</option>
 			</select></div>
-			<div><select ng-model="selectedClass">
+			<div><select ng-model="vm.selectedClass">
 				<option value="" disabled selected hidden>Class</option>
 				<option ng-repeat="class in vm.classes">{{class}}</option>
 			</select></div>
-			<div><select ng-model="selectedSection">
+			<div><select ng-model="vm.selectedSection">
 				<option value="" disabled selected hidden>Section</option>
 				<option ng-repeat="section in vm.sections">{{section}}</option>
 			</select></div>
-			<div><input type="radio"/> Open groups only</div>
+			<div><input type="radio" ng-model="vm.selectedOpen" value="Open"/> Open groups only</div>
 			<div><h3><button ng-click="vm.showSearchResults=true" class="btn btn-primary btn-sm"> Search </button></h3></div>
 			</center>
 		</div>
@@ -37,40 +37,42 @@
 	<div class="createTabs">
 		<div ng-show="vm.isSelected(2)">
 			<h5 style="margin-top:25px; margin-bottom:35px;">
-			<div style="margin:10px;">Group Name:  <input type="text" ng-model="vm.createGroup.groupName" style="height:26px;margin-left:5px; padding-left:3px;"></textarea></div>
+			<div style="margin:10px;">Group Name:  
+			<input type="text" ng-model="vm.groupFields.groupName" style="height:26px;margin-left:5px; padding-left:3px;"></textarea></div>
 			<div style="margin:10px;">
 				Class Info:
-				<select ng-model="vm.createGroup.groupSubject">
+				<select ng-model="vm.groupFields.groupSubject">
 					<option value="" disabled selected hidden>Subject</option>
 					<option ng-repeat="subject in vm.subjects">{{subject}}</option>
 				</select>
-				<select ng-model="vm.createGroup.groupClass">
+				<select ng-model="vm.groupFields.groupClass">
 					<option value="" disabled selected hidden>Class</option>
 					<option ng-repeat="class in vm.classes">{{class}}</option>
 				</select>
-				<select ng-model="vm.createGroup.groupSection">
+				<select ng-model="vm.groupFields.groupSection">
 					<option value="" disabled selected hidden>Section</option>
 					<option ng-repeat="section in vm.sections">{{section}}</option>
 				</select>
 			</div>
 			<div style="margin:10px;">Maximum Number of Members
-				 <input type="text" ng-model="vm.createGroup.groupMaxMembers" style="height:26px; width:40px; margin-left:5px; padding-left:3px;"></textarea>
+				 <input type="text" ng-model="vm.groupFields.groupMaxMembers" style="height:26px; width:40px; margin-left:5px; padding-left:3px;"></textarea>
 				 (default:30)</div>
 			<div style="margin:10px;">Access Type</div>
 			<div style="margin:10px;">
-				<input type="radio" name="setAccess" ng-model="vm.createGroup.groupAccessType" value="2" style="margin-left:24px;"/> Open
-				<input type="radio" name="setAccess" ng-model="vm.createGroup.groupAccessType" value="1" style="margin-left:24px;"/> Closed
-				<input type="radio" name="setAccess" ng-model="vm.createGroup.groupAccessType" value="0" style="margin-left:24px;"/> Private
+				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Open" style="margin-left:24px;"/> Open
+				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Closed" style="margin-left:24px;"/> Closed
+				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Public" style="margin-left:24px;"/> Private
 			</div>
 			<div style="margin:10px;">Meeting Permission for Members</div>
 			<div style="margin:10px;">
-				<input type="radio" name="setPerms" ng-model="vm.createGroup.groupPermissionLevel" value="2" style="margin-left:24px;"/> Anyone
-				<input type="radio" name="setPerms" ng-model="vm.createGroup.groupPermissionLevel" value="1" style="margin-left:24px;"/> Creator Nominated & Creator
-				<input type="radio" name="setPerms" ng-model="vm.createGroup.groupPermissionLevel" value="0" style="margin-left:24px;"/> Creator Only
+				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="2" style="margin-left:24px;"/> Anyone
+				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="1" style="margin-left:24px;"/> Creator Nominated & Creator
+				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="0" style="margin-left:24px;"/> Creator Only
 			</div>
 			<div style="margin:30px;" align="center">
-				<button class="btn btn-primary btn-sm"> Cancel </button>
-				<button class="btn btn-primary btn-sm" style="margin-left:30px;"> Create Group </button>
+				<button class="btn btn-primary btn-sm" ng-click="vm.selectTab(1)"> Cancel </button>
+				<button class="btn btn-primary btn-sm" ng-click="vm.createGroup()" style="margin-left:30px;"> Create Group </button>
+				{{vm.status}}
 			</div>
 			</h5>
 		</div>
@@ -85,7 +87,8 @@
 	</div>
 	<!--SEARCH RESULTS-->
 	<div ng-show="vm.isSelected(1) && vm.showSearchResults===true">
-		<h5>Search results for subject/class#/section</h5>
+		<h3>Search results</h3>
+		
 		<table style="width:100%; border:1px solid black;">
 		<tr>
 			<th>ID</th>
@@ -94,13 +97,13 @@
 			<th># Members</th>
 			<th>Type</th>
 		</tr>
-			<tr ng-repeat="group in vm.searchResults" style="border:1px solid black;">
-				<td>{{group[0]}}</td>
-				<td>{{group[1]}}</td>
-				<td>{{group[2]}}</td>
-				<td>{{group[3]}}</td>
-				<td>{{group[4]}}</td>
-				<td><button > {{group[5]}} </button></td>
+			<tr ng-repeat="group in vm.currentGroups | filter:vm.selectedClass | filter:vm.selectedSubject | filter:vm.selectedSection | filter:vm.selectedOpen" style="border:1px solid black;">
+				<td>{{group["id"]}}</td>
+				<td>{{group["groupName"]}}</td>
+				<td>{{group["groupOwner"]}}</td>
+				<td>{{group["memberCount"]}}</td>
+				<td>{{group["access"]}}</td>
+				<td><button > Join </button></td>
 			</tr>
 		</table>
 		<div align="center"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-md"> New Search </button></div>
