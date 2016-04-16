@@ -9,7 +9,7 @@ background-color: #2CC19A;
 }
 
   .navbar-default {
-    background-color: #2CC19A;
+    background-color: #50aa7f;
     border-color: #030033;
 }
 
@@ -36,7 +36,8 @@ background-color: #2CC19A;
 }
 
 .indexBody{
-  background-image: url("weather.png");
+    background-color: #f5e773
+  /*background-image: url("weather.png");*/
 }
 .center-pills { display: inline-block; }
 
@@ -53,7 +54,7 @@ select {
    -webkit-appearance: none;
    -moz-appearance: none;
    appearance: none;
-    background: url(http://www.thebookclubproject.org/wp-content/uploads/2015/09/favicon-v21.gif) 96% / 15% no-repeat #eee;
+   background-color: #ffffff
 }
 /*target Internet Explorer 9 and Internet Explorer 10:*/
 @media screen and (min-width:0\0) {
@@ -99,11 +100,24 @@ table, th, td {
   top: 310px;
 }
 
-th, td{
-  padding: 5px;
+table{
+  border-collapse: collapse;
+  float: left;
 }
 
-table, .messageGroup, .leaveGroup{
+th{
+  padding: 5px;
+  background-color: #b54426;
+  color: white;
+  border: 1px solid black;
+}
+
+td{
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.messageGroup, .leaveGroup{
   float: left;
 }
 
