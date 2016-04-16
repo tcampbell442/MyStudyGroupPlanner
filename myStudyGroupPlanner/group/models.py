@@ -10,8 +10,6 @@ class Group(models.Model):
 	groupOwner = models.CharField(max_length=30)
 	memberCount = models.IntegerField()
 	totalMembersAllowed = models.IntegerField()
-	meetingPermissions = models.CharField(max_length=20)
-	access = models.CharField(max_length=10)
 
 	def __unicode__(self):
 	    return self.groupName

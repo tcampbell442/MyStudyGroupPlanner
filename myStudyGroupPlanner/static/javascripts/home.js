@@ -37,9 +37,7 @@
     	groupSubject: "",
     	groupClass: "",
     	groupSection: "",
-    	groupMaxMembers: 30,
-    	groupAccessType: "Open",  /** private, closed, public */
-    	groupPermissionLevel: 0  /** 0 creator, 1 creator/creator nominated, 2 anyone */
+    	groupMaxMembers: 30
     }
     /** Join Private Group Tab variables */
     vm.privateCodeToSubmit = 0;
@@ -88,9 +86,7 @@
 			section: vm.groupFields.groupSection,
 			groupOwner: user.username,
 			memberCount: 1,
-			totalMembersAllowed: vm.groupFields.groupMaxMembers,
-			meetingPermissions: vm.groupFields.groupPermissionLevel,
-			access: vm.groupFields.groupAccessType
+			totalMembersAllowed: vm.groupFields.groupMaxMembers
 			}
 		})
 		.then(function(response){
