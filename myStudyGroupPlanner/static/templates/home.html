@@ -6,13 +6,10 @@
 	<div class=tabs>
 	<ul class="nav nav-pills center-pills" role="tablist">
 		<li ng-class="{active:vm.isSelected(1)}">
-			<a href="/home" ng-click="vm.selectTab(1)">Search</a>
+			<a href="/home" ng-click="vm.selectTab(1)">Search Groups</a>
 		</li>
 		<li ng-class="{active:vm.isSelected(2)}">
 			<a href="/home" ng-click="vm.selectTab(2)">Create Group</a>
-		</li>
-		<li ng-class="{active:vm.isSelected(3)}">
-			<a href="/home" ng-click="vm.selectTab(3)">Join Private Group</a>
 		</li>
 	</ul>
 	<!--SEARCH TAB-->
@@ -32,7 +29,6 @@
 				<option value="" disabled selected hidden>Section</option>
 				<option ng-repeat="section in vm.sections">{{section}}</option>
 			</select></div>
-			<div><input type="radio" ng-model="vm.selectedOpen" value="Open"/> Open groups only</div>
 			<div><h3><button ng-click="vm.showSearchResults=true" class="btn btn-primary btn-sm"> Search </button></h3></div>
 			</center>
 		</div>
@@ -40,6 +36,7 @@
 	<!--CREATE GROUP TAB-->
 	<div class="createTabs" ng-show="vm.isSelected(2)">
 			<form role="form" name="createGroups">
+			  <br>
 			<b>Group Name: </b>
 			<input type="text" class="from-control" id="groupName" ng-model="vm.groupFields.groupName"><br>
 			<b>Class Info: </b>
@@ -58,19 +55,8 @@
 				</select>
 			</div>
 			<b>Maximum Number of Members: </b>
-			<input type="number" class="from-control" id="maxmbrs" ng-model="vm.groupFields.groupMaxMembers">(Default of 30 members per group)<br>
-			<b>Access Type</b>
-			<div class="accessType">
-				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Open" style="margin-left:24px;"/> Open
-				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Closed" style="margin-left:24px;"/> Closed
-				<input type="radio" name="setAccess" ng-model="vm.groupFields.groupAccessType" value="Public" style="margin-left:24px;"/> Private
-			</div>
-			<b>Meeting Permission for Members</b>
-			<div class="permLevel">
-				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="2" style="margin-left:24px;"/> Anyone
-				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="1" style="margin-left:24px;"/> Creator Nominated & Creator
-				<input type="radio" name="setPerms" ng-model="vm.groupFields.groupPermissionLevel" value="0" style="margin-left:24px;"/> Creator Only
-			</div>
+			<input type="number" class="from-control" id="maxmbrs" ng-model="vm.groupFields.groupMaxMembers"> (Default of 30 members per group)<br>
+			<br>
 			<div class="button">
 				<button class="btn btn-primary btn-sm" ng-click="vm.selectTab(1)"> Cancel </button>
 				<button class="btn btn-primary btn-sm" ng-click="vm.createGroup()"> Create Group </button>
@@ -79,12 +65,6 @@
 		</form>
 	</div>
 
-	<!--JOIN PRIVATE GROUP TAB-->
-	<div class="GroupAccessCode" ng-show="vm.isSelected(3)">
-			Group Access Code:
-			<input type="text" ng-model="vm.privateCodeToSubmit" placeholder="Type Code Here" style="height:28px;margin-left:15px; padding-left:3px;"></textarea>
-		<div class="button"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-sm"> Join </button></div>
-	</div>
 	<!--SEARCH RESULTS-->
 	<div ng-show="vm.isSelected(1) && vm.showSearchResults===true">
 		<h3>Search results</h3>
@@ -113,7 +93,7 @@
 <div class="information">
 	<!--GROUPS-->
 	<div class="currentGrps">
-		<h3>Current Groups</h3>
+		<h3>My Groups</h3>
 
 		<ul ng-repeat="group in vm.currentGroups">
 			<li><a href="/groupMember">{{group["groupName"]}}</a></li>
