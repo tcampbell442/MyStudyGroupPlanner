@@ -24,17 +24,22 @@
       <table>
 	<tr>
 	  <th>Report Code</th>
-	  <th>Date Submitted</th>
+	  <th>Reporter</th>
+    <th>Reportee</th>
+    <th>Date Submitted</th>
+    <th>Date Submitted</th>
 	  <th></th>
 	</tr>
 	<tr ng-repeat="report in vm.reports" align="center">
-	  <td>{{report.code}}</td>
-	  <td>{{report.date}}</td>
+    <td>{{report.id}}</td>
+	  <td>{{report.reporter}}</td>
+    <td>{{report.reportee}}</td>
+	  <td>{{report.date_submitted}}</td>
 	  <td><button class="btn btn-info btn-xs" data-toggle="modal" data-target="#reportViewModal">VIEW</button></td>
 	  <!-- Modal -->
 	  <div id="reportViewModal" class="modal fade" role="dialog">
 	    <div class="modal-dialog">
-	      
+
 	      <!-- Modal content-->
 	      <div class="modal-content">
 		<div class="modal-header">
@@ -54,7 +59,7 @@
       </table>
     </div>
   </div>
-  
+
   <div ng-show="vm.isSelected(2)">
     <div class="dropdown">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Building
@@ -64,13 +69,13 @@
 	<li ng-repeat="building in vm.StudyLocation">{{building["name"]}}</li>
       </ul>
     </div>
-  
+
     <div>
       <ul ng-repeat="building in vm.studyLocations">
 	<li>{{building["name"]}}</li>
       </ul>
     </div>
-    
+
     <div> Building:
       <input type="text" ng-model="vm.studyLocation.building" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
@@ -83,20 +88,20 @@
       <input type="text" ng-model="vm.studyLocation.maxCapacity" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
   </div>
-  
+
   <div ng-show="vm.isSelected(3)">
     <div style="margin:10px;">Username:
       <input type="text" ng-model="vm.usernameTemp" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
   </div>
-  
+
   <div ng-show="vm.isSelected(4)">
     <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteAllModal">Delete Database</button>
-    
+
     <!-- Modal -->
     <div id="deleteAllModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
-	
+
 	<!-- Modal content -->
 	<div class="modal-content">
 	  <div class="modal-header">
@@ -111,5 +116,5 @@
 	</div>
       </div>
     </div>
-  </div>  
+  </div>
 </div>
