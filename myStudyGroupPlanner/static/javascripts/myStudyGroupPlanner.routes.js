@@ -40,6 +40,10 @@
       controller: 'GroupCreatorController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/groupCreator.html'
+    }).when('/deleteData', {
+	controller: 'DeleteDataController',
+	controllerAs: 'vm',
+	templateUrl: '/static/templates/admin/deleteData.html'
     }).otherwise('/home');
   }
 })();

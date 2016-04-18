@@ -7,7 +7,6 @@
     e.setAttribute("class", "selected");
     }
   </script>
-  <link rel="stylesheet" type="text/css" href="newStyles.css" />
 </head>
 
 <body>
@@ -17,7 +16,7 @@
       <ul id="links">
 	<li>
 	  <a href="viewReports.html" target="subpage" id="report" class="selected" onclick="updateLink(this)">
-	    <span>View Reports</span>
+	    View Reports
 	  </a>
 	</li>
 	
@@ -46,13 +45,13 @@
 	</li>
 
 	<li>
-	  <a href="deleteData.html" target="subpage" id="deleteData" onclick="updateLink(this)">
+	  <a href="/deleteData" target="subpage" id="deleteData" onclick="updateLink(this)">
 	      Delete Data from Database
 	  </a>
 	</li>
       </ul>
     </div>
     
-    <div class="frameContent"> <iframe src="viewReports.html" name="subpage" frameborder="0" scrolling="yes"></iframe></div>
+    <div class="content"><iframe src="/deleteData" name="subpage" frameborder="0" scrolling="yes"></iframe></div>
   </div>
 </body>
