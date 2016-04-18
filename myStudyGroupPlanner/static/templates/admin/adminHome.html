@@ -1,0 +1,58 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <script type="text/javascript">
+    function updateLink(e){
+    var old = document.getElementsByClassName("selected");
+    old[0].setAttribute("class", "unselected");
+    e.setAttribute("class", "selected");
+    }
+  </script>
+  <link rel="stylesheet" type="text/css" href="newStyles.css" />
+</head>
+
+<body>
+  <!--<div style="float:left; width:550px; margin:60px;">-->
+  <div id="container">
+    <div class="menubar">
+      <ul id="links">
+	<li>
+	  <a href="viewReports.html" target="subpage" id="report" class="selected" onclick="updateLink(this)">
+	    <span>View Reports</span>
+	  </a>
+	</li>
+	
+	<li>
+	  <a href="addToDB.html" target="subpage" id="addToDB" onclick="updateLink(this)">
+	    Add Information to Database
+	  </a>
+	</li>
+	
+	<li>
+	  <a href="viewUsers.html" target="subpage" id="viewUsers" onclick="updateLink(this)">
+	    View Users
+	  </a>
+	</li>
+	
+	<li>
+	  <a href="deleteData.html" target="subpage" id="deleteData" onclick="updateLink(this)">
+	    Delete Data from Database
+	  </a>
+	</li>
+	
+	<li>
+	  <a href="deleteData.html" target="subpage" id="deleteData" onclick="updateLink(this)">
+	    Delete Data from Database
+	  </a>
+	</li>
+
+	<li>
+	  <a href="deleteData.html" target="subpage" id="deleteData" onclick="updateLink(this)">
+	      Delete Data from Database
+	  </a>
+	</li>
+      </ul>
+    </div>
+    
+    <div class="frameContent"> <iframe src="viewReports.html" name="subpage" frameborder="0" scrolling="yes"></iframe></div>
+  </div>
+</body>

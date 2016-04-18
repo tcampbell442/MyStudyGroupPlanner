@@ -37,7 +37,6 @@ background-color: #2CC19A;
 
 .indexBody{
     background-color: #f5e773
-  /*background-image: url("weather.png");*/
 }
 .center-pills { display: inline-block; }
 
@@ -56,7 +55,7 @@ select {
    appearance: none;
    background-color: #ffffff
 }
-/*target Internet Explorer 9 and Internet Explorer 10:*/
+//target Internet Explorer 9 and Internet Explorer 10:
 @media screen and (min-width:0\0) {
     select {
         background:none;

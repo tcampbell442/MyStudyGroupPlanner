@@ -35,7 +35,7 @@
     }).when('/adminHome', {
       controller: 'AdminHomeController',
       controllerAs: 'vm',
-      templateUrl: '/static/templates/adminHome.html'
+      templateUrl: '/static/templates/admin/adminHome.html'
     }).when('/groupCreator', {
       controller: 'GroupCreatorController',
       controllerAs: 'vm',
