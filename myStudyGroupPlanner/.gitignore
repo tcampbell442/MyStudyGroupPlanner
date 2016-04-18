@@ -15,3 +15,11 @@ dist/
 
 # Staticfiles
 staticfiles/
+
+#migration files
+#authentication/migrations/*
+#building/migrations/*
+#group/migrations/*
+#meeting/migrations/*
+#report/migrations/*
+*/migrations/
