@@ -6,7 +6,7 @@ from myStudyGroupPlanner.views import IndexView
 from rest_framework_nested import routers
 
 from authentication.views import AccountViewSet, LoginView, LogoutView
-from building.views import RoomList, RoomDetail
+from building.views import RoomList, RoomDetail, BuildingList, BuildingDetail
 from group.views import GroupList, GroupDetail, UserList, UserDetail
 from meeting.views import MeetingList, MeetingDetail
 from report.views import ReportList, ReportDetail
@@ -19,8 +19,10 @@ router.register(r'accounts', AccountViewSet)
 urlpatterns = patterns(
      '',
     # ... URLs
-    url(r'^api/building/$', RoomList.as_view(), name='roomList'),
-    url(r'^api/building/(?P<pk>[0-9]+)/$', RoomDetail.as_view(), name='roomDetail'),
+    url(r'^api/building/$', BuildingList.as_view(), name='roomList'),
+    url(r'^api/building/(?P<pk>[0-9]+)/$', BuildingDetail.as_view(), name='roomDetail'),
+    url(r'^api/building/room/$', RoomList.as_view(), name='roomList'),
+    url(r'^api/building/room/(?P<pk>[0-9]+)/$', RoomDetail.as_view(), name='roomDetail'),
 
 	url(r'^api/group/$', GroupList.as_view(), name='groupList'),
 	url(r'^api/group/(?P<pk>[0-9]+)/$', GroupDetail.as_view(), name='groupDetail'),
@@ -41,5 +43,5 @@ urlpatterns = patterns(
     url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
     url(r'^admin/', include(admin.site.urls)),
     #remove this to see your api calls printout on browser
-    url('^.*$', IndexView.as_view(), name='index'),
+    #url('^.*$', IndexView.as_view(), name='index'),
 )
