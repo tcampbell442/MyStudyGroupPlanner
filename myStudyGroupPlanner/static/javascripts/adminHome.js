@@ -18,38 +18,7 @@
 	vm.tab = 1;
 
 	vm.reports = [];
-	// vm.reports = [
-	//     {
-	// 	code: "111",
-	// 	date: "mm/dd/yyyy",
-	// 	reporter: "User 1",
-	// 	recipient: "User 2",
-	// 	message: "This user was not participating in group discussions.",
-	//     },
-	//
-	//     {
-	// 	code: "222",
-	// 	date: "mm/dd/yyyy",
-	// 	reporter: "User 3",
-	// 	recipient: "User 4",
-	// 	message: "This user was unnecessarily reporting other users.",
-	//     },
-	//
-	//     {
-	// 	code: "333",
-	// 	date: "mm/dd/yyyy",
-	// 	reporter: "User 5",
-	// 	recipient: "User 6",
-	// 	message: "This user is not attending any meetings.",
-	//     },
-	//
-	//     {
-	// 	code: "444",
-	// 	date: "mm/dd/yyyy",
-	// 	reporter: "User 7",
-	// 	recipient: "User 8",
-	// 	message: "This user is being disruptive.",
-	//     }];
+
 
 	vm.selectTab = function(setTab){
 	    vm.tab = setTab;
@@ -59,6 +28,18 @@
 	    return vm.tab === checkTab;
 	}
 
+	vm.openReportDetail = function(reportID,reporter,reportee,comment){
+		$("#reportViewModal").modal("show");
+		vm.currentID = reportID;
+		vm.currentReporter = reporter;
+		vm.currentReportee = reportee;
+		vm.currentComment = comment;
+		// $("#txtreporter").val($(this).closest('tr').children()[0].textContent);
+    // $("#txtreportee").val($(this).closest('tr').children()[1].textContent);
+		// $("#txtmessage").val($(this).closest('tr').children()[2].textContent);
+
+
+	}
 	/**
 	   vm.studyLocation = {
 	   building: "",
@@ -90,7 +71,7 @@
 		function(response){
 	});
 
-	
+
 	vm.usernameTemp = "";
 
 	//vm.buildings = ["Sherman", "ITE", "Engineering", "Biology"];
