@@ -1,93 +1,92 @@
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-color: #000;  /*Sets the text hover color on navbar*/
+  color: #000;  /*Sets the text hover color on navbar*/
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >
- a:hover, .navbar-default .navbar-nav > .active > a:focus {
-color: white; /*BACKGROUND color for active*/
-background-color: #2CC19A;
+a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: white; /*BACKGROUND color for active*/
+  background-color: #2CC19A;
 }
 
-  .navbar-default {
-    background-color: #50aa7f;
-    border-color: #030033;
+.navbar-default {
+  background-color: #50aa7f;
+  border-color: #030033;
 }
 
-  .dropdown-menu > li > a:hover,
-   .dropdown-menu > li > a:focus {
-    color: #262626;
-   text-decoration: none;
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: #262626;
+  text-decoration: none;
   background-color: #66CCFF;  /*change color of links in drop down here*/
-   }
+}
 
- .nav > li > a:hover,
- .nav > li > a:focus {
-    text-decoration: none;
-    background-color: silver; /*Change rollover cell color here*/
-  }
+.nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: none;
+  background-color: silver; /*Change rollover cell color here*/
+}
 
 .navbar-brand{
-    height: 40;
-    width: 250px;
-    background-image:url("Logo.png");
-    background-repeat: no-repeat;
-    background-size: 180px, 10px;
-    background-position: 10px;
+  height: 40;
+  width: 250px;
+  background-image:url("Logo.png");
+  background-repeat: no-repeat;
+  background-size: 180px, 10px;
+  background-position: 10px;
 }
 
 .indexBody{
-    background-color: #f5e773
+  background-color: #f5e773
   /*background-image: url("weather.png");*/
 }
 .center-pills { display: inline-block; }
 
 select {
-   margin: 5px;
-   border: 1px solid #111;
-   background: transparent;
-   width: 150px;
-   padding: 5px 35px 5px 5px;
-   margin: left;
-   font-size: 16px;
-   border: 1px solid #ccc;
-   height: 35px;
-   -webkit-appearance: none;
-   -moz-appearance: none;
-   appearance: none;
-   background-color: #ffffff
+  margin: 5px;
+  border: 1px solid #111;
+  background: transparent;
+  width: 150px;
+  padding: 5px 35px 5px 5px;
+  margin: left;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  height: 35px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #ffffff
 }
 /*target Internet Explorer 9 and Internet Explorer 10:*/
 @media screen and (min-width:0\0) {
-    select {
-        background:none;
-        padding: 5px;
-    }
+  select {
+    background:none;
+    padding: 5px;
+  }
 }
 .calendar, .upcoming_events{
-   height:250px;
-   width:400px;
-   border:3px solid black;
-   float:left;
-   position: relative;
-   margin: 8px 10px;
- }
+  height:250px;
+  width:400px;
+  border:3px solid black;
+  position: relative;
+  margin: 8px 10px;
+}
 
- .creatorCalendar, .creatorUpcoming_events{
-    height:250px;
-    width:400px;
-    border:3px solid black;
-    position: relative;
-    margin: 8px 10px;
-  }
+.creatorCalendar, .creatorUpcoming_events{
+  height:250px;
+  width:400px;
+  border:3px solid black;
+  position: relative;
+  margin: 8px 10px;
+}
 
-  .creatorEvents{
-    width:400px;
-    float:right;
-  }
+.creatorEvents, .memberEvents{
+  width:400px;
+  float:right;
+  position:fixed;
+  top:70px;
+  right:30px;
+}
 
-.upcoming_events{
-   margin: 8px 30px;
- }
 
 table, th, td {
   border: 1px solid black;
@@ -95,10 +94,7 @@ table, th, td {
   margin: 8px 10px;
 }
 
-.members{
-  position: absolute;
-  top: 310px;
-}
+
 
 table{
   border-collapse: collapse;
@@ -107,7 +103,7 @@ table{
 
 th{
   padding: 5px;
-  background-color: #b54426;
+  background-color: #2CC19A;
   color: white;
   border: 1px solid black;
 }
@@ -117,8 +113,12 @@ td{
   border: 1px solid black;
 }
 
-.messageGroup, .leaveGroup{
+.messageGroup, .leaveGroup, .groupName{
   float: left;
+}
+
+.container{
+  margin-left: 250px;
 }
 
 .messageGroup{
@@ -164,15 +164,16 @@ td{
   padding:10px
 }
 
-.GroupAccessCode{
-  margin-top:50px;
-  margin-bottom:35px;
-}
-
 .button{
   align: center;
 }
 
 .create,.location,.accessType,.permLevel{
   margin: 10px;
+}
+
+.chatBoard{
+  height:400px;
+  width:600px;
+  border:3px solid black;
 }

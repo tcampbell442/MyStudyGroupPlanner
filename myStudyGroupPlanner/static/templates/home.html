@@ -1,120 +1,121 @@
 <head>
-  <link rel="stylesheet" href="../styleSheets/styles.css">
+	<link rel="stylesheet" href="../styleSheets/styles.css">
 </head>
 <!--LEFT COLUMN CONTENT: TABS-->
 <div>
 	<div class=tabs>
-	<ul class="nav nav-pills center-pills" role="tablist">
-		<li ng-class="{active:vm.isSelected(1)}">
-			<a href="/home" ng-click="vm.selectTab(1)">Search Groups</a>
-		</li>
-		<li ng-class="{active:vm.isSelected(2)}">
-			<a href="/home" ng-click="vm.selectTab(2)">Create Group</a>
-		</li>
-	</ul>
-	<!--SEARCH TAB-->
-	<div class="searchTab">
-		<div ng-show="vm.isSelected(1) && vm.showSearchResults===false">
-			<h3>Class</h3>
-			<center>
-			<div><select ng-model="vm.selectedSubject">
-				<option value="" disabled selected hidden>Subject</option>
-				<option ng-repeat="subject in vm.subjects">{{subject}}</option>
-			</select></div>
-			<div><select ng-model="vm.selectedClass">
-				<option value="" disabled selected hidden>Class</option>
-				<option ng-repeat="class in vm.classes">{{class}}</option>
-			</select></div>
-			<div><select ng-model="vm.selectedSection">
-				<option value="" disabled selected hidden>Section</option>
-				<option ng-repeat="section in vm.sections">{{section}}</option>
-			</select></div>
-			<div><h3><button ng-click="vm.showSearchResults=true" class="btn btn-primary btn-sm"> Search </button></h3></div>
-			</center>
+		<ul class="nav nav-pills center-pills" role="tablist">
+			<li ng-class="{active:vm.isSelected(1)}">
+				<a href="/home" ng-click="vm.selectTab(1)">Search Groups</a>
+			</li>
+			<li ng-class="{active:vm.isSelected(2)}">
+				<a href="/home" ng-click="vm.selectTab(2)">Create Group</a>
+			</li>
+		</ul>
+		<!--SEARCH TAB-->
+		<div class="searchTab">
+			<div ng-show="vm.isSelected(1) && vm.showSearchResults===false">
+				<h3>Class</h3>
+				<center>
+					<div><select ng-model="vm.selectedSubject">
+						<option value="" disabled selected hidden>Subject</option>
+						<option ng-repeat="subject in vm.subjects">{{subject}}</option>
+					</select></div>
+					<div><select ng-model="vm.selectedClass">
+						<option value="" disabled selected hidden>Class</option>
+						<option ng-repeat="class in vm.classes">{{class}}</option>
+					</select></div>
+					<div><select ng-model="vm.selectedSection">
+						<option value="" disabled selected hidden>Section</option>
+						<option ng-repeat="section in vm.sections">{{section}}</option>
+					</select></div>
+					<div><h3><button ng-click="vm.showSearchResults=true" class="btn btn-primary btn-sm"> Search </button></h3></div>
+				</center>
+			</div>
+		</div>
+		<!--CREATE GROUP TAB-->
+		<div class="createTabs" ng-show="vm.isSelected(2)">
+			<form role="form" name="createGroups">
+				<br>
+				<b>Group Name: </b>
+				<input type="text" class="from-control" id="groupName" ng-model="vm.groupFields.groupName"><br>
+				<b>Class Info: </b>
+				<div>
+					<select ng-model="vm.groupFields.groupSubject">
+						<option value="" disabled selected hidden>Subject</option>
+						<option ng-repeat="subject in vm.subjects">{{subject}}</option>
+					</select>
+					<select ng-model="vm.groupFields.groupClass">
+						<option value="" disabled selected hidden>Class</option>
+						<option ng-repeat="class in vm.classes">{{class}}</option>
+					</select>
+					<select ng-model="vm.groupFields.groupSection">
+						<option value="" disabled selected hidden>Section</option>
+						<option ng-repeat="section in vm.sections">{{section}}</option>
+					</select>
+				</div>
+				<b>Maximum Number of Members: </b>
+				<input type="number" class="from-control" id="maxmbrs" ng-model="vm.groupFields.groupMaxMembers"> (Default of 30 members per group)<br>
+				<br>
+				<div class="button">
+					<button class="btn btn-primary btn-sm" ng-click="vm.selectTab(1)"> Cancel </button>
+					<button class="btn btn-primary btn-sm" ng-click="vm.createGroup()"> Create Group </button>
+					{{vm.status}}
+				</div>
+			</form>
+		</div>
+
+		<!--SEARCH RESULTS-->
+		<div ng-show="vm.isSelected(1) && vm.showSearchResults===true">
+			<h3>Search results</h3>
+
+			<table>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Owner</th>
+					<th># Members</th>
+					<th>Type</th>
+				</tr>
+				<tr ng-repeat="group in vm.currentGroups | filter:vm.selectedClass | filter:vm.selectedSubject | filter:vm.selectedSection | filter:vm.selectedOpen" style="border:1px solid black;">
+					<td>{{group["id"]}}</td>
+					<td>{{group["groupName"]}}</td>
+					<td>{{group["groupOwner"]}}</td>
+					<td>{{group["memberCount"]}}</td>
+					<td>{{group["access"]}}</td>
+					<td><button > Join </button></td>
+				</tr>
+			</table>
+			<div align="center"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-md"> New Search </button></div>
 		</div>
 	</div>
-	<!--CREATE GROUP TAB-->
-	<div class="createTabs" ng-show="vm.isSelected(2)">
-			<form role="form" name="createGroups">
-			  <br>
-			<b>Group Name: </b>
-			<input type="text" class="from-control" id="groupName" ng-model="vm.groupFields.groupName"><br>
-			<b>Class Info: </b>
-			<div>
-				<select ng-model="vm.groupFields.groupSubject">
-					<option value="" disabled selected hidden>Subject</option>
-					<option ng-repeat="subject in vm.subjects">{{subject}}</option>
-				</select>
-				<select ng-model="vm.groupFields.groupClass">
-					<option value="" disabled selected hidden>Class</option>
-					<option ng-repeat="class in vm.classes">{{class}}</option>
-				</select>
-				<select ng-model="vm.groupFields.groupSection">
-					<option value="" disabled selected hidden>Section</option>
-					<option ng-repeat="section in vm.sections">{{section}}</option>
-				</select>
-			</div>
-			<b>Maximum Number of Members: </b>
-			<input type="number" class="from-control" id="maxmbrs" ng-model="vm.groupFields.groupMaxMembers"> (Default of 30 members per group)<br>
-			<br>
-			<div class="button">
-				<button class="btn btn-primary btn-sm" ng-click="vm.selectTab(1)"> Cancel </button>
-				<button class="btn btn-primary btn-sm" ng-click="vm.createGroup()"> Create Group </button>
-				{{vm.status}}
-			</div>
-		</form>
-	</div>
+	<!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->
+	<div class="information">
+		<!--GROUPS-->
+		<div class="currentGrps">
+			<h3>My Groups</h3>
 
-	<!--SEARCH RESULTS-->
-	<div ng-show="vm.isSelected(1) && vm.showSearchResults===true">
-		<h3>Search results</h3>
-
-		<table>
-		<tr>
-			<th>ID</th>
-			<th>Name</th>
-			<th>Owner</th>
-			<th># Members</th>
-			<th>Type</th>
-		</tr>
-			<tr ng-repeat="group in vm.currentGroups | filter:vm.selectedClass | filter:vm.selectedSubject | filter:vm.selectedSection | filter:vm.selectedOpen" style="border:1px solid black;">
-				<td>{{group["id"]}}</td>
-				<td>{{group["groupName"]}}</td>
-				<td>{{group["groupOwner"]}}</td>
-				<td>{{group["memberCount"]}}</td>
-				<td>{{group["access"]}}</td>
-				<td><button > Join </button></td>
-			</tr>
-		</table>
-		<div align="center"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-md"> New Search </button></div>
-	</div>
-</div>
-<!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->
-<div class="information">
-	<!--GROUPS-->
-	<div class="currentGrps">
-		<h3>My Groups</h3>
-
-		<ul ng-repeat="group in vm.currentGroups">
-			<li><a href="/groupMember">{{group["groupName"]}}</a></li>
-		</ul>
+			<ul ng-repeat="group in vm.currentGroups">
+				<li><a href="/groupMember">{{group["groupName"]}}</a></li>
+			</ul>
 
 
-	</div class="homeCalendar">
-	<!--CALENDAR-->
-	<div class="currentGrps">
+		</div class="homeCalendar">
+		<!--CALENDAR-->
+		<div class="currentGrps">
 
 			<div pickadate ng-model="vm.date" format="mm/dd/yyyy"></div>
 			<!-- The below line will be commented out, just here now to show that it's working-->
 			<div class="selected-date">Selected date is {{vm.date || '(no date selected)'}}</div>
 
-	</div>
-	<!--MEETINGS-->
-	<div class="meetingDetail">
-		<div>{{vm.calendarDate}}</div>
-		<ul ng-repeat="meetingInfo in vm.currentMeetings" style="list-style: none; padding:0px;">
-			<li ng-repeat="info in meetingInfo">{{info}}</li>
-		</ul>
+		</div>
+		<!--MEETINGS-->
+		<div class="meetingDetail">
+			<div>{{vm.calendarDate}}</div>
+			<ul ng-repeat="meetingInfo in vm.currentMeetings" style="list-style: none; padding:0px;">
+				<li ng-repeat="info in meetingInfo">{{info}}</li>
+			</ul>
+		</div>
 	</div>
 </div>
 </div>
