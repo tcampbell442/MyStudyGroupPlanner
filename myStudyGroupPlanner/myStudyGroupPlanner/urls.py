@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url, include
 from django.contrib import admin
 
 from myStudyGroupPlanner.views import IndexView
+from myStudyGroupPlanner.views import FrameView
 
 from rest_framework_nested import routers
 
@@ -41,5 +42,6 @@ urlpatterns = patterns(
     url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
     url(r'^admin/', include(admin.site.urls)),
     #remove this to see your api calls printout on browser
+    #url('^.*$', FrameView.as_view(), name='frame'),
     url('^.*$', IndexView.as_view(), name='index'),
 )

@@ -38,6 +38,11 @@ background-color: #2CC19A;
 .indexBody{
     background-color: #f5e773
 }
+
+.frameBody{
+    background-color: #f5e773
+}
+
 .center-pills { display: inline-block; }
 
 select {
