@@ -33,20 +33,25 @@
       color: #fff;
   }
   .container-fluid {
-      padding-top: 10px;
+      padding-top: 5px;
       padding-bottom: 5px;
   }
   .navbar {
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 0px;
+      padding-bottom: 20px;
       border: 0;
       border-radius: 0;
       margin-bottom: 0;
       font-size: 12px;
       letter-spacing: 5px;
+	 padding-left: -50px;
   }
   .navbar-nav  li a:hover {
       color: #1abc9c !important;
+  }
+
+  .navbar-collapse {
+  	margin-top: 15px;
   }
   </style>
 </head>
@@ -62,17 +67,11 @@
         <span class="icon-bar"></span>                        
       </button>
     </div>
+	<a class="navbar-brand" href="#"><img src="Logo.png" width="200"></a>
     <div class="collapse navbar-collapse" id="myNavbar">
-
-
- <ul class="nav navbar-nav navbar-left">
-<img src="Logo.png" width="200">
-              </ul>
-
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">WHO</a></li>
-        <li><a href="#">WHAT</a></li>
-        <li><a href="#">WHERE</a></li>
+        <li><a href="#">LOGIN</a></li>
+        <li><a href="#">REGISTER</a></li>
       </ul>
     </div>
   </div>
@@ -81,7 +80,7 @@
 <!-- First Container -->
 <div class="container-fluid bg-1 text-center">
   <h3 class="margin">What is this Application?</h3>
-  <img src="Logo.png" style="display:inline" alt="Bird" width="500">
+  <img src="Logo.png" style="display:inline" width="500">
   <h4><br>It is a tool that allows you to form study groups.</h4>
 </div>
 
@@ -94,6 +93,7 @@
 <!-- Third Container (Grid) -->
 <div class="container-fluid bg-3 text-center">    
   <h3 class="margin">Other</h3><br>
+  <p></p>
 </div>
 
 <!-- Footer -->
