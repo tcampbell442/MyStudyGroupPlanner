@@ -19,6 +19,7 @@
 	vm.roomStatus = null;
 	vm.buildings = [];
 	vm.rooms = [];
+	vm.users = [];
 
 	vm.tab = 1;
 
@@ -167,11 +168,19 @@
 	});
 
 
-	vm.usernameTemp = "";
+	$http({method: 'GET',
+		url: '/api/v1/accounts/'
+		}).then(function(response){
+			vm.users = response.data;
+		},
+		function(response){
+	});
+
+	// vm.usernameTemp = "";
 
 	//vm.buildings = ["Sherman", "ITE", "Engineering", "Biology"];
 
-	vm.username = 'username1';
+	// vm.username = 'username1';
 
 	//activate();
     }
