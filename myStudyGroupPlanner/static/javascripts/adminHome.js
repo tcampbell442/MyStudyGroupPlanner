@@ -12,8 +12,13 @@
      */
     function AdminHomeController($location, $scope, Authentication, $http) {
 	var vm = this;
-	vm.selectedStudyLocation = null;
-	vm.studyLocations = [];
+	vm.selectedBuilding = null;
+	vm.selectedBuildingID = null;
+	vm.selectedRoom = null;
+	vm.buildingStatus = null;
+	vm.roomStatus = null;
+	vm.buildings = [];
+	vm.rooms = [];
 
 	vm.tab = 1;
 
@@ -27,6 +32,96 @@
 	vm.isSelected = function(checkTab){
 	    return vm.tab === checkTab;
 	}
+
+	vm.updateBuilding = function() {
+
+	vm.rooms = null;
+
+		if(vm.selectedBuilding != "addBuilding"){
+			document.getElementById("newBuilding").style.visibility = "hidden";
+			document.getElementById("makeBuilding").style.visibility = "hidden";
+		 for(var i = 0; i < vm.buildings.length; i++){
+		 	
+			if(vm.buildings[i].name == vm.selectedBuilding){
+				vm.selectedBuildingID =vm.buildings[i].id;
+		 	}
+		 }
+
+		$http({method: 'GET',
+		       url: '/api/building/room/'
+		      }).then(function(response){
+			  vm.rooms = response.data;
+		      },
+			  function(response){
+			   });
+		}else if (vm.selectedBuilding == "addBuilding"){
+			document.getElementById("newBuilding").style.visibility = "visible";
+			document.getElementById("makeBuilding").style.visibility = "visible";
+		}
+
+
+	}
+
+	vm.updateRoom = function(){
+		if (vm.selectedRoom == "addRoom"){
+			document.getElementById("newRoom").style.visibility = "visible";
+			document.getElementById("makeRoom").style.visibility = "visible";
+
+		}else{
+			document.getElementById("newRoom").style.visibility = "hidden";
+			document.getElementById("makeRoom").style.visibility = "hidden";
+
+		}
+	}
+	
+	vm.makeBuilding = function(){
+		vm.buildingAbrv = vm.newBuilding.substring(0,3);
+		$http({method: 'POST',
+		url: '/api/building/',
+		data: {
+			name: vm.newBuilding,
+			abrv: vm.buildingAbrv
+			}
+		})
+		.then(function(response){
+			alert("building Created");
+			location.reload();
+			// vm.buildingStatus = "BuildingCreated";
+		},
+		function(response){
+			// vm.buildingStatus = "Failed to create building.";
+			alert("Failed to create building");
+		});
+	}
+
+
+	vm.makeRoom = function(){
+
+		$http({method: 'POST',
+		url: '/api/building/room/',
+		data: {
+			room_num: vm.newRoom,
+			building: vm.selectedBuildingID
+						}
+		})
+		.then(function(response){
+			alert("Room Created");
+			location.reload();
+			// vm.roomStatus = "Room Created";
+		},
+		function(response){
+			alert("Failed to create Room");
+			// vm.roomStatus = "Failed to create Room.";
+		});
+	}
+
+	$http({method: 'GET',
+	       url: '/api/building/'
+	      }).then(function(response){
+		  vm.buildings = response.data;
+	      },
+		  function(response){
+		   });
 
 	vm.openReportDetail = function(reportID,reporter,reportee,comment){
 		$("#reportViewModal").modal("show");

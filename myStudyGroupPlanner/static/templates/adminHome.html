@@ -65,31 +65,30 @@
   </div>
 
   <div ng-show="vm.isSelected(2)">
-    <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Building
-	<span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-	<li ng-repeat="building in vm.StudyLocation">{{building["name"]}}</li>
-      </ul>
-    </div>
+<div>Building: <select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
+        <option value="" disabled selected hidden>Buildings</option>
+        <option ng-repeat="building in vm.buildings">{{building["name"]}}</option>
+        <option value="addBuilding">Add New Building</option>
+      </select>
+       <input id= "newBuilding" type="textbox" ng-model="vm.newBuilding" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
+       <button id = "makeBuilding"ng-click="vm.makeBuilding()" style="visibility: hidden;">add Building</button>
+      </div>
 
-    <div>
-      <ul ng-repeat="building in vm.studyLocations">
-	<li>{{building["name"]}}</li>
-      </ul>
-    </div>
+  <div> {{vm.buildingStatus}}</div>
+  <div> {{vm.roomStatus}}</div>
 
-    <div> Building:
-      <input type="text" ng-model="vm.studyLocation.building" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
-    </div>
+      <div>Room Number: <select ng-model="vm.selectedRoom" ng-change="vm.updateRoom()" id="roomSelect">
+        <option value="" disabled selected hidden>Rooms</option>
+        <option ng-repeat="room in vm.rooms | filter:vm.selectedBuildingID">{{room.room_num}}</option>
+        <option value="addRoom">Add New Room</option>
+      </select>
+      <input id= "newRoom" type="textbox" ng-model="vm.newRoom" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
 
-    <div> Room Number:
-      <input type="text" ng-model="vm.studyLocation.roomNum" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
-    </div>
+      <button id = "makeRoom" ng-click="vm.makeRoom()" style="visibility: hidden;">add Room</button>
+      </div>
 
     <div> Max Capacity:
-      <input type="text" ng-model="vm.studyLocation.maxCapacity" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
+      <input id = "maxCapacity" type="text" ng-model="vm.maxCapacity" style="height:26px; margin-left:5px; padding-left:3px;"></textarea>
     </div>
   </div>
 
