@@ -23,6 +23,11 @@
       date : ""
     }
 
+    vm.chatFields = {
+      message: ""
+    }
+
+    vm.messages = [];
 	vm.date = new Date();
     vm.msgpUserAll = {};
 
@@ -63,6 +68,32 @@
   			vm.status = "Failed to submit report.";
   		});
   	}
+
+    $http({method: 'GET',
+       url: '/api/chat/'})
+       .then(function(response){
+         vm.messages = response.data;
+       },
+       function(response){
+     });
+
+    vm.sendMessage = function()
+    {
+      var user = Authentication.getAuthenticatedAccount();
+
+      $http({method: 'POST',
+      url: '/api/chat/',
+      data: {
+        message: vm.chatFields.message,
+        }
+      })
+      .then(function(response){
+        vm.status = "Report submitted";
+      },
+      function(response){
+        vm.status = "Failed to submit report.";
+      });
+    }
 
   }
 

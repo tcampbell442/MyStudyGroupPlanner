@@ -172,9 +172,27 @@ td{
   margin: 10px;
 }
 
-.chatBoard{
-  height:400px;
+.chat{
+  height:330px;
   width:600px;
   border:3px solid black;
-  overflow-y:scroll;
+  overflow-y: scroll;
+}
+
+.chatBoard{
+  height: 400px;
+  width:600px;
+}
+
+#comments{
+  position: absolute;
+  top: 400px;
+  width: 500px;
+  height: 50px;
+}
+
+#subMsg{
+  position:absolute;
+  top: 410px;
+  left: 525px;
 }

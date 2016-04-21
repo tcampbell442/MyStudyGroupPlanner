@@ -5,7 +5,18 @@
 <div class="member">
   <h3>GroupName01</h3>
   <div class="chatBoard">
-    placeholder for chat board
+    <div class="chat">
+  <div ng-repeat="msg in vm.messages">
+    <p>{{msg.userId}}: {{msg.message}}</p>
+    <p>{{msg.dateTime}}</p>
+  </div>
+  <form role="form">
+    <textarea name="comments" id="comments" ng-model="vm.chatFields.message">
+    Type a message....
+    </textarea>
+    <button id="subMsg" type="submit" class="btn btn-default" ng-click="vm.sendMessage()">Send</button>
+</form>
+</div>
   </div>
   <div class="memberEvents">
     <div class="calendar">
