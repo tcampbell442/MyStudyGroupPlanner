@@ -5,4 +5,4 @@ from authentication.models import Account
 class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
-        field = ('reporter','comments','reportee','date_submitted')
+        field = ('reporter','reportee','comments','date_submitted')
