@@ -7,9 +7,10 @@ from rest_framework_nested import routers
 
 from authentication.views import AccountViewSet, LoginView, LogoutView
 from building.views import RoomList, RoomDetail, BuildingList, BuildingDetail
-from group.views import GroupList, GroupDetail, UserList, UserDetail
+from group.views import GroupList, GroupDetail
 from meeting.views import MeetingList, MeetingDetail
 from report.views import ReportList, ReportDetail
+from msgpUser.views import MSGPUserList, MSGPUserDetail
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
@@ -30,8 +31,8 @@ urlpatterns = patterns(
 	url(r'^api/meeting/$', MeetingList.as_view(), name='meetingList'),
 	url(r'^api/meeting/(?P<pk>[0-9]+)/$', MeetingDetail.as_view(), name='meetingDetail'),
 
-	url(r'^api/group/user/$', UserList.as_view(), name='userList'),
-        url(r'^api/group/user/(?P<pk>[0-9]+)/$', UserDetail.as_view(), name='userDetail'),
+	url(r'^api/msgpUser/$', MSGPUserList.as_view(), name='msgpUserList'),
+	url(r'^api/msgpUser/(?P<pk>[0-9]+)/$', MSGPUserDetail.as_view(), name='msgpUserDetail'),
 
 	#url(r'^api/account/$', AccountList.as_view(), name='accountList'),
 
@@ -43,5 +44,5 @@ urlpatterns = patterns(
     url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
     url(r'^admin/', include(admin.site.urls)),
     #remove this to see your api calls printout on browser
-    #url('^.*$', IndexView.as_view(), name='index'),
+    url('^.*$', IndexView.as_view(), name='index'),
 )

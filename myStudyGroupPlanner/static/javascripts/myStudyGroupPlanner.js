@@ -7,8 +7,7 @@
       'myStudyGroupPlanner.authentication',
       'myStudyGroupPlanner.config',
       'myStudyGroupPlanner.layout',
-      'pickadate',
-      'irontec.simpleChat'
+      'pickadate'
     ]);
 
   angular

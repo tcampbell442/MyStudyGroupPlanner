@@ -1,28 +1,19 @@
 from rest_framework import serializers
-from group.models import Group, User
-#from authentication.serializers import AccountSerializer
+from group.models import Group
 
-class UserSerializer(serializers.ModelSerializer):
-	class Meta:	
-		model = User
-		field = ('id', 'email', 'username',
-			'first_name', 'last_name', 'tagline',)
+
 
 class GroupSerializer(serializers.ModelSerializer):
 
-	# ADDED THIS LINE FOR GROUP FOREIGN KEY RELATIONSHIP
-	#users = AccountSerializer(many=True, read_only=True, required=False)
-	users = UserSerializer(many=True, read_only=True)
 
 	class Meta:
 		model = Group
-		field = ('subject', 
+		field = ('groupName',
+				 'subject', 
 				 'className', 
 				 'section', 
 				 'groupOwner', 
 				 'memberCount', 
-				 'totalMembersAllowed', 
-				 'access',
-				 'users',)
+				 'totalMembersAllowed')
 		
 		

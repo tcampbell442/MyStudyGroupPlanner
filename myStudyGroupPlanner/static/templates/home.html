@@ -29,7 +29,7 @@
 						<option value="" disabled selected hidden>Section</option>
 						<option ng-repeat="section in vm.sections">{{section}}</option>
 					</select></div>
-					<div><h3><button ng-click="vm.showSearchResults=true" class="btn btn-primary btn-sm"> Search </button></h3></div>
+					<div><h3><button ng-click="vm.searchGroups()" class="btn btn-primary btn-sm"> Search </button></h3></div>
 				</center>
 			</div>
 		</div>
@@ -77,7 +77,7 @@
 					<th># Members</th>
 					<th>Type</th>
 				</tr>
-				<tr ng-repeat="group in vm.currentGroups | filter:vm.selectedClass | filter:vm.selectedSubject | filter:vm.selectedSection | filter:vm.selectedOpen" style="border:1px solid black;">
+				<tr ng-repeat="group in vm.allGroups | filter:vm.selectedClass | filter:vm.selectedSubject | filter:vm.selectedSection" style="border:1px solid black;">
 					<td>{{group["id"]}}</td>
 					<td>{{group["groupName"]}}</td>
 					<td>{{group["groupOwner"]}}</td>
@@ -95,8 +95,8 @@
 		<div class="currentGrps">
 			<h3>My Groups</h3>
 
-			<ul ng-repeat="group in vm.currentGroups">
-				<li><a href="/groupMember">{{group["groupName"]}}</a></li>
+			<ul ng-repeat="group in vm.currentGroups | filter:{msgpUserId:vm.thisUser.id}">
+				<li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
 			</ul>
 
 

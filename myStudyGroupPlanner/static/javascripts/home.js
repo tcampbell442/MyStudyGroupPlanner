@@ -1,6 +1,6 @@
 /**
 * Home controller
-* @namespace myStudyGroupPlanner.authentication.controllers
+*
 */
 (function () {
   'use strict';
@@ -16,15 +16,19 @@
   */
   function HomeController($location, $scope, Authentication, $http) {
     var vm = this;
+    
+    vm.thisUser = Authentication.getAuthenticatedAccount();
 
 	vm.date = new Date();
 	vm.status = "";
+	vm.currentGroups = [];
+	vm.allGroups = [];
+	
 
 	/** search parameters/filters */
 	vm.selectedSubject = "";
 	vm.selectedClass = "";
 	vm.selectedSection = "";
-	vm.selectedOpenOnly = "";
 
 	/** Variable used to track activated tab */
     vm.tab = 1;
@@ -39,8 +43,7 @@
     	groupSection: "",
     	groupMaxMembers: 30
     }
-    /** Join Private Group Tab variables */
-    vm.privateCodeToSubmit = 0;
+
 
 	/** Hardcoded Search tab data.  CHANGE TO DJANGO MODEL DATA */
 	vm.selectedSubject = "";
@@ -50,16 +53,7 @@
 	vm.selectedSection = "";
 	vm.sections = ["001", "002", "003", "004"];
 
-
-	/**  Get groups DJANGO MODEL DATA --- ***MOVE TO A FUNCTION*** */
-	$http({method: 'GET',
-		url: '/api/group/'})
-		.then(function(response){
-			vm.currentGroups = response.data;
-		},
-		function(response){
-			/**vm.status = "failed";*/
-	});
+	
 	/**  Hardcoded Upcoming Meetings tab data.  CHANGE TO DJANGO MODEL DATA */
 	vm.calendarDate = "March 5";
 	vm.currentMeetings = [["MeetingName1", "GroupName1", "Time 7:00pm to 12:00am", "Location: RLC"], ["MeetingName2", "GroupName3", "Time 6:00pm to 9:00pm", "Location: Sherman 151"]];
@@ -72,11 +66,11 @@
 	vm.isSelected = function(checkTab) {
 		return vm.tab === checkTab;
 	}
-	/** Create New Group with user as the group owner */
-	vm.createGroup = function() {
-
-		var user = Authentication.getAuthenticatedAccount();
-
+	/** Create New Group with user as the group owner.  Also when first POST response 
+	    is received it calls a second POST to create new msgpUser which is USER-GROUP table */
+	vm.createGroup = function() {		
+		
+		/** CREATE NEW GROUP */
 		$http({method: 'POST',
 		url: '/api/group/',
 		data: {
@@ -84,34 +78,80 @@
 			subject: vm.groupFields.groupSubject,
 			className: vm.groupFields.groupClass,
 			section: vm.groupFields.groupSection,
-			groupOwner: user.username,
+			groupOwner: vm.thisUser.username,
 			memberCount: 1,
 			totalMembersAllowed: vm.groupFields.groupMaxMembers
 			}
 		})
 		.then(function(response){
 			vm.status = "Group Created";
+			
+			/** CREATE NEW USER-GROUP */
+			$http({method: 'POST',
+			url: '/api/msgpUser/',
+			data: {
+				msgpUserId: vm.thisUser.id,
+				msgpUsername: vm.thisUser.username,
+				msgpGroupId: response.data.id,
+				msgpGroupName: response.data.groupName
+				}
+			})
+			.then(function(response2){		
+				/**vm.status = "";*/
+				vm.getGroups();
+			},
+			function(response2){
+				/**vm.status = "";*/
+			});
+			
 		},
 		function(response){
 			vm.status = "Failed to create group.";
+		});
+
+	}
+	
+	/**  Get groups specific to current user */
+	vm.getGroups = function() {
+	
+		/** Currently no filtering django side, GETS all objects so angular can filter client side */
+		$http({method: 'GET',
+			url: '/api/msgpUser/'})
+			.then(function(response){
+			/** response is a msgpUser json object, contains user AND group data */
+				vm.currentGroups = response.data;
+			},
+			function(response){
+				/**vm.status = "failed";*/
 		});
 	}
-	/** Requests all groups from database.
-		ALL GROUPS ALREADY CONTAINED IN vm.currentGroups
-		FOR NOW FILTERING IS DONE ON FRONT END WITH ANGULARJS
-		TO SHOW ONLY RELEVAVENT GROUPS */
-	/**vm.searchGroups = function() {
+
+
+	vm.searchGroups = function() {
+		vm.showSearchResults = true;
+		vm.getAllGroups();
+	}
+	
+	/**  Get groups specific to current user */
+	vm.getAllGroups = function() {
+	
+		/** Currently no filtering django side, GETS all objects so angular can filter client side */
 		$http({method: 'GET',
-			   url: '/api/group/'})
-		.then(function(response){
-			vm.currentGroups = response.data;
-		},
-		function(response){
-			vm.status = "Failed to create group.";
+			url: '/api/group/'})
+			.then(function(response){
+			/** response is a msgpUser json object, contains user AND group data */
+				vm.allGroups = response.data;
+			},
+			function(response){
+				/**vm.status = "failed";*/
 		});
-	}*/
+	}	
+	
 
 	/**  */
+
+	/** Call getGroups() helper function one time initially to display user's current groups */
+	vm.getGroups();
 
   }
 })();

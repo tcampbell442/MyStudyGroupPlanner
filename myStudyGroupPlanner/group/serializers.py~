@@ -1,21 +1,21 @@
 from rest_framework import serializers
 from group.models import Group
-#from authentication.serializers import AccountSerializer
+
+#from msgpUser.serializers import MSGPUserSerializer
+
 
 class GroupSerializer(serializers.ModelSerializer):
 
-	# ADDED THIS LINE FOR GROUP FOREIGN KEY RELATIONSHIP
-	#users = AccountSerializer(many=True, read_only=True)
+	#users = MSGPUserSerializer(many=True, read_only=False)
 
 	class Meta:
 		model = Group
-		field = ('subject', 
+		field = ('groupName',
+				 'subject', 
 				 'className', 
 				 'section', 
 				 'groupOwner', 
 				 'memberCount', 
-				 'totalMembersAllowed', 
-				 'access',
-				 'users')
+				 'totalMembersAllowed')
 		
 		

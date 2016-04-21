@@ -24,7 +24,7 @@
       controller: 'HomeController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/home.html'
-    }).when('/groupMember',{
+    }).when('/groupMember/:groupId',{
       controller: 'GroupMemberController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/groupMember.html'

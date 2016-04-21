@@ -42,7 +42,7 @@ class Account(AbstractBaseUser):
     updated_at = models.DateTimeField(auto_now=True)
     
     # ADDED FOREIGN KEY TO GROUP
-    groups = models.ManyToManyField(Group)
+    #groups = models.ManyToManyField(Group)
     #userGroups = models.ForeignKey(Group, related_name="groups", null=True)
 
     objects = AccountManager()

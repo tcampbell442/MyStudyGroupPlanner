@@ -9,17 +9,34 @@
     .module('myStudyGroupPlanner')
     .controller('GroupMemberController', GroupMemberController);
 
-  GroupMemberController.$inject = ['$location', '$scope', 'Authentication'];
+  GroupMemberController.$inject = ['$location', '$scope', 'Authentication', '$http', '$routeParams'];
 
   /**
   * @namespace
   */
-  function GroupMemberController($location, $scope, Authentication) {
+  function GroupMemberController($location, $scope, Authentication, $http, $routeParams) {
     var vm = this;
 
-    vm.groupName = "GroupName1";
-    vm.members = ["Siqi Lin", "Tyler Campbell", "Sean Murren", "Aparna Kaliappan"];
-    vm.meetings = [["Meeting01", "Time: 4:00pm to 8:00pm", "Location: Sherman 151"],["Meeting02", "Time: 7:00pm to 12:00am", "Location: RLC"]]
+	vm.date = new Date();
+    vm.msgpUserAll = {};
+    
+    vm.groupId = $routeParams.groupId;
+    
+    vm.getGroupsData = function() {
+    	
+    	$http({method: 'GET',
+			url: '/api/msgpUser/'})
+			.then(function(response){
+				vm.msgpUserAll = response.data;
+			},
+			function(response){
+				/**vm.status = "failed";*/
+		});
+    	
+    }
+    
+    vm.getGroupsData();
+    
   }
 
 })();
