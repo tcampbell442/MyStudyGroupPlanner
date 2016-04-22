@@ -29,10 +29,12 @@
 
     vm.messages = [];
 	vm.date = new Date();
-    vm.msgpUserAll = {};
-
+    vm.msgpUserAll = [];
+    
     vm.groupId = $routeParams.groupId;
+    vm.groupInfo = {};
 
+	/** Gets all listings in the msgpUser table that contains user-group-meetingId info */
     vm.getGroupsData = function() {
 
     	$http({method: 'GET',
@@ -47,6 +49,23 @@
     }
 
     vm.getGroupsData();
+
+	/** Gets this specific group's info from group table */
+	vm.getGroupInfo = function() {
+
+    	$http({method: 'GET',
+			url: '/api/group/' + vm.groupId + '/'})
+			.then(function(response){
+				vm.groupInfo = response.data;
+			},
+			function(response){
+				/**vm.status = "failed";*/
+		});
+
+    }
+
+    vm.getGroupInfo();
+
 
     vm.reportUser = function()
     {

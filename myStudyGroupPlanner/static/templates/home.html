@@ -67,23 +67,31 @@
 
 		<!--SEARCH RESULTS-->
 		<div ng-show="vm.isSelected(1) && vm.showSearchResults===true">
-			<h3>Search results</h3>
+			<h2>Search results</h2>
 
 			<table>
 				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Owner</th>
-					<th># Members</th>
-					<th>Type</th>
+					<th><a href="" ng-click="vm.setOrderBy('groupName')">Name</a></th>
+					<th><a href="" ng-click="vm.setOrderBy('subject')">Subject</a></th>
+					<th><a href="" ng-click="vm.setOrderBy('className')">Class</a></th>
+					<th><a href="" ng-click="vm.setOrderBy('section')">Section</a></th>
+					<th><a href="" ng-click="vm.setOrderBy('groupOwner')">Owner</a></th>
+					<th><a href="" ng-click="vm.setOrderBy('memberCount')"># Members</a></th>
+					<th><a href="" ng-click="vm.setOrderBy('totalMembersAllowed')">Capacity</a></th>
+					<th>Action</th>
 				</tr>
-				<tr ng-repeat="group in vm.allGroups | filter:vm.selectedClass | filter:vm.selectedSubject | filter:vm.selectedSection" style="border:1px solid black;">
-					<td>{{group["id"]}}</td>
+				<tr ng-repeat="group in vm.allGroups | filter:vm.selectedClass | filter:vm.selectedSubject | filter:{section:vm.selectedSection} | orderBy:vm.orderResultsBy" style="border:1px solid black;">
 					<td>{{group["groupName"]}}</td>
+					<td>{{group["subject"]}}</td>
+					<td>{{group["className"]}}</td>
+					<td>{{group["section"]}}</td>
 					<td>{{group["groupOwner"]}}</td>
 					<td>{{group["memberCount"]}}</td>
-					<td>{{group["access"]}}</td>
-					<td><button > Join </button></td>
+					<td>{{group["totalMembersAllowed"]}}</td>
+					<td>
+						<button ng-click="vm.joinGroup(group['id'], group['groupName'])" ng-hide="vm.checkIfInGroup(group['id'])"> Join Group </button>
+						<div ng-show="vm.checkIfInGroup(group['id'])"> *joined* </div>
+					</td>
 				</tr>
 			</table>
 			<div align="center"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-md"> New Search </button></div>
@@ -95,7 +103,7 @@
 		<div class="currentGrps">
 			<h3>My Groups</h3>
 
-			<ul ng-repeat="group in vm.currentGroups | filter:{msgpUserId:vm.thisUser.id}">
+			<ul ng-repeat="group in vm.currentGroups | filter:{msgpUserId:vm.thisUser.id}" style="list-style: none; padding:0px;">
 				<li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
 			</ul>
 

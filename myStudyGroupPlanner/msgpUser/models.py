@@ -1,6 +1,5 @@
 from django.db import models
-#from group.models import Group
-#from report.models import Report
+
 
 class MSGPUser(models.Model):
 
@@ -8,6 +7,8 @@ class MSGPUser(models.Model):
 	msgpUsername = models.CharField(max_length=40)
 	msgpGroupId = models.IntegerField()
 	msgpGroupName = models.CharField(max_length=40)
+	msgpMeetingId = models.IntegerField(null=True)
 	
-	class Meta:	
-		unique_together = (("msgpUserId", "msgpGroupId"))
+	#class Meta:	
+		# this is supposed to make both those fields primary keys
+		#unique_together = (("msgpUserId", "msgpGroupId"))              # removed this after adding meetingId

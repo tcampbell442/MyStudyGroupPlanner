@@ -24,11 +24,17 @@
 	vm.currentGroups = [];
 	vm.allGroups = [];
 	
+	/** Used to store ids of groups from group table current user is a part of*/
+	vm.userGroups = [];
+	
 
 	/** search parameters/filters */
 	vm.selectedSubject = "";
 	vm.selectedClass = "";
 	vm.selectedSection = "";
+	
+	/** order search results by this variable.  Set when clicking on table column titles */
+	vm.orderResultsBy = "";
 
 	/** Variable used to track activated tab */
     vm.tab = 1;
@@ -50,8 +56,8 @@
 	vm.subjects = ["Art", "Business", "English", "Geography", "History", "Math", "Music", "Science"];
 	vm.selectedClass = "";
 	vm.classes = ["CMSC101", "CMSC102", "CMSC201", "CMSC202", "CMSC313", "CMSC331", "CMSC447"];
-	vm.selectedSection = "";
-	vm.sections = ["001", "002", "003", "004"];
+	vm.selectedSection;
+	vm.sections = [1,2,3,4];
 
 	
 	/**  Hardcoded Upcoming Meetings tab data.  CHANGE TO DJANGO MODEL DATA */
@@ -85,8 +91,9 @@
 		})
 		.then(function(response){
 			vm.status = "Group Created";
+			vm.userGroups.push(response.data.id);
 			
-			/** CREATE NEW USER-GROUP */
+			/** CREATE NEW USER-GROUP-REPORT ENTRY (msgpUser table) */
 			$http({method: 'POST',
 			url: '/api/msgpUser/',
 			data: {
@@ -148,10 +155,69 @@
 	}	
 	
 
-	/**  */
+	/** sets how search results should be sorted.  Not sorted by default right now... */
+	vm.setOrderBy = function(column) {
+		if (vm.orderResultsBy == column)
+			vm.orderResultsBy = '-' + column;
+		else
+			vm.orderResultsBy = column;
+	}
+	
+	/** check if user in a specific group by checking msgpUser table.  Return list of ids from group table */
+	/** Generates list of group ids user is a part of.  This list is used in group search join button functionality */ 
+	vm.getUserGroups = function() {
+			
+		$http({method: 'GET',
+			url: '/api/msgpUser/'})
+			.then(function(response){
+				for (var i = 0; i < response.data.length; i++) {
+					/** save groupId to userGroups if not already added*/
+					if (response.data[i].msgpUserId == vm.thisUser.id) {
+						if (vm.userGroups.indexOf(response.data[i].msgpGroupId) == -1)
+							vm.userGroups.push(response.data[i].msgpGroupId);	
+					}	
+				}
+			},
+			function(response){
+				
+		});
+	}
+	
+	/** Check if group id is one user has joined */
+	vm.checkIfInGroup = function(groupId) {
+		if (vm.userGroups.indexOf(groupId) > -1)
+			return true;
+		else
+			return false;
+	}
+	
+	
+	/** Check if group id is one user has joined */
+	vm.joinGroup = function(groupId, groupName) {
+		
+		$http({method: 'POST',
+			url: '/api/msgpUser/',
+			data: {
+				msgpUserId: vm.thisUser.id,
+				msgpUsername: vm.thisUser.username,
+				msgpGroupId: groupId,
+				msgpGroupName: groupName
+				}
+			})
+			.then(function(response2){		
+				vm.getGroups();
+				vm.userGroups.push(groupId);
+			},
+			function(response2){
+				
+			});
+		
+	}
+	
 
 	/** Call getGroups() helper function one time initially to display user's current groups */
 	vm.getGroups();
-
+	/** Call this to get list of group ids from group table user is a part of */
+	vm.getUserGroups();
   }
 })();
