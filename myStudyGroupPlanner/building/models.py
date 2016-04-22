@@ -13,8 +13,11 @@ DAYS_OF_WEEK = (
 
 
 class Building(models.Model):
-    name= models.CharField(max_length=16)
-    abrv = models.CharField(max_length=3)
+    name= models.CharField(max_length=32)
+    abrv = models.CharField(max_length=5)
+
+    def __unicode__(self):
+	return self.abrv
 
 class Room(models.Model):
     building = models.ForeignKey(Building, related_name="rooms", null=True)	
@@ -22,6 +25,9 @@ class Room(models.Model):
     room_num = models.CharField(max_length=3, blank=True)
     #hours = models.ForeignKey(Hours, on_delete=models.CASCADE, related_name='hours', blank=True, null=True)
     #days = models.ForeignKey(Day, on_delete=models.CASCADE)
+
+    def __unicode__(self):
+	return room_num
 
 class Hour(models.Model):
     room = models.ForeignKey(Room, related_name="hours", null=True)
