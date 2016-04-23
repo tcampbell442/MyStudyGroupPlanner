@@ -248,26 +248,26 @@
 						
 				} /** END if (meetingId!=null) */
 				
-				else {
-					/** delete msgpUser table entry IF ASSOCIATED WITH THIS GROUP ONLY*/
-					if (vm.msgpUserAll[i].msgpGroupId == vm.groupId) {
-					
-						/** clear msgpGroupId so another DELETE request won't happen on it 
-							below in group DELETE request's .then function */
-						vm.msgpUserAll[i].msgpGroupId = null;
-					
-						$http({method: 'DELETE',
-				  		   url: '/api/msgpUser/' + vm.msgpUserAll[i].id + '/',
-				  		})
-				  		.then(function(deleteMSGPUserResponse1){
-				  			
-				  		},
-				  		function(deleteMSGPUserResponse1){
-				  			/** request failed */
-				  			vm.leaveGroupSuccess = false;
-				  		});
-			  		}
-		  		} /** END else */
+				
+				/** delete msgpUser table entry IF ASSOCIATED WITH THIS GROUP ONLY*/
+				if (vm.msgpUserAll[i].msgpGroupId == vm.groupId) {
+				
+					/** clear msgpGroupId so another DELETE request won't happen on it 
+						below in group DELETE request's .then function */
+					vm.msgpUserAll[i].msgpGroupId = null;
+				
+					$http({method: 'DELETE',
+			  		   url: '/api/msgpUser/' + vm.msgpUserAll[i].id + '/',
+			  		})
+			  		.then(function(deleteMSGPUserResponse1){
+			  			
+			  		},
+			  		function(deleteMSGPUserResponse1){
+			  			/** request failed */
+			  			vm.leaveGroupSuccess = false;
+			  		});
+		  		}
+		  		
 		  	} /** END if (msgpUser.Id==vm.thisUser.id) */
   		} /** END for loop */
   		
