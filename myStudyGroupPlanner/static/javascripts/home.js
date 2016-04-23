@@ -35,6 +35,8 @@
 	
 	/** order search results by this variable.  Set when clicking on table column titles */
 	vm.orderResultsBy = "";
+	/** group availability in group search results. */
+	vm.groupAvailability = "";
 
 	/** Variable used to track activated tab */
     vm.tab = 1;
@@ -68,10 +70,12 @@
 	vm.selectTab = function(setTab) {
 		vm.tab = setTab;
 	}
+	
 	/** Checks if activated tab is equal to tab passed in as parameter */
 	vm.isSelected = function(checkTab) {
 		return vm.tab === checkTab;
 	}
+	
 	/** Create New Group with user as the group owner.  Also when first POST response 
 	    is received it calls a second POST to create new msgpUser which is USER-GROUP table */
 	vm.createGroup = function() {		
@@ -118,14 +122,14 @@
 
 	}
 	
-	/**  Get groups specific to current user */
+	/**  Get all user-groups info */
 	vm.getGroups = function() {
 	
 		/** Currently no filtering django side, GETS all objects so angular can filter client side */
 		$http({method: 'GET',
 			url: '/api/msgpUser/'})
 			.then(function(response){
-			/** response is a msgpUser json object, contains user AND group data */
+			/** response is a list of msgpUser json objects, contains user AND group data */
 				vm.currentGroups = response.data;
 			},
 			function(response){
@@ -133,24 +137,31 @@
 		});
 	}
 
-
+	/** This runs when you click search button in group search tab */
 	vm.searchGroups = function() {
 		vm.showSearchResults = true;
 		vm.getAllGroups();
 	}
 	
-	/**  Get groups specific to current user */
+	/** This runs when you click new search button in group search results */
+	vm.resetGroupSearch = function() {
+		vm.showSearchResults = false;
+		vm.selectedSubject = "";
+		vm.selectedClass = "";
+		vm.selectedSection = "";
+	}	
+	
+	/**  Get group table entries */
 	vm.getAllGroups = function() {
 	
-		/** Currently no filtering django side, GETS all objects so angular can filter client side */
+		/** GET request all objects from group table */
 		$http({method: 'GET',
 			url: '/api/group/'})
 			.then(function(response){
-			/** response is a msgpUser json object, contains user AND group data */
 				vm.allGroups = response.data;
 			},
 			function(response){
-				/**vm.status = "failed";*/
+				
 		});
 	}	
 	
@@ -183,34 +194,70 @@
 		});
 	}
 	
-	/** Check if group id is one user has joined */
-	vm.checkIfInGroup = function(groupId) {
-		if (vm.userGroups.indexOf(groupId) > -1)
+	/** Check if group id is one user has joined -- ALSO CHECKS IF GROUP IS NOT FULL */
+	vm.checkIfAvailable = function(groupId, groupMemberCount, groupMaxMembers) {
+		if (vm.userGroups.indexOf(groupId) > -1) {
+			vm.groupAvailability = "IN GROUP";
 			return true;
-		else
+		}
+		else if (groupMemberCount >= groupMaxMembers) {
+			vm.groupAvailability = "FULL";
+			return true;
+		}
+		else {
 			return false;
+		}
 	}
 	
 	
 	/** Check if group id is one user has joined */
 	vm.joinGroup = function(groupId, groupName) {
 		
-		$http({method: 'POST',
-			url: '/api/msgpUser/',
-			data: {
-				msgpUserId: vm.thisUser.id,
-				msgpUsername: vm.thisUser.username,
-				msgpGroupId: groupId,
-				msgpGroupName: groupName
-				}
-			})
-			.then(function(response2){		
-				vm.getGroups();
-				vm.userGroups.push(groupId);
-			},
-			function(response2){
+		$http({method: 'GET',
+					url: '/api/group/' + groupId + '/',
+				})
+				.then(function(getResponse){
+					
+					if (getResponse.data.memberCount < getResponse.data.totalMembersAllowed) {
+					
+						$http({method: 'POST',
+							url: '/api/msgpUser/',
+							data: {
+								msgpUserId: vm.thisUser.id,
+								msgpUsername: vm.thisUser.username,
+								msgpGroupId: groupId,
+								msgpGroupName: groupName
+							}
+						})
+						.then(function(response2){		
+							vm.getGroups();
+							vm.userGroups.push(groupId);
 				
-			});
+							/** update group's memberCount */		
+							$http({method: 'PATCH',
+								url: '/api/group/' + groupId + '/',
+								data: {
+									memberCount: getResponse.data.memberCount + 1
+									}
+								})
+								.then(function(patchResponse){
+									/** update list of groups being used to filter group search */
+									vm.getAllGroups();
+								},
+								function(patchResponse){
+									/** request failed */
+								});			
+				
+						},
+						function(response2){
+							/** request failed */
+						});
+					
+					} /** END IF */
+				},
+				function(getResponse){
+					/** request failed */
+				});
 		
 	}
 	

@@ -71,6 +71,11 @@ select {
   margin: 8px 10px;
 }
 
+.homeCalendar {
+  border: 3px solid black;
+  padding: 10px;
+}
+
 .creatorCalendar, .creatorUpcoming_events{
   height:250px;
   width:400px;
@@ -161,7 +166,10 @@ td{
 
 .currentGrps{
   border: 3px solid black;
-  padding:10px
+  padding: 10px;
+  height: 150px;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .button{
@@ -182,6 +190,13 @@ td{
 .chatBoard{
   height: 400px;
   width:600px;
+}
+
+.groupSearchDetail{
+  padding: 10px;
+  height: 450px;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 #comments{

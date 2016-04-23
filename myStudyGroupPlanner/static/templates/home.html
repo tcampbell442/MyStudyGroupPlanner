@@ -66,7 +66,7 @@
 		</div>
 
 		<!--SEARCH RESULTS-->
-		<div ng-show="vm.isSelected(1) && vm.showSearchResults===true">
+		<div class="groupSearchDetail" ng-show="vm.isSelected(1) && vm.showSearchResults===true">
 			<h2>Search results</h2>
 
 			<table>
@@ -89,12 +89,12 @@
 					<td>{{group["memberCount"]}}</td>
 					<td>{{group["totalMembersAllowed"]}}</td>
 					<td>
-						<button ng-click="vm.joinGroup(group['id'], group['groupName'])" ng-hide="vm.checkIfInGroup(group['id'])"> Join Group </button>
-						<div ng-show="vm.checkIfInGroup(group['id'])"> *joined* </div>
+						<button ng-click="vm.joinGroup(group['id'], group['groupName'])" ng-hide="vm.checkIfAvailable(group['id'], group['memberCount'], group['totalMembersAllowed'])"> <strong>Join Group</strong> </button>
+						<div ng-show="vm.checkIfAvailable(group['id'], group['memberCount'], group['totalMembersAllowed'])"> <strong>{{vm.groupAvailability}}</strong> </div>
 					</td>
 				</tr>
 			</table>
-			<div align="center"><button ng-click="vm.showSearchResults=false" class="btn btn-primary btn-md"> New Search </button></div>
+			<div align="center"><button ng-click="vm.resetGroupSearch()" class="btn btn-primary btn-md"> New Search </button></div>
 		</div>
 	</div>
 	<!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->
@@ -103,14 +103,14 @@
 		<div class="currentGrps">
 			<h3>My Groups</h3>
 
-			<ul ng-repeat="group in vm.currentGroups | filter:{msgpUserId:vm.thisUser.id}" style="list-style: none; padding:0px;">
+			<ul ng-repeat="group in vm.currentGroups | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}" style="list-style: none; padding:0px;">
 				<li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
 			</ul>
 
 
 		</div class="homeCalendar">
 		<!--CALENDAR-->
-		<div class="currentGrps">
+		<div class="homeCalendar">
 
 			<div pickadate ng-model="vm.date" format="mm/dd/yyyy"></div>
 			<!-- The below line will be commented out, just here now to show that it's working-->

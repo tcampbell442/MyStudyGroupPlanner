@@ -7,11 +7,11 @@ class MeetingSerializer(serializers.ModelSerializer):
 
     class Meta:
 	model = Meeting
-	field = ('id', 
-			 'name', 
-			 'start_date',
-			 'end_date',
+	field = ('title',
+			 'building', 
+			 'room_num',
 			 'start_time',
 			 'end_time',
 			 'users_attending',
-			 'groupId')
+			 'groupId',
+			 'comment')
