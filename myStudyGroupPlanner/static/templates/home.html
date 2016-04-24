@@ -3,12 +3,12 @@
 </head>
 <!--LEFT COLUMN CONTENT: TABS-->
 <div>
-	<div class=tabs>
-		<ul class="nav nav-pills center-pills" role="tablist">
-			<li ng-class="{active:vm.isSelected(1)}">
-				<a href="/home" ng-click="vm.selectTab(1)">Search Groups</a>
-			</li>
-			<li ng-class="{active:vm.isSelected(2)}">
+  <div class=tabs>
+    <ul class="nav nav-pills center-pills" role="tablist">
+      <li ng-class="{active:vm.isSelected(1)}">
+	<a href="/home" ng-click="vm.selectTab(1)">Search Groups</a>
+      </li>
+      <li ng-class="{active:vm.isSelected(2)}">
 				<a href="/home" ng-click="vm.selectTab(2)">Create Group</a>
 			</li>
 		</ul>
@@ -29,7 +29,7 @@
 						<option value="" disabled selected hidden>Section</option>
 						<option ng-repeat="section in vm.sections">{{section}}</option>
 					</select></div>
-					<div><h3><button ng-click="vm.searchGroups()" class="btn btn-primary btn-sm"> Search </button></h3></div>
+					<div><h3><button ng-click="vm.searchGroups()" class="btn btn-success btn-sm"> Search </button></h3></div>
 				</center>
 			</div>
 		</div>
@@ -58,8 +58,8 @@
 				<input type="number" class="from-control" id="maxmbrs" ng-model="vm.groupFields.groupMaxMembers"> (Default of 30 members per group)<br>
 				<br>
 				<div class="button">
-					<button class="btn btn-primary btn-sm" ng-click="vm.selectTab(1)"> Cancel </button>
-					<button class="btn btn-primary btn-sm" ng-click="vm.createGroup()"> Create Group </button>
+					<button class="btn btn-success btn-sm" ng-click="vm.selectTab(1)"> Cancel </button>
+					<button class="btn btn-success btn-sm" ng-click="vm.createGroup()"> Create Group </button>
 					{{vm.status}}
 				</div>
 			</form>
@@ -94,7 +94,7 @@
 					</td>
 				</tr>
 			</table>
-			<div align="center"><button ng-click="vm.resetGroupSearch()" class="btn btn-primary btn-md"> New Search </button></div>
+			<div align="center"><button ng-click="vm.resetGroupSearch()" class="btn btn-success btn-md"> New Search </button></div>
 		</div>
 	</div>
 	<!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->

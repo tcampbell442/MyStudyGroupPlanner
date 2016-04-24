@@ -12,7 +12,7 @@
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #silver; /*Change rollover cell color here*/
+  background-color: silver; /*Change rollover cell color here*/
 }
 
 .navbar-brand{
@@ -25,7 +25,7 @@
 }
 
 .indexBody{
-  background-color: #f5e773
+  background-color: #dbcb48;
   /*background-image: url("weather.png");*/
 }
 .center-pills { display: inline-block; }
@@ -97,7 +97,7 @@ table{
 
 th{
   padding: 5px;
-  background-color: #2CC19A;
+  background-color: #B54626;
   color: white;
   border: 1px solid black;
 }
