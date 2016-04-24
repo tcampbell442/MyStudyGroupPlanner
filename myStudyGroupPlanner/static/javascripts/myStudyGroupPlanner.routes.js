@@ -40,6 +40,10 @@
       controller: 'GroupCreatorController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/groupCreator.html'
+    }).when('/frontPage', {
+      controller: 'frontPageController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/frontPage.html'
     }).otherwise('/home');
   }
 })();
