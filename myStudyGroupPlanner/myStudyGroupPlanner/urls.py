@@ -48,5 +48,5 @@ urlpatterns = patterns(
     url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
     url(r'^admin/', include(admin.site.urls)),
     #remove this to see your api calls printout on browser
-    #url('^.*$', IndexView.as_view(), name='index'),
+    url('^.*$', IndexView.as_view(), name='index'),
 )
