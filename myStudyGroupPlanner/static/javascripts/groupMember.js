@@ -15,6 +15,7 @@
   * @namespace
   */
   function GroupMemberController($location, $scope, Authentication, $http, $routeParams, $filter) {
+    
     var vm = this;
 
     /** Will need to know current user for chat/reports/leave group ***NOT CURRENTLY BEING USED IN CHAT/REPORTING*** */
@@ -29,10 +30,12 @@
     vm.leaveGroupStatus = "";
     /** used to check if leave group had errors */
     vm.leaveGroupSuccess = true;
+    /** used to store meeting objects for meetings group is involved with */
+	vm.currentGroupMeetings = [];
     
     
     /** GROUP CREATOR ONLY VARIABLES */
-    /** -------------------------- */
+    /** ------------------------------------ */
 	vm.isCreator = false;
 	vm.meetingCreateStatus = "";
 	
@@ -41,13 +44,14 @@
 	vm.selectedRoom ="";
 	vm.startTime = new Date();
 	vm.endTime = new Date();
+	
 	vm.meetingComments = ""; 
 	
 	vm.buildings = ["Information Technology of Engineering",
 		           "Sherman Hall","Arts and Humanities",
 		           "Biological Science"];
 	vm.rooms = ["102","202","303","505"];	
-    /** ------------------------- */
+    /** ------------------------------------ */
     
     
     vm.reportFields = {
@@ -61,7 +65,8 @@
     vm.chatFields = {
       message: ""
     }
-
+	
+	/** vm.date used to save calendar's selected date */
 	vm.date = new Date();
     /** Will contain all entries in the msgpUser table.  Used to get user and group ids and names, plus meeting ids */
     vm.msgpUserAll = [];
@@ -72,10 +77,29 @@
     /** List of user objects that belong to this group, taken from vm.msgpUserAll 
         This is used to ng-repeat through users on the groupMember page Members list*/
 	vm.groupUsers = [];
-
+	
+	
+	/**------------------------------------------*/
+	/** sets the default create meeting start/end 
+	    times                                    */
+	/**------------------------------------------*/
+	vm.setDefualtMeetingInfo = function() {
+	
+		vm.startTime.setHours(12);
+		vm.startTime.setMinutes(0);
+		vm.startTime.setSeconds(0);
+		vm.startTime.setMilliseconds(0);
+		
+		vm.endTime.setHours(12);
+		vm.endTime.setMinutes(0);
+		vm.endTime.setSeconds(0);
+		vm.endTime.setMilliseconds(0);
+	}
+	
 
 	/**------------------------------------------*/
-	/** Gets all listings in the msgpUser table that contains user-group-meetingId info */
+	/** Gets all listings in the msgpUser table 
+	    that contains user-group-meetingId info  */
 	/**------------------------------------------*/
     vm.getGroupsData = function() {
 
@@ -95,6 +119,9 @@
 				
 				/** Run function to verify user is in this group */
 				vm.checkIfUserIsMember();
+				
+				/** load meetings for current group */
+				vm.loadGroupMeetings();
 				
 				/** groupUserIds is a temporary list of ids used to ensure only 
 				    unique users added to vm.groupUsers in for loop below*/
@@ -117,7 +144,8 @@
 
 
 	/**------------------------------------------*/
-	/** Gets this specific group's info from group table */
+	/** Gets this specific group's info from 
+	    group table                              */
 	/**------------------------------------------*/
 	vm.getGroupInfo = function() {
 
@@ -137,8 +165,9 @@
     }
 
 	/**------------------------------------------*/
-	/** Looks through msgpUser table to see if user is part
-	    of this group. If not redirect to home */
+	/** Looks through msgpUser table to see if 
+	    user is part of this group. If not 
+	    redirect to home                         */
 	/**------------------------------------------*/
 	vm.checkIfUserIsMember = function() {
 	
@@ -158,8 +187,10 @@
 	
 	
 	/**------------------------------------------*/
-	/** check if user is creator -- Used to ng-hide remove button on members list
-	    Creator should not be able to remove themselves (they can leave group) */
+	/** check if user is creator -- Used to ng-hide 
+	    remove button on members list Creator should 
+	    not be able to remove themselves (they can 
+	    leave group still)                       */
 	/**------------------------------------------*/
 	vm.isUserCreator = function(userId) {
 		if (vm.isCreator == true) {
@@ -171,14 +202,15 @@
 	}
 	
 	/**------------------------------------------*/
-	/** Changes current users url to specified url */
+	/** Changes current users url to specified url*/
 	/**------------------------------------------*/
 	vm.changeUserURL = function(url) {
 		$location.path(url).replace();
 	}	
 
 	/**------------------------------------------*/
-	/** Sets vm.removeUserObj either to current user or the user creator is trying to remove */
+	/** Sets vm.removeUserObj either to current user 
+	    or the user creator is trying to remove  */
 	/**------------------------------------------*/
 	vm.setUserLeavingGroup = function(userObj) {
 		if (userObj != null)
@@ -186,7 +218,7 @@
 	}
 
 	/**------------------------------------------*/
-	/** Have specified user leave current group */
+	/** Have specified user leave current group  */
 	/**------------------------------------------*/
 	vm.leaveGroup = function() {
 		
@@ -211,10 +243,10 @@
 			  				$http({method: 'DELETE',
 					  		   url: '/api/meeting/' + meetingGetResponse.data.id + '/',
 					  		})
-					  		.then(function(deleteResponse){
+					  		.then(function(deleteMeetingResponse){
 					  			
 					  		},
-					  		function(deleteResponse){
+					  		function(deleteMeetingResponse){
 					  			/** request failed */
 					  			vm.leaveGroupSuccess = false;
 					  		});
@@ -284,10 +316,22 @@
 		  		   url: '/api/group/' + groupGetResponse.data.id + '/',
 		  		})
 		  		.then(function(deleteGroupResponse){
-		  			/** delete all msgpUser table entries associated with this now deleted group */
+		  			
+		  			/** contains list of ids of meetings associated with this group, used to
+		  			    delete them from meeting table after deleting all msgpUser related entries */
+		  			var meetingsToDelete = [];
+		  			
+		  			/** delete all msgpUser table entries associated with this now deleted group. */
 		  			for (var i = vm.msgpUserAll.length-1; i >= 0; i--) {
 		  				
 		  				if (vm.msgpUserAll[i].msgpGroupId == vm.groupId) {
+		  					
+		  					/** msgpUser table may have multiple entries with same meetingId 
+		  					    This approach is used to avoid duplicate delete attempts  */
+		  					if (vm.msgpUserAll[i].msgpMeetingId != null) {
+		  						if (meetingsToDelete.indexOf(vm.msgpUserAll[i].msgpMeetingId) <= -1)
+									meetingsToDelete.push(vm.msgpUserAll[i].msgpMeetingId);
+		  					}
 		  					
 							/** delete msgpUser table entry */
 							$http({method: 'DELETE',
@@ -301,12 +345,24 @@
 								vm.leaveGroupSuccess = false;
 							});
 		  					
-		  					/** Delete meetings associated with this group */
-		  					
-		  					
-		  					
 		  				} /** END if */
 		  			} /** END for loop */
+		  			
+		  			/** delete all meetings that were still associated with this group */
+					for (var i = 0; i < meetingsToDelete.length; i++) {
+						
+						/** delete meeting table entry */
+							$http({method: 'DELETE',
+							   url: '/api/meeting/' + meetingsToDelete[i] + '/',
+							})
+							.then(function(deleteMeetingResponse2){
+								
+							},
+							function(deleteMeetingResponse2){
+								/** request failed */
+								vm.leaveGroupSuccess = false;
+							});
+					} 
 		  			
 		  			/** redirect to homepage if no errors and user leaving is current user*/
 					if (vm.leaveGroupSuccess)
@@ -360,8 +416,48 @@
 	
 	
 	
+	
+	/** ------------------------------------------------ */
+	/** Load meetings for the current group only. 
+	    to be displayed in meetings                      */
+	/** ------------------------------------------------ */
+	vm.loadGroupMeetings = function() {
+	
+		/** temporary list of meeting ids */
+		var uniqueMeetingIds = [];
+		
+		for (var i = 0; i < vm.msgpUserAll.length; i++) {
+
+			if (vm.msgpUserAll[i].msgpMeetingId != null) {
+				
+				/** this if statement ensures same meeting is not saved multiple times.
+				    Ever user attending the meeting will have a msgpUser table entry
+				    with the same meeting id field */
+				if (uniqueMeetingIds.indexOf(vm.msgpUserAll[i].msgpMeetingId) <= -1) {
+				
+					/** get meeting info from meeting table */
+					$http({method: 'GET',
+					url: '/api/meeting/' + vm.msgpUserAll[i].msgpMeetingId + '/'})
+					.then(function(meetingResponse){
+					
+						uniqueMeetingIds.push(meetingResponse.data.id);
+						/** add meeting object to groups meetings list, to be used in meetings window */
+						vm.currentGroupMeetings.push(meetingResponse.data);
+					
+					},
+					function(meetingResponse){
+					
+					});
+				}
+			}
+		}
+	} /** END loadGroupMeetings() */	
+	
+	
+	
+	
 	/**------------------------------------------*/
-	/** Reporting POST function */
+	/** Reporting POST function                  */
 	/**------------------------------------------*/
     vm.reportUser = function()
     {
@@ -386,7 +482,7 @@
 
 
 	/**------------------------------------------*/
-	/** Chat GET AND POST functions */
+	/** Chat GET AND POST functions              */
 	/**------------------------------------------*/
     $http({method: 'GET',
        url: '/api/chat/'})
@@ -416,11 +512,12 @@
 
 
 	/**------------------------------------------*/
-	/** Meeting POST function */
+	/** Meeting POST function                    */
 	/**------------------------------------------*/
 	vm.createMeeting = function() {
 		/**var startTime = $filter('date')(vm.startTime, 'H:mm');*/
-		
+		/**vm.test = $filter('date')(vm.startTime, 'MM/dd/yyyy hh:mm');*/
+		vm.test = vm.startTime;
 		$http({method: 'POST',
   		url: '/api/meeting/',
   		data: {
@@ -463,13 +560,21 @@
   			/** meeting POST failed */
   		});
 	    
-	}
+	} /** END meeting function */
 
 
-	/** Load info on current group */
+	/** Functions to run on page load */
+	/** ----------------------------------------------------------- */
+	/** Load info on current group on page load */
 	vm.getGroupInfo();
-	/** Load all entries from the msgpUser table */
+	/** Load all entries from the msgpUser table on page load */
 	vm.getGroupsData();
+	/** Sets defualt create meeting start/end time options */
+	vm.setDefualtMeetingInfo();
+	
+	/** Load current groups's meetings ### CALLED IN .THEN FUNCTION OF vm.getGroupsData() ### */
+	
+	/** ----------------------------------------------------------- */
 
   }
 

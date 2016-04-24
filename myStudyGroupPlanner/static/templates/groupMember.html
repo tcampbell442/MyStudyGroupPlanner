@@ -26,10 +26,14 @@
 	</div>
 
 	<div class="upcoming_events" ng-show="vm.userAMember">
-	  <div class="meetings" ng-repeat="meeting in vm.meetings">
-	    <ul ng-repeat="detail in meeting">
-	      {{detail}}
-	    </ul>
+	  <div class="meetings">
+		<ul ng-repeat="meetingInfo in vm.currentGroupMeetings | orderBy:-start_time" style="list-style: none; padding:0px;">
+			<li style="font-size:1.5em"><strong>{{meetingInfo["title"]}}</strong></li>
+			<li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
+			<li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
+			<li>Attendence: {{meetingInfo["users_attending"]}}</li>
+			<li>{{meetingInfo["comment"]}}</li>
+		</ul>
 	  </div>
 	</div>
   </div>
@@ -103,7 +107,7 @@
 
 
   <div class="members" ng-show="vm.userAMember">
-	<h3>Members: {{vm.test}}</h3>
+	<h3>Members: </h3>
 	<table>
 		<tr>
 			<th>Name</th>
@@ -156,6 +160,7 @@
 								</div>
 								<div class="modal-body">
 									<p>Are you sure you want to remove this member the group?</p>
+									<p><strong>{{vm.leaveGroupStatus}}</strong></p>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-success" ng-click="vm.leaveGroup()" data-dismiss="modal">Yes</button>

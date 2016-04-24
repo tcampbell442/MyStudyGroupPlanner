@@ -103,7 +103,7 @@
 		<div class="currentGrps">
 			<h3>My Groups</h3>
 
-			<ul ng-repeat="group in vm.currentGroups | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}" style="list-style: none; padding:0px;">
+			<ul ng-repeat="group in vm.msgpUserAll | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}" style="list-style: none; padding:0px;">
 				<li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
 			</ul>
 
@@ -119,9 +119,12 @@
 		</div>
 		<!--MEETINGS-->
 		<div class="meetingDetail">
-			<div>{{vm.calendarDate}}</div>
-			<ul ng-repeat="meetingInfo in vm.currentMeetings" style="list-style: none; padding:0px;">
-				<li ng-repeat="info in meetingInfo">{{info}}</li>
+			<ul ng-repeat="meetingInfo in vm.currentMeetings | orderBy:-start_time" style="list-style: none; padding:0px;">
+				<li style="font-size:1.5em"><strong>{{meetingInfo["title"]}}</strong></li>
+				<li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
+				<li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
+				<li>Group: {{meetingInfo["groupName"]}}, Attendence: {{meetingInfo["users_attending"]}}</li>
+				<li>{{meetingInfo["comment"]}}</li>
 			</ul>
 		</div>
 	</div>

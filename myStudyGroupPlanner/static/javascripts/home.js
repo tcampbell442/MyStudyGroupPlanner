@@ -17,11 +17,12 @@
   function HomeController($location, $scope, Authentication, $http) {
     var vm = this;
     
+    /** store current user (Account) object */
     vm.thisUser = Authentication.getAuthenticatedAccount();
 
 	vm.date = new Date();
 	vm.status = "";
-	vm.currentGroups = [];
+	vm.msgpUserAll = [];
 	vm.allGroups = [];
 	
 	/** Used to store ids of groups from group table current user is a part of*/
@@ -61,23 +62,32 @@
 	vm.selectedSection;
 	vm.sections = [1,2,3,4];
 
+	/** used to store meeting objects for meetings user is involved with */
+	vm.currentMeetings = [];
 	
-	/**  Hardcoded Upcoming Meetings tab data.  CHANGE TO DJANGO MODEL DATA */
-	vm.calendarDate = "March 5";
-	vm.currentMeetings = [["MeetingName1", "GroupName1", "Time 7:00pm to 12:00am", "Location: RLC"], ["MeetingName2", "GroupName3", "Time 6:00pm to 9:00pm", "Location: Sherman 151"]];
 
-	/** Sets current activated tab */
+	/** ------------------------------------------------ */
+	/** Sets current activated tab                       */
+	/** ------------------------------------------------ */
 	vm.selectTab = function(setTab) {
 		vm.tab = setTab;
 	}
 	
-	/** Checks if activated tab is equal to tab passed in as parameter */
+	/** ------------------------------------------------ */
+	/** Checks if activated tab is equal to tab passed 
+	    in as parameter                                  */
+	/** ------------------------------------------------ */
 	vm.isSelected = function(checkTab) {
 		return vm.tab === checkTab;
 	}
 	
-	/** Create New Group with user as the group owner.  Also when first POST response 
-	    is received it calls a second POST to create new msgpUser which is USER-GROUP table */
+	
+	/** ------------------------------------------------ */
+	/** Create New Group with user as the group owner.  
+	    Also when first POST response is received it calls
+	    a second POST to create new msgpUser which is 
+	    USER-GROUP table                                 */
+	/** ------------------------------------------------ */
 	vm.createGroup = function() {		
 		
 		/** CREATE NEW GROUP */
@@ -122,28 +132,41 @@
 
 	}
 	
-	/**  Get all user-groups info */
+	
+	/** ------------------------------------------------ */
+	/**  Get all user-groups info                        */
+	/** ------------------------------------------------ */
 	vm.getGroups = function() {
 	
 		/** Currently no filtering django side, GETS all objects so angular can filter client side */
 		$http({method: 'GET',
 			url: '/api/msgpUser/'})
 			.then(function(response){
-			/** response is a list of msgpUser json objects, contains user AND group data */
-				vm.currentGroups = response.data;
+			/** response is a list of msgpUser json objects, contains user AND group data, plus meeting id*/
+				vm.msgpUserAll = response.data;
+				/** load user's meetings */
+				vm.loadUserMeetings();
 			},
 			function(response){
 				/**vm.status = "failed";*/
 		});
 	}
-
-	/** This runs when you click search button in group search tab */
+	
+	
+	/** ------------------------------------------------ */
+	/** This runs when you click search button in group 
+	    search tab                                       */
+	/** ------------------------------------------------ */
 	vm.searchGroups = function() {
 		vm.showSearchResults = true;
 		vm.getAllGroups();
 	}
 	
-	/** This runs when you click new search button in group search results */
+	
+	/** ------------------------------------------------ */
+	/** This runs when you click new search button in 
+	    group search results                             */
+	/** ------------------------------------------------ */
 	vm.resetGroupSearch = function() {
 		vm.showSearchResults = false;
 		vm.selectedSubject = "";
@@ -151,7 +174,10 @@
 		vm.selectedSection = "";
 	}	
 	
-	/**  Get group table entries */
+	
+	/** ------------------------------------------------ */
+	/**  Get group table entries                         */
+	/** ------------------------------------------------ */
 	vm.getAllGroups = function() {
 	
 		/** GET request all objects from group table */
@@ -165,8 +191,10 @@
 		});
 	}	
 	
-
+	
+	/** ------------------------------------------------ */
 	/** sets how search results should be sorted.  Not sorted by default right now... */
+	/** ------------------------------------------------ */
 	vm.setOrderBy = function(column) {
 		if (vm.orderResultsBy == column)
 			vm.orderResultsBy = '-' + column;
@@ -174,8 +202,14 @@
 			vm.orderResultsBy = column;
 	}
 	
-	/** check if user in a specific group by checking msgpUser table.  Return list of ids from group table */
-	/** Generates list of group ids user is a part of.  This list is used in group search join button functionality */ 
+	
+	/** ------------------------------------------------ */
+	/** check if user in a specific group by checking 
+	    msgpUser table.  Return ids list from group table*/
+	/** Generates list of group ids user is a part of.  
+	    This list is used in group search join button 
+	    functionality                                    */
+	/** ------------------------------------------------ */ 
 	vm.getUserGroups = function() {
 			
 		$http({method: 'GET',
@@ -194,7 +228,11 @@
 		});
 	}
 	
-	/** Check if group id is one user has joined -- ALSO CHECKS IF GROUP IS NOT FULL */
+	
+	/** ------------------------------------------------ */
+	/** Check if group id is one user has joined 
+	     -- ALSO CHECKS IF GROUP IS NOT FULL             */
+	/** ------------------------------------------------ */
 	vm.checkIfAvailable = function(groupId, groupMemberCount, groupMaxMembers) {
 		if (vm.userGroups.indexOf(groupId) > -1) {
 			vm.groupAvailability = "IN GROUP";
@@ -210,7 +248,48 @@
 	}
 	
 	
-	/** Check if group id is one user has joined */
+	/** ------------------------------------------------ */
+	/** Load meetings for the current user only. 
+	    to be displayed in meetings                      */
+	/** ------------------------------------------------ */
+	vm.loadUserMeetings = function() {
+		
+		for (var i = 0; i < vm.msgpUserAll.length; i++) {
+
+			if (vm.msgpUserAll[i].msgpUserId == vm.thisUser.id && 
+					vm.msgpUserAll[i].msgpMeetingId != null) {
+				
+				$http({method: 'GET',
+				url: '/api/meeting/' + vm.msgpUserAll[i].msgpMeetingId + '/'})
+				.then(function(meetingResponse){
+				
+					/** groupName is not stored in meetings table, need to get
+					    it and add it to meetingResponse object */
+					$http({method: 'GET',
+					url: '/api/group/' + meetingResponse.data.groupId + '/'})
+					.then(function(groupResponse2){
+						
+						meetingResponse.data["groupName"] = groupResponse2.data.groupName;
+						vm.currentMeetings.push(meetingResponse.data);
+						
+					},
+					function(groupResponse2){
+					
+					});
+				
+				},
+				function(meetingResponse){
+					
+				});
+			}
+
+		}
+	}
+	
+	
+	/** ------------------------------------------------ */
+	/** Check if group id is one user has joined         */
+	/** ------------------------------------------------ */
 	vm.joinGroup = function(groupId, groupName) {
 		
 		$http({method: 'GET',
@@ -259,12 +338,21 @@
 					/** request failed */
 				});
 		
-	}
+	} /** END vm.joinGroup() */
 	
-
+	
+	/** Functions to run on page load */
+	/** ----------------------------------------------------------- */
 	/** Call getGroups() helper function one time initially to display user's current groups */
 	vm.getGroups();
 	/** Call this to get list of group ids from group table user is a part of */
 	vm.getUserGroups();
+	/** sets default group search sorting by member count */
+	vm.setOrderBy('-memberCount');
+	
+	/** Load current user's meetings ### CALLED IN .THEN FUNCTION OF vm.getGroups() ### */
+	
+	/** ----------------------------------------------------------- */
+	
   }
 })();
