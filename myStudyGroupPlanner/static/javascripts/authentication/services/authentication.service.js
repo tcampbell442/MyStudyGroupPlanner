@@ -63,6 +63,7 @@ function register(email, password, username) {
   */
   function registerErrorFn(data, status, headers, config) {
     console.error('register failure!');
+    alert("register failure!... please make sure all fields are filled out correctly");
   }
 }
 
@@ -85,8 +86,12 @@ function login(email, password) {
    */
   function loginSuccessFn(data, status, headers, config) {
     Authentication.setAuthenticatedAccount(data.data);
-
-    window.location = '/';
+    
+    if(data.data.is_admin == true){
+      window.location = '/adminHome';
+    }else{
+      window.location = '/';
+    }
   }
 
   /**
@@ -95,6 +100,7 @@ function login(email, password) {
    */
   function loginErrorFn(data, status, headers, config) {
     console.error('Login failure!');
+    alert('Login failure!.. Please try again');
   }
 }
 
