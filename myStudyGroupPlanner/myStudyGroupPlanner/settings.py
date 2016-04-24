@@ -26,9 +26,10 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/frontPage/'
 
 LOGIN_EXEMPT_URLS = (
+ r'login$',
  r'^register$',
  r'^api/v1/auth/login/$',
  r'^api/v1/accounts/$'
