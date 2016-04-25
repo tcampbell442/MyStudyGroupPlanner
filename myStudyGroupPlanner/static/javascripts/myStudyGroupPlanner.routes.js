@@ -41,7 +41,7 @@
       controllerAs: 'vm',
       templateUrl: '/static/templates/groupCreator.html'
     }).when('/frontPage', {
-      controller: 'frontPageController',
+      controller: 'FrontPageController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/frontPage.html'
     }).otherwise('/home');

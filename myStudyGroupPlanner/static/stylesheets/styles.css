@@ -182,6 +182,7 @@ td{
 .groupSearchDetail{
   padding: 10px;
   height: 450px;
+  width: 800px;
   overflow: hidden;
   overflow-y: scroll;
 }
