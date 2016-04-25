@@ -9,6 +9,6 @@ class Report(models.Model):
     reporter = models.CharField(max_length=250)
     reportee = models.CharField(max_length=250)
     comments = models.CharField(max_length=1000)
-    date_submitted = models.CharField(max_length=350)
-    #date_submitted = models.DateTimeField(default=datetime.now, blank=True)
+    #date_submitted = models.CharField(max_length=350)
+    date_submitted = models.DateTimeField(default=datetime.now, blank=True)
     #reportingUser = models.Foreign(Account, related_name="reports", null=True)
