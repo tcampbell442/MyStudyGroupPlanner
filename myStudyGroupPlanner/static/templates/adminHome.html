@@ -68,7 +68,9 @@
     </div>
 
     <div ng-show="vm.isSelected(2)">
-      <div>Building: <select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
+      <div>
+      <label>Building: </label> 
+      <select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
           <option value="" disabled selected hidden>Buildings</option>
           <option ng-repeat="building in vm.buildings">{{building["name"]}}</option>
           <option value="addBuilding">Add New Building</option>
@@ -77,12 +79,14 @@
 	<button id = "makeBuilding"ng-click="vm.makeBuilding()" style="visibility: hidden;">add Building</button>
       </div>
 
-      <div> {{vm.buildingStatus}}</div>
-      <div> {{vm.roomStatus}}</div>
+<!--       <div> {{vm.buildingStatus}}</div>
+      <div> {{vm.roomStatus}}</div> -->
 
-      <div>Room Number: <select ng-model="vm.selectedRoom" ng-change="vm.updateRoom()" id="roomSelect">
+      <div>
+      <label id= "roomLabel" style="visibility: hidden;">Room Number: </label>
+      <select ng-model="vm.selectedRoom" ng-change="vm.updateRoom()" id="roomSelect" style="visibility: hidden;">
           <option value="" disabled selected hidden>Rooms</option>
-          <option ng-repeat="room in vm.rooms | filter:vm.selectedBuildingID">{{room.room_num}}</option>
+          <option ng-repeat="room in vm.filteredRooms">{{room.room_num}}</option>
           <option value="addRoom">Add New Room</option>
 	</select>
 	<input id= "newRoom" type="textbox" ng-model="vm.newRoom" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
