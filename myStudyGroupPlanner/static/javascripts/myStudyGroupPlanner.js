@@ -7,7 +7,8 @@
       'myStudyGroupPlanner.authentication',
       'myStudyGroupPlanner.config',
       'myStudyGroupPlanner.layout',
-      'pickadate'
+      'pickadate',
+      'igTruncate'
     ]);
 
   angular

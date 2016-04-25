@@ -12,6 +12,8 @@
      */
     function AdminHomeController($location, $scope, Authentication, $http) {
 	var vm = this;
+	vm.addNewBuilding = "addNewBuilding";
+	vm.addNewRoom = "addNewRoom";
 	vm.selectedBuilding = null;
 	vm.selectedBuildingID = null;
 	vm.selectedRoom = null;
