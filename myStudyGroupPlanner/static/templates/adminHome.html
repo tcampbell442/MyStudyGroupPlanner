@@ -16,18 +16,17 @@
     </ul>
   </div>
 
-  <div class="col-md-8">
-    <div ng-show="vm.isSelected(1)">
-      <div class="container">
-	<br>
-	<table>
+  <div ng-show="vm.isSelected(1)">
+    <div class="container">
+      <br>
+      <div class="col-md-8">
+	<table class="table table-hover table-bordered table-condensed">
 	  <tr>
 	    <th>Report Code</th>
 	    <th>Reporter</th>
 	    <th>Reportee</th>
 	    <th>Date Submitted</th>
 	    <th>Date Submitted</th>
-	    <th></th>
 	  </tr>
 	  <tr ng-repeat="report in vm.reports" align="center">
 	    <td>{{report.id}}</td>
@@ -38,62 +37,65 @@
 
 	  </tr>
 	</table>
+      </div>
 
-	<!-- Modal -->
-	<div id="reportViewModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
+      <!-- Modal -->
+      <div id="reportViewModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-	      <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<h4 class="modal-title"><b>Report</b></h4>
-	      </div>
-	      <div class="modal-body">
-		<p>Report Code: {{vm.currentID}}</p>
-		<p>Reporter: {{vm.currentReporter}}</p>
-		<p>Reportee: {{vm.currentReportee}}</p>
-		<p>Comment:{{vm.currentComment}}</p>
+          <!-- Modal content-->
+          <div class="modal-content">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      <h4 class="modal-title"><b>Report</b></h4>
+	    </div>
+	    <div class="modal-body">
+	      <p>Report Code: {{vm.currentID}}</p>
+	      <p>Reporter: {{vm.currentReporter}}</p>
+	      <p>Reportee: {{vm.currentReportee}}</p>
+	      <p>Comment:{{vm.currentComment}}</p>
 
-		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-            </div>
+	      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	    </div>
           </div>
-	</div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div ng-show="vm.isSelected(2)">
-      <div>
+  <div ng-show="vm.isSelected(2)">
+    <div>
       <label>Building: </label> 
       <select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
-          <option value="" disabled selected hidden>Buildings</option>
-          <option ng-repeat="building in vm.buildings">{{building["name"]}}</option>
-          <option value="addBuilding">Add New Building</option>
-	</select>
-	<input id= "newBuilding" type="textbox" ng-model="vm.newBuilding" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
-	<button id = "makeBuilding"ng-click="vm.makeBuilding()" style="visibility: hidden;">add Building</button>
-      </div>
-
-<!--       <div> {{vm.buildingStatus}}</div>
-      <div> {{vm.roomStatus}}</div> -->
-
-      <div>
-      <label id= "roomLabel" style="visibility: hidden;">Room Number: </label>
-      <select ng-model="vm.selectedRoom" ng-change="vm.updateRoom()" id="roomSelect" style="visibility: hidden;">
-          <option value="" disabled selected hidden>Rooms</option>
-          <option ng-repeat="room in vm.filteredRooms">{{room.room_num}}</option>
-          <option value="addRoom">Add New Room</option>
-	</select>
-	<input id= "newRoom" type="textbox" ng-model="vm.newRoom" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
-
-	<button id = "makeRoom" ng-click="vm.makeRoom()" style="visibility: hidden;">add Room</button>
-      </div>
+        <option value="" disabled selected hidden>Buildings</option>
+        <option ng-repeat="building in vm.buildings">{{building["name"]}}</option>
+        <option value="addBuilding">Add New Building</option>
+      </select>
+      <input id= "newBuilding" type="textbox" ng-model="vm.newBuilding" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
+      <button id = "makeBuilding"ng-click="vm.makeBuilding()" style="visibility: hidden;">add Building</button>
     </div>
 
-    <div ng-show="vm.isSelected(3)">
+    <!--       <div> {{vm.buildingStatus}}</div>
+	       <div> {{vm.roomStatus}}</div> -->
 
-      <table>
+    <div>
+      <label id= "roomLabel" style="visibility: hidden;">Room Number: </label>
+      <select ng-model="vm.selectedRoom" ng-change="vm.updateRoom()" id="roomSelect" style="visibility: hidden;">
+        <option value="" disabled selected hidden>Rooms</option>
+        <option ng-repeat="room in vm.filteredRooms">{{room.room_num}}</option>
+        <option value="addRoom">Add New Room</option>
+      </select>
+      <input id= "newRoom" type="textbox" ng-model="vm.newRoom" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
+
+      <button id = "makeRoom" ng-click="vm.makeRoom()" style="visibility: hidden;">add Room</button>
+    </div>
+  </div>
+
+  <div ng-show="vm.isSelected(3)">
+
+    <div class="col-md-8">
+      <br>
+      <table class="table table-hover table-bordered">
 	<tr>
           <th>ID</th>
           <th>UserName</th>
@@ -106,25 +108,25 @@
 	</tr>
       </table>
     </div>
+  </div>
 
-    <div ng-show="vm.isSelected(4)">
-      <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteAllModal">Delete Database</button>
+  <div ng-show="vm.isSelected(4)">
+    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteAllModal">Delete Database</button>
 
-      <!-- Modal -->
-      <div id="deleteAllModal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
+    <!-- Modal -->
+    <div id="deleteAllModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
 
-	  <!-- Modal content -->
-	  <div class="modal-content">
-	    <div class="modal-header">
-	      <button type="button" class="close" data-dismiss="modal">&times;</button>
-	      <h4 class="modal-title"><b>Warning</b></h4>
-	    </div>
-	    <div class="modal-body">
-	      <h4>Are you sure you want to delete the database and its contents?</h4>
-	      <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
-	      <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-	    </div>
+	<!-- Modal content -->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal">&times;</button>
+	    <h4 class="modal-title"><b>Warning</b></h4>
+	  </div>
+	  <div class="modal-body">
+	    <h4>Are you sure you want to delete the database and its contents?</h4>
+	    <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+	    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
 	  </div>
 	</div>
       </div>
