@@ -21,13 +21,14 @@
   </div>
   <div class="memberEvents" ng-show="vm.userAMember">
     <div class="calendar">
-      <div pickadate ng-model="vm.date" format="mm/dd/yyyy"></div>
-      <div class="selected-date">Selected date is {{vm.date || '(no date selected)'}}</div>
+      <!-- <div pickadate ng-model="vm.date" format="mm/dd/yyyy" meeting="{{vm.meetings}}"></div>
+      <div class="selected-date">Selected date is {{vm.date || '(no date selected)'}}</div> -->
+      <div ng-include="vm.calendarHTML"></div>
     </div>
 
     <div class="upcoming_events" ng-show="vm.userAMember">
       <div class="meetings">
-	<ul ng-repeat="meetingInfo in vm.currentGroupMeetings | orderBy:-start_time" style="list-style: none; padding:0px;">
+	<ul ng-repeat="meetingInfo in vm.filteredMeetings | orderBy:-start_time" style="list-style: none; padding:0px;">
 	  <li style="font-size:1.5em"><strong>{{meetingInfo["title"]}}</strong></li>
 	  <li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
 	  <li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
@@ -107,7 +108,7 @@
 
 
   <div class="members" ng-show="vm.userAMember">
-    <h3>Members: </h3>
+    <h3 >Members: </h3>
     <table>
       <tr>
 	<th>Name</th>

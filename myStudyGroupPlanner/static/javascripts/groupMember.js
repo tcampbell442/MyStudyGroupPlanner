@@ -9,14 +9,20 @@
     .module('myStudyGroupPlanner')
     .controller('GroupMemberController', GroupMemberController);
 
-  GroupMemberController.$inject = ['$location', '$scope', 'Authentication', '$http', '$routeParams', '$filter'];
+  GroupMemberController.$inject = ['$location', '$scope', 'Authentication', '$http', '$routeParams', '$filter', '$timeout', '$q'];
 
   /**
   * @namespace
   */
-  function GroupMemberController($location, $scope, Authentication, $http, $routeParams, $filter) {
+  function GroupMemberController($location, $scope, Authentication, $http, $routeParams, $filter, $timeout, $q) {
     
     var vm = this;
+    
+    /** used to load calendar.html, refreshed after loading meetings info */
+    vm.calendarHTML = '';
+    
+    /** stores meetings day/month start date info in comma seperated string */
+    vm.meetings = "";
 
     /** Will need to know current user for chat/reports/leave group ***NOT CURRENTLY BEING USED IN CHAT/REPORTING*** */
     vm.thisUser = Authentication.getAuthenticatedAccount();
@@ -32,6 +38,7 @@
     vm.leaveGroupSuccess = true;
     /** used to store meeting objects for meetings group is involved with */
 	vm.currentGroupMeetings = [];
+	vm.filteredMeetings = [];
     
     
     /** GROUP CREATOR ONLY VARIABLES */
@@ -68,6 +75,7 @@
 	
 	/** vm.date used to save calendar's selected date */
 	vm.date = new Date();
+	
     /** Will contain all entries in the msgpUser table.  Used to get user and group ids and names, plus meeting ids */
     vm.msgpUserAll = [];
     /** Loads the groups id which is in the URL as the first (and only) parameter */
@@ -423,8 +431,19 @@
 	/** ------------------------------------------------ */
 	vm.loadGroupMeetings = function() {
 	
+		/** clear calendar before refreshing it */
+		vm.calendarHTML = '';
+	
+		vm.meetings = "";
+		vm.currentGroupMeetings = [];
+		
 		/** temporary list of meeting ids */
 		var uniqueMeetingIds = [];
+		var day = "";
+		var month = "";
+		var year = "";
+		
+		vm.promiseList = [];
 		
 		for (var i = 0; i < vm.msgpUserAll.length; i++) {
 
@@ -436,24 +455,74 @@
 				if (uniqueMeetingIds.indexOf(vm.msgpUserAll[i].msgpMeetingId) <= -1) {
 				
 					/** get meeting info from meeting table */
-					$http({method: 'GET',
+					vm.promiseList.push($http({method: 'GET',
 					url: '/api/meeting/' + vm.msgpUserAll[i].msgpMeetingId + '/'})
 					.then(function(meetingResponse){
 					
 						uniqueMeetingIds.push(meetingResponse.data.id);
 						/** add meeting object to groups meetings list, to be used in meetings window */
 						vm.currentGroupMeetings.push(meetingResponse.data);
+						vm.filteredMeetings.push(meetingResponse.data);
 					
+						/** Setup vm.meetings String for pickadate calendar to know what days meetings are scheduled
+						pickadate modified to splice string at ',' and make a list of strings formatted like 'mm/dd/yyyy' */
+						
+						day = String(meetingResponse.data.start_time).substring(8,10);
+						month = String(meetingResponse.data.start_time).substring(5,7);
+						year = String(meetingResponse.data.start_time).substring(0,4);
+						
+
+						day = parseInt(day);
+						month = parseInt(month);
+						month -= 1;
+						
+						vm.meetings += "" + month + "/" + day + "/" + year + ",";
+						
 					},
 					function(meetingResponse){
-					
-					});
+						
+					}));
 				}
 			}
-		}
+		} /** END for loop */
+		
+		
+		/** LOAD CALENDAR AFTER LOADING MEETINGS INFO !!! 
+		    WAITS FOR ALL PROMISES FROM MEETING GET REQUESTS*/
+		$q.all(vm.promiseList).then(function(waitResponse){
+			vm.calendarHTML = '/static/templates/calendar.html';		
+		});		
+			
 	} /** END loadGroupMeetings() */	
 	
 	
+
+	/**------------------------------------------*/
+	/** filter meetings list for selected day    */
+	/**------------------------------------------*/	
+	vm.filterMeetingsOnClick = function() {
+		
+		var day;
+		var month;
+		var year;
+		var selectedDay;
+		var selectedMonth;
+		var selectedYear;
+		vm.filteredMeetings = [];
+		
+		for (var i = vm.currentGroupMeetings.length-1; i >=0; i--) {
+			
+			day = String(vm.currentGroupMeetings[i].start_time).substring(8,10);
+			month = String(vm.currentGroupMeetings[i].start_time).substring(5,7);
+			year = String(vm.currentGroupMeetings[i].start_time).substring(0,4);
+			selectedDay = String(vm.date).substring(3,5);
+			selectedMonth = String(vm.date).substring(0,2);
+			selectedYear = String(vm.date).substring(6,10);
+			/**alert("|" + day + month + year + ":" + selectedDay + selectedMonth + selectedYear + "|");*/
+			if (day == selectedDay && month == selectedMonth && year == selectedYear)
+				vm.filteredMeetings.push(vm.currentGroupMeetings[i]);
+		}
+	}	
 	
 	
 	/**------------------------------------------*/
@@ -517,7 +586,7 @@
 	vm.createMeeting = function() {
 		/**var startTime = $filter('date')(vm.startTime, 'H:mm');*/
 		/**vm.test = $filter('date')(vm.startTime, 'MM/dd/yyyy hh:mm');*/
-		vm.test = vm.startTime;
+		
 		$http({method: 'POST',
   		url: '/api/meeting/',
   		data: {
@@ -550,6 +619,7 @@
 				/** Load/update all entries from the msgpUser table 
 				    as there is a new one now*/
 				vm.getGroupsData();
+
 			},
 			function(msgpUserResponse){
 				/**msgpUser POST failed*/

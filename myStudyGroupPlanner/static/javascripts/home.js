@@ -9,12 +9,12 @@
     .module('myStudyGroupPlanner')
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$location', '$scope', 'Authentication', '$http'];
+  HomeController.$inject = ['$location', '$scope', 'Authentication', '$http', '$filter', '$q'];
 
   /**
   * @namespace HomeController
   */
-  function HomeController($location, $scope, Authentication, $http) {
+  function HomeController($location, $scope, Authentication, $http, $filter, $q) {
     var vm = this;
     
     /** store current user (Account) object */
@@ -62,8 +62,14 @@
 	vm.selectedSection;
 	vm.sections = [1,2,3,4];
 
+
+	/** used to ng-include calendar HTML*/
+	vm.calendarHTML = '';
 	/** used to store meeting objects for meetings user is involved with */
 	vm.currentMeetings = [];
+	vm.filteredMeetings = [];
+	/** used to store string of comma seperated meeting start_time dd/mm formatted */
+	vm.meetings = "";
 	
 
 	/** ------------------------------------------------ */
@@ -253,36 +259,95 @@
 	    to be displayed in meetings                      */
 	/** ------------------------------------------------ */
 	vm.loadUserMeetings = function() {
+	
+		vm.meetings = "";
+		vm.currentMeetings = [];
+		
+		/** temporary list of meeting ids */
+		var uniqueMeetingIds = [];
+		var day = "";
+		var month = "";
+		var year = "";
+		
+		vm.promiseList = [];
 		
 		for (var i = 0; i < vm.msgpUserAll.length; i++) {
 
 			if (vm.msgpUserAll[i].msgpUserId == vm.thisUser.id && 
 					vm.msgpUserAll[i].msgpMeetingId != null) {
 				
-				$http({method: 'GET',
-				url: '/api/meeting/' + vm.msgpUserAll[i].msgpMeetingId + '/'})
-				.then(function(meetingResponse){
+				/** this if statement ensures same meeting is not saved multiple times.
+				    Ever user attending the meeting will have a msgpUser table entry
+				    with the same meeting id field */
+				if (uniqueMeetingIds.indexOf(vm.msgpUserAll[i].msgpMeetingId) <= -1) {
 				
-					/** groupName is not stored in meetings table, need to get
-					    it and add it to meetingResponse object */
-					$http({method: 'GET',
-					url: '/api/group/' + meetingResponse.data.groupId + '/'})
-					.then(function(groupResponse2){
-						
-						meetingResponse.data["groupName"] = groupResponse2.data.groupName;
+					/** get meeting info from meeting table */
+					vm.promiseList.push($http({method: 'GET',
+					url: '/api/meeting/' + vm.msgpUserAll[i].msgpMeetingId + '/'})
+					.then(function(meetingResponse){
+					
+						uniqueMeetingIds.push(meetingResponse.data.id);
+						/** add meeting object to groups meetings list, to be used in meetings window */
 						vm.currentMeetings.push(meetingResponse.data);
+						vm.filteredMeetings.push(meetingResponse.data);
+					
+						/** Setup vm.meetings String for pickadate calendar to know what days meetings are scheduled
+						pickadate modified to splice string at ',' and make a list of strings formatted like 'mm/dd/yyyy' */
+						
+						day = String(meetingResponse.data.start_time).substring(8,10);
+						month = String(meetingResponse.data.start_time).substring(5,7);
+						year = String(meetingResponse.data.start_time).substring(0,4);
+						
+
+						day = parseInt(day);
+						month = parseInt(month);
+						month -= 1;
+						
+						vm.meetings += "" + month + "/" + day + "/" + year + ",";
 						
 					},
-					function(groupResponse2){
-					
-					});
-				
-				},
-				function(meetingResponse){
-					
-				});
+					function(meetingResponse){
+						
+					}));
+				}
 			}
+		} /** END for loop */
+		
+		/** clear calendar before refreshing it */
+		vm.calendarHTML = '';
+		/** LOAD CALENDAR AFTER LOADING MEETINGS INFO !!! 
+		    WAITS FOR ALL PROMISES FROM MEETING GET REQUESTS*/
+		$q.all(vm.promiseList).then(function(waitResponse){
+			vm.calendarHTML = '/static/templates/calendar.html';		
+		});		
+			
+	} /** END loadGroupMeetings() */
 
+
+	/**------------------------------------------*/
+	/** filter meetings list for selected day    */
+	/**------------------------------------------*/	
+	vm.filterMeetingsOnClick = function() {
+		
+		var day;
+		var month;
+		var year;
+		var selectedDay;
+		var selectedMonth;
+		var selectedYear;
+		vm.filteredMeetings = [];
+		
+		for (var i = vm.currentMeetings.length-1; i >=0; i--) {
+			
+			day = String(vm.currentMeetings[i].start_time).substring(8,10);
+			month = String(vm.currentMeetings[i].start_time).substring(5,7);
+			year = String(vm.currentMeetings[i].start_time).substring(0,4);
+			selectedDay = String(vm.date).substring(3,5);
+			selectedMonth = String(vm.date).substring(0,2);
+			selectedYear = String(vm.date).substring(6,10);
+			/**alert("|" + day + month + year + ":" + selectedDay + selectedMonth + selectedYear + "|");*/
+			if (day == selectedDay && month == selectedMonth && year == selectedYear)
+				vm.filteredMeetings.push(vm.currentMeetings[i]);
 		}
 	}
 	

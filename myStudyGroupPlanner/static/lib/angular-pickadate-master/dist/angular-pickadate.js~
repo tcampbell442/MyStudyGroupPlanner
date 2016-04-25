@@ -14,8 +14,12 @@
     });
     return mappedArray;
   }
+  
+  /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
+  var meetings = []; /** GLOBAL VARIABLE */
+  /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
 
-  angular.module('pickadate')
+  angular.module('pickadate', [])
 
     .provider('pickadateI18n', function() {
       var defaults = {
@@ -96,6 +100,7 @@
           case 'yyyy': return 'year';
         }
       }
+      
 
       return function(format, options) {
         var minDate, maxDate, disabledDates, currentDate, weekStartsOn, noExtraRows;
@@ -108,7 +113,7 @@
         if (!angular.isNumber(weekStartsOn) || weekStartsOn < 0 || weekStartsOn > 6) weekStartsOn = 0;
 
         return {
-
+			
           parseDate: function(dateString) {
             if (!dateString) return;
             if (angular.isDate(dateString)) return new Date(dateString);
@@ -212,6 +217,8 @@
       'pickadateI18n', 'pickadateModalBindings', 'filterFilter', function($locale, $sce, $compile, $document, $window,
                                                                           dateHelperFactory, i18n, modalBindings, filter) {
 
+		
+
       var TEMPLATE =
         '<div class="pickadate" ng-show="displayPicker" ng-style="modalStyles">' +
           '<div class="pickadate-header">' +
@@ -254,17 +261,27 @@
         },
 
         link: function(scope, element, attrs, ngModel)  {
+          var meetingsString = "";
+          
           var allowMultiple           = attrs.hasOwnProperty('multiple'),
               selectedDates           = [],
               wantsModal              = element[0] instanceof HTMLInputElement,
               compiledHtml            = $compile(TEMPLATE)(scope),
               format                  = (attrs.format || 'yyyy-MM-dd').replace(/m/g, 'M'),
+              /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
+              meetingsString		  = attrs.meeting,
+              /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
               dateHelper              = dateHelperFactory(format, {
                 previousMonthSelectable: /^(previous|both)$/.test(attrs.selectOtherMonths),
                 nextMonthSelectable:     /^(next|both)$/.test(attrs.selectOtherMonths),
                 weekStartsOn: scope.weekStartsOn,
                 noExtraRows: attrs.hasOwnProperty('noExtraRows')
               });
+              
+              /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
+              if (meetingsString != "")
+              	meetings = meetingsString.split(',');
+              /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
 
           scope.displayPicker = !wantsModal;
 
@@ -354,6 +371,13 @@
 
             scope.dates = map(dates, function(date) {
               date.classNames = [date.enabled ? 'pickadate-enabled' : 'pickadate-disabled'];
+              
+              /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */	
+			  for (var i = 0; i < meetings.length; i++) {
+			  	if (meetings[i] == "" + date.date.getMonth() + "/" + date.date.getDate() + "/" + date.date.getFullYear())    
+			  		date.classNames.push('CMSC447-meetings-scheduled');
+			  } 
+			  /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
 
               if (date.today)    date.classNames.push('pickadate-today');
               if (date.disabled) date.classNames.push('pickadate-unavailable');
