@@ -19,6 +19,7 @@
 	vm.roomStatus = null;
 	vm.buildings = [];
 	vm.rooms = [];
+	vm.filteredRooms = [];
 	vm.users = [];
 
 	vm.tab = 1;
@@ -36,28 +37,43 @@
 
 	vm.updateBuilding = function() {
 
-	vm.rooms = null;
+	vm.rooms = [];
+	vm.filteredRooms = [];
 
-		if(vm.selectedBuilding != "addBuilding"){
+		if(vm.selectedBuilding != "addBuilding" && vm.selectedBuilding != ""){
 			document.getElementById("newBuilding").style.visibility = "hidden";
 			document.getElementById("makeBuilding").style.visibility = "hidden";
+			document.getElementById("roomSelect").style.visibility = "visible";
+			document.getElementById("roomLabel").style.visibility = "visible";
+
 		 for(var i = 0; i < vm.buildings.length; i++){
 		 	
 			if(vm.buildings[i].name == vm.selectedBuilding){
-				vm.selectedBuildingID =vm.buildings[i].id;
+				vm.selectedBuildingID = vm.buildings[i].id;
 		 	}
 		 }
 
 		$http({method: 'GET',
 		       url: '/api/building/room/'
 		      }).then(function(response){
-			  vm.rooms = response.data;
+			  	vm.rooms = response.data;
+			  	for(var i =0; i <vm.rooms.length; i++){
+					if(vm.rooms[i].building == vm.selectedBuildingID){
+					vm.filteredRooms.push(vm.rooms[i]);
+				}
+				}
 		      },
 			  function(response){
 			   });
+
 		}else if (vm.selectedBuilding == "addBuilding"){
 			document.getElementById("newBuilding").style.visibility = "visible";
 			document.getElementById("makeBuilding").style.visibility = "visible";
+			document.getElementById("roomSelect").style.visibility = "hidden";
+			document.getElementById("roomLabel").style.visibility = "hidden";
+			document.getElementById("newRoom").style.visibility = "hidden";
+			document.getElementById("makeRoom").style.visibility = "hidden";
+			vm.selectedRoom = "";
 		}
 
 
