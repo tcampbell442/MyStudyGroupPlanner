@@ -24,6 +24,22 @@
   background-position: 10px;
 }
 
+.nav-pills > li > a:hover{
+    background-color: #50AA7F !important;
+}
+
+.nav-pills a{
+    color: #ffffff !important;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus{
+    background-color: #50aa7f !important;
+}
+
+.nav-filter{
+    background-color: #1b7e43 !important;
+}
+
 .indexBody{
   background-color: #dbcb48;
   /*background-image: url("weather.png");*/
