@@ -12,7 +12,7 @@ from meeting.views import MeetingList, MeetingDetail
 from report.views import ReportList, ReportDetail
 from msgpUser.views import MSGPUserList, MSGPUserDetail
 from chat.views import ChatList, ChatDetail
-from Class.views import SubjectList, SubjectDetail, ClassList, ClassDetail
+from Class.views import SubjectList, SubjectDetail, ClassList, ClassDetail, SectionList, SectionDetail
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
@@ -31,6 +31,8 @@ urlpatterns = patterns(
     url(r'^api/subject/(?P<pk>[0-9]+)/$', SubjectDetail.as_view(), name='subjectDetail'),
     url(r'^api/subject/class/$', ClassList.as_view(), name='classList'),
     url(r'^api/subject/class/(?P<pk>[0-9]+)/$', ClassDetail.as_view(), name='classDetail'),
+    url(r'^api/subject/class/section/$', SectionList.as_view(), name='sectionList'),
+    url(r'^api/subject/class/section/(?P<pk>[0-9]+)/$', SectionDetail.as_view(), name='sectionDetail'),
 
 	url(r'^api/group/$', GroupList.as_view(), name='groupList'),
 	url(r'^api/group/(?P<pk>[0-9]+)/$', GroupDetail.as_view(), name='groupDetail'),

@@ -11,7 +11,7 @@ class Class(models.Model):
 	subjectsClass = models.CharField(max_length=32)
 
 	def __unicode__(self):
-		return self.subjectClass
+		return self.subjectsClass
 
 class Section(models.Model):
 	subjectsClass = models.ForeignKey(Class, related_name="Classes", null=True)	

@@ -14,6 +14,9 @@
 	var vm = this;
 	vm.addNewBuilding = "addNewBuilding";
 	vm.addNewRoom = "addNewRoom";
+	vm.addNewSubject = "addNewSubject";
+	vm.addNewClass = "addNewClass";
+	vm.addNewSection = "addNewSection";
 	vm.selectedBuilding = null;
 	vm.selectedBuildingID = null;
 	vm.selectedRoom = null;
@@ -23,6 +26,18 @@
 	vm.rooms = [];
 	vm.filteredRooms = [];
 	vm.users = [];
+	vm.subjects = [];
+	vm.classes = [];
+	vm.sections = [];
+	vm.filteredClasses = [];
+	vm.filteredSections = [];
+	vm.selectedSubject = null;
+	vm.selectedClass = null;
+	vm.selectedSection = null;
+	vm.selectedSubjectsID = null;
+	vm.selectedClassID = null;
+	vm.seleectedSectionID = null;
+
 
 	vm.tab = 1;
 
@@ -45,8 +60,8 @@
 		if(vm.selectedBuilding != "addBuilding" && vm.selectedBuilding != ""){
 			document.getElementById("newBuilding").style.visibility = "hidden";
 			document.getElementById("makeBuilding").style.visibility = "hidden";
-			document.getElementById("roomSelect").style.visibility = "visible";
-			document.getElementById("roomLabel").style.visibility = "visible";
+			// document.getElementById("roomSelect").style.visibility = "visible";
+			// document.getElementById("roomLabel").style.visibility = "visible";
 
 		 for(var i = 0; i < vm.buildings.length; i++){
 		 	
@@ -71,10 +86,10 @@
 		}else if (vm.selectedBuilding == "addBuilding"){
 			document.getElementById("newBuilding").style.visibility = "visible";
 			document.getElementById("makeBuilding").style.visibility = "visible";
-			document.getElementById("roomSelect").style.visibility = "hidden";
-			document.getElementById("roomLabel").style.visibility = "hidden";
-			document.getElementById("newRoom").style.visibility = "hidden";
-			document.getElementById("makeRoom").style.visibility = "hidden";
+			// document.getElementById("roomSelect").style.visibility = "hidden";
+			// document.getElementById("roomLabel").style.visibility = "hidden";
+			// document.getElementById("newRoom").style.visibility = "hidden";
+			// document.getElementById("makeRoom").style.visibility = "hidden";
 			vm.selectedRoom = "";
 		}
 
@@ -151,8 +166,6 @@
 		// $("#txtreporter").val($(this).closest('tr').children()[0].textContent);
     // $("#txtreportee").val($(this).closest('tr').children()[1].textContent);
 		// $("#txtmessage").val($(this).closest('tr').children()[2].textContent);
-
-
 	}
 	/**
 	   vm.studyLocation = {
@@ -193,6 +206,193 @@
 		},
 		function(response){
 	});
+
+
+
+
+
+	//ADD Classes
+
+	$http({method: 'GET',
+		url: '/api/subject/'
+		}).then(function(response){
+			vm.subjects = response.data;
+		},
+		function(response){
+	});
+
+	vm.updateSubject = function() {
+
+
+	//document.getElementById("classSelect")
+
+		if(vm.selectedSubject != "addSubject" && vm.selectedSubject != ""){
+			document.getElementById("newSubject").style.visibility = "hidden";
+			document.getElementById("makeSubject").style.visibility = "hidden";
+			document.getElementById("classSelect").style.visibility = "visible";
+			document.getElementById("classLabel").style.visibility = "visible";
+			document.getElementById("newClass").style.visibility = "hidden";
+			document.getElementById("makeClass").style.visibility = "hidden";
+			document.getElementById("sectionSelect").style.visibility = "hidden";
+			document.getElementById("sectionLabel").style.visibility = "hidden";
+			document.getElementById("newSection").style.visibility = "hidden";
+			document.getElementById("makeSection").style.visibility = "hidden";
+
+			vm.classes = [];
+			vm.filteredClasses = [];
+		 for(var i = 0; i < vm.subjects.length; i++){
+		 	
+			if(vm.subjects[i].subject == vm.selectedSubject){
+				vm.selectedSubjectsID = vm.subjects[i].id;
+		 	}
+		 }
+
+		$http({method: 'GET',
+		       url: '/api/subject/class/'
+		      }).then(function(response){
+			  	vm.classes = response.data;
+				  	for(var i =0; i <vm.classes.length; i++){
+						if(vm.classes[i].subject == vm.selectedSubjectID){
+						vm.filteredClasses.push(vm.classes[i]);
+					}
+				}
+		      },
+			  function(response){
+			   });
+
+		}else if (vm.selectedSubject == "addSubject"){
+			document.getElementById("newSubject").style.visibility = "visible";
+			document.getElementById("makeSubject").style.visibility = "visible";
+			document.getElementById("classSelect").style.visibility = "hidden";
+			document.getElementById("classLabel").style.visibility = "hidden";
+			document.getElementById("newClass").style.visibility = "hidden";
+			document.getElementById("makeClass").style.visibility = "hidden";
+			document.getElementById("sectionSelect").style.visibility = "hidden";
+			document.getElementById("sectionLabel").style.visibility = "hidden";
+			document.getElementById("newSection").style.visibility = "hidden";
+			document.getElementById("makeSection").style.visibility = "hidden";
+			// vm.selectedRoom = "";
+		}
+
+
+	}
+
+	vm.makeSubject = function(){
+		$http({method: 'POST',
+		url: '/api/subject/',
+		data: {
+			subject: vm.newSubject
+			}
+		})
+		.then(function(response){
+			alert("subject Created");
+			location.reload();
+			// vm.buildingStatus = "BuildingCreated";
+		},
+		function(response){
+			// vm.buildingStatus = "Failed to create building.";
+			alert("Failed to create subject");
+		});
+	}
+
+	vm.updateClass = function(){
+		vm.sections = [];
+		vm.filteredSections = [];
+
+		if (vm.selectedClass != "addClass" && vm.selectedClass != ""){
+			document.getElementById("newClass").style.visibility = "hidden";
+			document.getElementById("makeClass").style.visibility = "hidden";
+			document.getElementById("sectionLabel").style.visibility = "visible";
+			document.getElementById("sectionSelect").style.visibility = "visible";
+			document.getElementById("newSection").style.visibility = "hidden";
+			document.getElementById("makeSection").style.visibility = "hidden";
+
+
+			for(var i = 0; i < vm.classes.length; i++){
+		 	
+			if(vm.filteredClasses[i].subjectsClass == vm.selectedClass){
+				vm.selectedClassID = vm.filteredClasses[i].id;
+		 	}
+		 }
+
+		$http({method: 'GET',
+		       url: '/api/subject/class/section/'
+		      }).then(function(response){
+			  	vm.sections = response.data;
+				  	for(var i =0; i <vm.sections.length; i++){
+						if(vm.sections[i].subjectsClass == vm.selectedClassID){
+						vm.filteredSections.push(vm.sections[i]);
+					}
+				}
+		      },
+			  function(response){
+			   });
+
+		}else if (vm.selectedClass == "addClass"){
+			document.getElementById("newClass").style.visibility = "visible";
+			document.getElementById("makeClass").style.visibility = "visible";
+			document.getElementById("sectionLabel").style.visibility = "hidden";
+			document.getElementById("sectionSelect").style.visibility = "hidden";
+			document.getElementById("newSection").style.visibility = "hidden";
+			document.getElementById("makeSection").style.visibility = "hidden";
+
+		}
+	}
+
+
+
+	vm.makeClass = function(){
+
+		$http({method: 'POST',
+		url: '/api/subject/class/',
+		data: {
+			subjectsClass: vm.newClass,
+			subject: vm.selectedSubjectID
+						}
+		})
+		.then(function(response){
+			alert("Class Created");
+			location.reload();
+			// vm.roomStatus = "Room Created";
+		},
+		function(response){
+			alert("Failed to create Class");
+			// vm.roomStatus = "Failed to create Room.";
+		});
+	}
+
+
+	vm.updateSection = function(){
+		if (vm.selectedSection == "addSection"){
+			document.getElementById("newSection").style.visibility = "visible";
+			document.getElementById("makeSection").style.visibility = "visible";
+
+		}else{
+			document.getElementById("newSection").style.visibility = "hidden";
+			document.getElementById("makeSection").style.visibility = "hidden";
+
+		}
+	}
+
+	vm.makeSection = function(){
+
+		$http({method: 'POST',
+		url: '/api/subject/class/section/',
+		data: {
+			section: vm.newSection,
+			subjectsClass: vm.selectedClassID
+						}
+		})
+		.then(function(response){
+			alert("Section Created");
+			location.reload();
+			// vm.roomStatus = "Room Created";
+		},
+		function(response){
+			alert("Failed to section Class");
+			// vm.roomStatus = "Failed to create Room.";
+		});
+	}
 
 	// vm.usernameTemp = "";
 

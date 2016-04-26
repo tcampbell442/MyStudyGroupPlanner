@@ -23,3 +23,11 @@ class ClassList(generics.ListCreateAPIView):
 class ClassDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Class.objects.all()
 	serializer_class = ClassSerializer
+
+class SectionList(generics.ListCreateAPIView):
+	queryset = Section.objects.all()
+	serializer_class = SectionSerializer
+
+class SectionDetail(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Section.objects.all()
+	serializer_class = SectionSerializer

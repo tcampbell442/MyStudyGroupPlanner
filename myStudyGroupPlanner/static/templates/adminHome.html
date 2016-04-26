@@ -8,10 +8,13 @@
 	<a href="/adminHome" ng-click="vm.selectTab(2)">Add Study Location</a>
       </li>
       <li ng-class="{ active:vm.isSelected(3)} ">
-	<a href="/adminHome" ng-click="vm.selectTab(3)">Users</a>
+  <a href="/adminHome" ng-click="vm.selectTab(3)">Add Class</a>
       </li>
       <li ng-class="{ active:vm.isSelected(4)} ">
-	<a href="/adminHome" ng-click="vm.selectTab(4)">Delete</a>
+	<a href="/adminHome" ng-click="vm.selectTab(4)">Users</a>
+      </li>
+      <li ng-class="{ active:vm.isSelected(5)} ">
+	<a href="/adminHome" ng-click="vm.selectTab(5)">Delete</a>
       </li>
     </ul>
   </div>
@@ -63,7 +66,7 @@
     </div>
   </div>
 
-  <div ng-show="vm.isSelected(2)">
+ <div ng-show="vm.isSelected(2)">
     <div>
       <label>Building: </label> 
       <select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
@@ -76,7 +79,7 @@
     </div>
 
     <!--       <div> {{vm.buildingStatus}}</div>
-	       <div> {{vm.roomStatus}}</div> -->
+         <div> {{vm.roomStatus}}</div> -->
 
     <div>
       <label id= "roomLabel" style="visibility: hidden;">Room Number: </label>
@@ -89,9 +92,58 @@
 
       <button id = "makeRoom" ng-click="vm.makeRoom()" style="visibility: hidden;">add Room</button>
     </div>
+
   </div>
 
+<!-- classes -->
   <div ng-show="vm.isSelected(3)">
+    <div>
+      <label>Subject: </label> 
+      <select ng-model="vm.selectedSubject" ng-change="vm.updateSubject()" id="subjectSelect">
+        <option value="" disabled selected hidden>Subjects</option>
+        <option ng-repeat="subject in vm.subjects">{{subject["subject"]|truncate}}</option>
+        <option value="addSubject">{{vm.addNewSubject | truncate}}</option>
+      </select>
+      <input id= "newSubject" type="textbox" ng-model="vm.newSubject" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
+      <button id = "makeSubject"ng-click="vm.makeSubject()" style="visibility: hidden;">add Subject</button>
+    </div>
+
+    <!--       <div> {{vm.buildingStatus}}</div>
+	       <div> {{vm.roomStatus}}</div> -->
+
+    <div>
+      <label id= "classLabel" style="visibility: hidden;">Class: </label>
+      <select ng-model="vm.selectedClass" ng-change="vm.updateClass()" id="classSelect" style="visibility: hidden;">
+        <option value="" disabled selected hidden>Classes</option>
+        <option ng-repeat="Class in vm.filteredClasses">{{Class.subjectsClass | truncate}}</option>
+        <option value="addClass">{{vm.addNewClass | truncate}}</option>
+      </select>
+      <input id= "newClass" type="textbox" ng-model="vm.newClass" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
+
+      <button id = "makeClass" ng-click="vm.makeClass()" style="visibility: hidden;">add Class</button>
+    </div>
+
+
+
+    <div>
+      <label id= "sectionLabel" style="visibility: hidden;">Section: </label>
+      <select ng-model="vm.selectedSection" ng-change="vm.updateSection()" id="sectionSelect" style="visibility: hidden;">
+        <option value="" disabled selected hidden>Section</option>
+        <option ng-repeat="Section in vm.filteredSections">{{Section.section}}</option>
+        <option value="addSection">{{vm.addNewSection | truncate}}</option>
+      </select>
+      <input id= "newSection" type="textbox" ng-model="vm.newSection" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
+
+      <button id = "makeSection" ng-click="vm.makeSection()" style="visibility: hidden;">add Section</button>
+    </div>
+
+
+  </div>
+
+
+
+
+  <div ng-show="vm.isSelected(4)">
 
     <div class="col-md-8">
       <br>
@@ -110,7 +162,7 @@
     </div>
   </div>
 
-  <div ng-show="vm.isSelected(4)">
+  <div ng-show="vm.isSelected(5)">
     <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteAllModal">Delete Database</button>
 
     <!-- Modal -->
