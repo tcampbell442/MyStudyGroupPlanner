@@ -1,10 +1,6 @@
-<head>
-  <link rel="stylesheet" href="../styleSheets/styles.css">
-</head>
 <!--LEFT COLUMN CONTENT: TABS-->
 <div>
-  <div class=tabs>
-    <ul class="nav nav-pills center-pills" role="tablist">
+    <ul class="nav nav-pills" role="tablist">
       <li ng-class="{active:vm.isSelected(1)}">
 	<a href="/home" ng-click="vm.selectTab(1)">Search Groups</a>
       </li>
@@ -12,6 +8,8 @@
 	<a href="/home" ng-click="vm.selectTab(2)">Create Group</a>
       </li>
     </ul>
+  </div>
+  <div class="col-md-8">
     <!--SEARCH TAB-->
     <div class="searchTab">
       <div ng-show="vm.isSelected(1) && vm.showSearchResults===false">
@@ -33,7 +31,7 @@
 	</center>
       </div>
     </div>
-    <!--CREATE GROUP TAB-->
+  <!--CREATE GROUP TAB-->
     <div class="createTabs" ng-show="vm.isSelected(2)">
       <form role="form" name="createGroups">
 	<br>
@@ -69,7 +67,7 @@
     <div class="groupSearchDetail" ng-show="vm.isSelected(1) && vm.showSearchResults===true">
       <h2>Search results</h2>
 
-      <table>
+      <table class="table table-hover table-bordered table-condensed">
 	<tr>
 	  <th><a href="" ng-click="vm.setOrderBy('groupName')">Name</a></th>
 	  <th><a href="" ng-click="vm.setOrderBy('subject')">Subject</a></th>
@@ -97,36 +95,39 @@
       <div align="center"><button ng-click="vm.resetGroupSearch()" class="btn btn-success btn-md"> New Search </button></div>
     </div>
   </div>
-  <!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->
-  <div class="information">
-    <!--GROUPS-->
-    <div class="currentGrps">
-      <h3>My Groups</h3>
 
-      <ul ng-repeat="group in vm.msgpUserAll | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}" style="list-style: none; padding:0px;">
-	<li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
-      </ul>
+  <div class="col-md-4">
+    <!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->
+    <div class="information">
+      <!--GROUPS-->
+      <div class="currentGrps">
+	<h3>My Groups</h3>
+
+	<ul ng-repeat="group in vm.msgpUserAll | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}" style="list-style: none; padding:0px;">
+	  <li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
+	</ul>
 
 
-    </div class="homeCalendar">
-    <!--CALENDAR-->
-    <div class="homeCalendar">
+      </div class="homeCalendar">
+      <!--CALENDAR-->
+      <div class="homeCalendar">
 
-      <div ng-include="vm.calendarHTML"></div>
-      <!-- <div pickadate ng-model="vm.date" format="mm/dd/yyyy"></div> -->
-      <!-- The below line will be commented out, just here now to show that it's working-->
-      <!-- <div class="selected-date">Selected date is {{vm.date || '(no date selected)'}}</div> -->
+	<div ng-include="vm.calendarHTML"></div>
+	<!-- <div pickadate ng-model="vm.date" format="mm/dd/yyyy"></div> -->
+	<!-- The below line will be commented out, just here now to show that it's working-->
+	<!-- <div class="selected-date">Selected date is {{vm.date || '(no date selected)'}}</div> -->
 
-    </div>
-    <!--MEETINGS-->
-    <div class="meetingDetail">
-      <ul ng-repeat="meetingInfo in vm.filteredMeetings | orderBy:-start_time" style="list-style: none; padding:0px;">
-	<li style="font-size:1.5em"><strong>{{meetingInfo["title"]}}</strong></li>
-	<li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
-	<li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
-	<li>Group: {{meetingInfo["groupName"]}}, Attendence: {{meetingInfo["users_attending"]}}</li>
-	<li>{{meetingInfo["comment"]}}</li>
-      </ul>
+      </div>
+      <!--MEETINGS-->
+      <div class="meetingDetail">
+	<ul ng-repeat="meetingInfo in vm.filteredMeetings | orderBy:-start_time" style="list-style: none; padding:0px;">
+	  <li style="font-size:1.5em"><strong>{{meetingInfo["title"]}}</strong></li>
+	  <li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
+	  <li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
+	  <li>Group: {{meetingInfo["groupName"]}}, Attendence: {{meetingInfo["users_attending"]}}</li>
+	  <li>{{meetingInfo["comment"]}}</li>
+	</ul>
+      </div>
     </div>
   </div>
 </div>
