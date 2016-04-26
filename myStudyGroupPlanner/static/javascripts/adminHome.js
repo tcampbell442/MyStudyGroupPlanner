@@ -57,6 +57,9 @@
 
 	vm.rooms = [];
 	vm.filteredRooms = [];
+	vm.selectedRoom = "";
+	document.getElementById("newRoom").style.visibility = "hidden";
+	document.getElementById("makeRoom").style.visibility = "hidden";
 
 		if(vm.selectedBuilding != "addBuilding" && vm.selectedBuilding != ""){
 			document.getElementById("newBuilding").style.visibility = "hidden";
@@ -168,28 +171,6 @@
     // $("#txtreportee").val($(this).closest('tr').children()[1].textContent);
 		// $("#txtmessage").val($(this).closest('tr').children()[2].textContent);
 	}
-	/**
-	   vm.studyLocation = {
-	   building: "",
-	   roomNum: "",
-	   maxCapacity: ""
-	   }
-	**/
-	/*$http({method: 'GET',
-	       url: '/api/building/'
-	      }).then(function(response){
-		  vm.studyLocations = response.data;
-	      },
-		      function(response){
-		      });*/
-
-	/**
-	   vm.addname = function (building){
-    	   if ( !_.contains( vm.studyLocations.name , building.name ) ){
-      	   vm.studyLocations.push( building.name );
-	   vm.studyLocations.name = {};
-    	   }
-	**/
 
 	$http({method: 'GET',
 		url: '/api/report/'
