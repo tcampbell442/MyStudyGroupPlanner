@@ -15,23 +15,24 @@
       <div ng-show="vm.isSelected(1) && vm.showSearchResults===false">
 	<h3>Class</h3>
 	<center>
-	  <div><select ng-model="vm.selectedSubject">
+	  <div><select ng-model="vm.selectedSubject" ng-change="vm.updateSubject()" id="subjectSelect">
 	      <option value="" disabled selected hidden>Subject</option>
-	      <option ng-repeat="subject in vm.subjects">{{subject}}</option>
+	      <option ng-repeat="subject in vm.subjects">{{subject["subject"]|truncate}}</option>
 	  </select></div>
-	  <div><select ng-model="vm.selectedClass">
+	  <div><select ng-model="vm.selectedClass" ng-change="vm.updateClass()" id="classSelect" style="visibility: hidden;">
 	      <option value="" disabled selected hidden>Class</option>
-	      <option ng-repeat="class in vm.classes">{{class}}</option>
+	      <option ng-repeat="Class in vm.filteredClasses">{{Class.subjectsClass | truncate}}</option>
 	  </select></div>
-	  <div><select ng-model="vm.selectedSection">
+	  <div><select ng-model="vm.selectedSection" ng-change="vm.updateSection()" id="sectionSelect" style="visibility: hidden;">
 	      <option value="" disabled selected hidden>Section</option>
-	      <option ng-repeat="section in vm.sections">{{section}}</option>
+	      <option ng-repeat="Section in vm.filteredSections">{{Section.section}}</option>
 	  </select></div>
 	  <div><h3><button ng-click="vm.searchGroups()" class="btn btn-success btn-sm"> Search </button></h3></div>
 	</center>
       </div>
+
     </div>
-  <!--CREATE GROUP TAB-->
+  <!-- CREATE GROUP TAB -->
     <div class="createTabs" ng-show="vm.isSelected(2)">
       <form role="form" name="createGroups">
 	<br>
@@ -39,17 +40,17 @@
 	<input type="text" class="from-control" id="groupName" ng-model="vm.groupFields.groupName"><br>
 	<b>Class Info: </b>
 	<div>
-	  <select ng-model="vm.groupFields.groupSubject">
+	  <select ng-model="vm.groupFields.groupSubject" ng-change="vm.updateSubjectCreate()" id="subjectSelect">
 	    <option value="" disabled selected hidden>Subject</option>
-	    <option ng-repeat="subject in vm.subjects">{{subject}}</option>
+	    <option ng-repeat="subject in vm.subjectsCreate">{{subject["subject"]|truncate}}</option>
 	  </select>
-	  <select ng-model="vm.groupFields.groupClass">
+	  <select ng-model="vm.groupFields.groupClass" ng-change="vm.updateClassCreate()" id="classSelectCreate" style="visibility: hidden;">
 	    <option value="" disabled selected hidden>Class</option>
-	    <option ng-repeat="class in vm.classes">{{class}}</option>
+	    <option ng-repeat="Class in vm.filteredClassesCreate">{{Class.subjectsClass | truncate}}</option>
 	  </select>
-	  <select ng-model="vm.groupFields.groupSection">
+	  <select ng-model="vm.groupFields.groupSection" ng-change="vm.updateSectionCreate()" id="sectionSelectCreate" style="visibility: hidden;">
 	    <option value="" disabled selected hidden>Section</option>
-	    <option ng-repeat="section in vm.sections">{{section}}</option>
+	    <option ng-repeat="Section in vm.filteredSectionsCreate">{{Section.section}}</option>
 	  </select>
 	</div>
 	<b>Maximum Number of Members: </b>
@@ -63,7 +64,7 @@
       </form>
     </div>
 
-    <!--SEARCH RESULTS-->
+    <!--SEARCH RESULTS -->
     <div class="groupSearchDetail" ng-show="vm.isSelected(1) && vm.showSearchResults===true">
       <h2>Search results</h2>
 

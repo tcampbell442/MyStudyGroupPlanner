@@ -17,6 +17,32 @@
   function HomeController($location, $scope, Authentication, $http, $filter, $q) {
     var vm = this;
     
+	vm.subjects = [];
+	vm.classes = [];
+	vm.sections = [];
+	vm.filteredClasses = [];
+	vm.filteredSections = [];
+	vm.selectedSubject = null;
+	vm.selectedClass = null;
+	vm.selectedSection = null;
+	vm.selectedSubjectsID = null;
+	vm.selectedClassID = null;
+	vm.selectedSectionID = null;
+	vm.selectedSubjectHolder = null;
+
+	vm.subjectsCreate = [];
+	vm.classesCreate = [];
+	vm.sectionsCreate = [];
+	vm.filteredClassesCreate = [];
+	vm.filteredSectionsCreate = [];
+	vm.selectedSubjectCreate = null;
+	vm.selectedClassCreate = null;
+	vm.selectedSectionCreate = null;
+	vm.selectedSubjectsIDCreate = null;
+	vm.selectedClassIDCreate = null;
+	vm.selectedSectionIDCreate = null;
+	vm.selectedSubjectHolderCreate = null;
+
     /** store current user (Account) object */
     vm.thisUser = Authentication.getAuthenticatedAccount();
 
@@ -55,12 +81,12 @@
 
 
 	/** Hardcoded Search tab data.  CHANGE TO DJANGO MODEL DATA */
-	vm.selectedSubject = "";
-	vm.subjects = ["Art", "Business", "English", "Geography", "History", "Math", "Music", "Science"];
-	vm.selectedClass = "";
-	vm.classes = ["CMSC101", "CMSC102", "CMSC201", "CMSC202", "CMSC313", "CMSC331", "CMSC447"];
-	vm.selectedSection;
-	vm.sections = [1,2,3,4];
+	// vm.selectedSubject = "";
+	// vm.subjects = ["Art", "Business", "English", "Geography", "History", "Math", "Music", "Science"];
+	// vm.selectedClass = "";
+	// vm.classes = ["CMSC101", "CMSC102", "CMSC201", "CMSC202", "CMSC313", "CMSC331", "CMSC447"];
+	// vm.selectedSection;
+	// vm.sections = [1,2,3,4];
 
 
 	/** used to ng-include calendar HTML*/
@@ -405,7 +431,167 @@
 		
 	} /** END vm.joinGroup() */
 	
+
+	// Getting the classes available for search
+
+
+
+	$http({method: 'GET',
+		url: '/api/subject/'
+		}).then(function(response){
+			vm.subjects = response.data;
+		},
+		function(response){
+	});
+
+	vm.updateSubject = function() {
+
+	vm.classes = [];
+	vm.filteredClasses = [];
+	//vm.selectedSubjectsID = "";
+	vm.selectedClass = "";
+		if(vm.selectedSubject != ""){
+			document.getElementById("classSelect").style.visibility = "visible";
+			document.getElementById("sectionSelect").style.visibility = "hidden";
+
+		 for(var i = 0; i < vm.subjects.length; i++){
+		 	
+			if(vm.subjects[i].subject == vm.selectedSubject){
+				vm.selectedSubjectsID = vm.subjects[i].id;
+		 	}
+		 }
+
+		$http({method: 'GET',
+		       url: '/api/subject/class/'
+		      }).then(function(response){
+			  	vm.classes = response.data;
+			  	//alert(vm.classes);
+				  	for(var i =0; i <vm.classes.length; i++){
+						if(vm.classes[i].subject == vm.selectedSubjectsID){
+						vm.filteredClasses.push(vm.classes[i]);
+					}
+				}
+				//alert(vm.filteredClasses);
+		      },
+			  function(response){
+			   });
+
+		}
+	}
+
+
+	vm.updateClass = function(){
+		vm.sections = [];
+		vm.filteredSections = [];
+		vm.selectedSection = "";
+
+		if (vm.selectedClass != ""){
+			document.getElementById("sectionSelect").style.visibility = "visible";
+
+			//alert(vm.filteredClasses);
+			for(var i = 0; i < vm.filteredClasses.length; i++){
+		 	
+			if(vm.filteredClasses[i].subjectsClass == vm.selectedClass){
+				vm.selectedClassID = vm.filteredClasses[i].id;
+		 	}
+		 }
+
+		$http({method: 'GET',
+		       url: '/api/subject/class/section/'
+		      }).then(function(response){
+			  	vm.sections = response.data;
+				  	for(var i =0; i <vm.sections.length; i++){
+						if(vm.sections[i].subjectsClass == vm.selectedClassID){
+						vm.filteredSections.push(vm.sections[i]);
+					}
+				}
+		      },
+			  function(response){
+			   });
+
+		}
+	}
+
+
+	// get available classes for create
 	
+	$http({method: 'GET',
+		url: '/api/subject/'
+		}).then(function(response){
+			vm.subjectsCreate = response.data;
+		},
+		function(response){
+	});
+
+	vm.updateSubjectCreate = function() {
+
+	vm.classesCreate = [];
+	vm.filteredClassesCreate = [];
+	//vm.selectedSubjectsID = "";
+	vm.groupFields.groupClass = "";
+		if(vm.groupFields.groupSubject != ""){
+			document.getElementById("classSelectCreate").style.visibility = "visible";
+			document.getElementById("sectionSelectCreate").style.visibility = "hidden";
+
+		 for(var i = 0; i < vm.subjectsCreate.length; i++){
+		 	
+			if(vm.subjectsCreate[i].subject == vm.groupFields.groupSubject){
+				vm.selectedSubjectsIDCreate = vm.subjectsCreate[i].id;
+		 	}
+		 }
+
+		$http({method: 'GET',
+		       url: '/api/subject/class/'
+		      }).then(function(response){
+			  	vm.classesCreate = response.data;
+			  	//alert(vm.classes);
+				  	for(var i =0; i <vm.classesCreate.length; i++){
+						if(vm.classesCreate[i].subject == vm.selectedSubjectsIDCreate){
+						vm.filteredClassesCreate.push(vm.classesCreate[i]);
+					}
+				}
+				//alert(vm.filteredClasses);
+		      },
+			  function(response){
+			   });
+
+		}
+	}
+
+
+	vm.updateClassCreate = function(){
+		vm.sectionsCreate = [];
+		vm.filteredSectionsCreate = [];
+		vm.groupFields.groupSection = "";
+
+		if (vm.groupFields.groupClass != ""){
+			document.getElementById("sectionSelectCreate").style.visibility = "visible";
+
+			//alert(vm.filteredClasses);
+			for(var i = 0; i < vm.filteredClassesCreate.length; i++){
+		 	
+			if(vm.filteredClassesCreate[i].subjectsClass == vm.groupFields.groupClass){
+				vm.selectedClassIDCreate = vm.filteredClassesCreate[i].id;
+		 	}
+		 }
+
+		$http({method: 'GET',
+		       url: '/api/subject/class/section/'
+		      }).then(function(response){
+			  	vm.sectionsCreate = response.data;
+				  	for(var i =0; i < vm.sectionsCreate.length; i++){
+						if(vm.sectionsCreate[i].subjectsClass == vm.selectedClassIDCreate){
+						vm.filteredSectionsCreate.push(vm.sectionsCreate[i]);
+					}
+				}
+		      },
+			  function(response){
+			   });
+
+		}
+	}
+
+
 	/** Functions to run on page load */
 	/** ----------------------------------------------------------- */
 	/** Call getGroups() helper function one time initially to display user's current groups */
