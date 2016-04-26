@@ -118,7 +118,13 @@ th{
 
 td{
   padding: 5px;
+  background-color: #f5e773;
   border: 1px solid black;
+}
+
+.table-bordered td, .table-bordered th{
+    border-color: black !important;
+    text-align: center !important;
 }
 
 .messageGroup, .leaveGroup, .groupName{
