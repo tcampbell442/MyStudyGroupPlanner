@@ -60,8 +60,8 @@
 		if(vm.selectedBuilding != "addBuilding" && vm.selectedBuilding != ""){
 			document.getElementById("newBuilding").style.visibility = "hidden";
 			document.getElementById("makeBuilding").style.visibility = "hidden";
-			// document.getElementById("roomSelect").style.visibility = "visible";
-			// document.getElementById("roomLabel").style.visibility = "visible";
+			document.getElementById("roomSelect").style.visibility = "visible";
+			document.getElementById("roomLabel").style.visibility = "visible";
 
 		 for(var i = 0; i < vm.buildings.length; i++){
 		 	
@@ -86,10 +86,10 @@
 		}else if (vm.selectedBuilding == "addBuilding"){
 			document.getElementById("newBuilding").style.visibility = "visible";
 			document.getElementById("makeBuilding").style.visibility = "visible";
-			// document.getElementById("roomSelect").style.visibility = "hidden";
-			// document.getElementById("roomLabel").style.visibility = "hidden";
-			// document.getElementById("newRoom").style.visibility = "hidden";
-			// document.getElementById("makeRoom").style.visibility = "hidden";
+			document.getElementById("roomSelect").style.visibility = "hidden";
+			document.getElementById("roomLabel").style.visibility = "hidden";
+			document.getElementById("newRoom").style.visibility = "hidden";
+			document.getElementById("makeRoom").style.visibility = "hidden";
 			vm.selectedRoom = "";
 		}
 
@@ -223,7 +223,8 @@
 
 	vm.updateSubject = function() {
 
-
+	vm.classes = [];
+	vm.filteredClasses = [];
 	//document.getElementById("classSelect")
 
 		if(vm.selectedSubject != "addSubject" && vm.selectedSubject != ""){
