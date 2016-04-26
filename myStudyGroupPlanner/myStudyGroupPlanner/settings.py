@@ -58,7 +58,8 @@ INSTALLED_APPS = (
     'group',
     'report',
     'msgpUser',
-    'chat'
+    'chat',
+    'Class',
 )
 
 MIDDLEWARE_CLASSES = (
