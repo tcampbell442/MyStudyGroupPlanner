@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from Class.serializers import SubjectSerializer, ClassSerializer, SectionSerializer
-from models import Subject, Class, Section
+from models import Subject, SubjectsClass, Section
 
 class SubjectList(generics.ListCreateAPIView):
 	queryset = Subject.objects.all()
@@ -17,11 +17,11 @@ class SubjectDetail(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = SubjectSerializer
 
 class ClassList(generics.ListCreateAPIView):
-	queryset = Class.objects.all()
+	queryset = SubjectsClass.objects.all()
 	serializer_class = ClassSerializer
 
 class ClassDetail(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Class.objects.all()
+	queryset = SubjectsClass.objects.all()
 	serializer_class = ClassSerializer
 
 class SectionList(generics.ListCreateAPIView):
