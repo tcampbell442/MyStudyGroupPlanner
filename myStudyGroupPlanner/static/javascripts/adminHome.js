@@ -36,7 +36,8 @@
 	vm.selectedSection = null;
 	vm.selectedSubjectsID = null;
 	vm.selectedClassID = null;
-	vm.seleectedSectionID = null;
+	vm.selectedSectionID = null;
+	vm.selectedSubjectHolder = null;
 
 
 	vm.tab = 1;
@@ -223,10 +224,15 @@
 
 	vm.updateSubject = function() {
 
+	// vm.selectedSubjectHolder = null;
+	//document.getElementById("classSelect").val = ""
+	// vm.selectedSubjectHolder =  vm.selectedSubject;
+	// vm.selectedSection = "";
+	// vm.selectedSubject = vm.selectedSubjectHolder;
 	vm.classes = [];
 	vm.filteredClasses = [];
-	//document.getElementById("classSelect")
-
+	//vm.selectedSubjectsID = "";
+	vm.selectedClass = "";
 		if(vm.selectedSubject != "addSubject" && vm.selectedSubject != ""){
 			document.getElementById("newSubject").style.visibility = "hidden";
 			document.getElementById("makeSubject").style.visibility = "hidden";
@@ -239,8 +245,7 @@
 			document.getElementById("newSection").style.visibility = "hidden";
 			document.getElementById("makeSection").style.visibility = "hidden";
 
-			vm.classes = [];
-			vm.filteredClasses = [];
+
 		 for(var i = 0; i < vm.subjects.length; i++){
 		 	
 			if(vm.subjects[i].subject == vm.selectedSubject){
@@ -252,11 +257,13 @@
 		       url: '/api/subject/class/'
 		      }).then(function(response){
 			  	vm.classes = response.data;
+			  	//alert(vm.classes);
 				  	for(var i =0; i <vm.classes.length; i++){
-						if(vm.classes[i].subject == vm.selectedSubjectID){
+						if(vm.classes[i].subject == vm.selectedSubjectsID){
 						vm.filteredClasses.push(vm.classes[i]);
 					}
 				}
+				//alert(vm.filteredClasses);
 		      },
 			  function(response){
 			   });
@@ -299,6 +306,7 @@
 	vm.updateClass = function(){
 		vm.sections = [];
 		vm.filteredSections = [];
+		vm.selectedSection = "";
 
 		if (vm.selectedClass != "addClass" && vm.selectedClass != ""){
 			document.getElementById("newClass").style.visibility = "hidden";
@@ -308,8 +316,8 @@
 			document.getElementById("newSection").style.visibility = "hidden";
 			document.getElementById("makeSection").style.visibility = "hidden";
 
-
-			for(var i = 0; i < vm.classes.length; i++){
+			//alert(vm.filteredClasses);
+			for(var i = 0; i < vm.filteredClasses.length; i++){
 		 	
 			if(vm.filteredClasses[i].subjectsClass == vm.selectedClass){
 				vm.selectedClassID = vm.filteredClasses[i].id;
@@ -348,7 +356,7 @@
 		url: '/api/subject/class/',
 		data: {
 			subjectsClass: vm.newClass,
-			subject: vm.selectedSubjectID
+			subject: vm.selectedSubjectsID
 						}
 		})
 		.then(function(response){
