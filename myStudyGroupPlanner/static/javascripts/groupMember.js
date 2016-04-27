@@ -716,6 +716,8 @@
 	/**------------------------------------------*/
   vm.getMessage = function()
   {
+    var div = $(".chat");
+    div.scrollTop(div.prop('scrollHeight'));
     $http({method: 'GET',
        url: '/api/chat/'})
        .then(function(response){
