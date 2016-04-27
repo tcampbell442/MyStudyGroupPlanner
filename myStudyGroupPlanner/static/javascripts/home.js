@@ -185,6 +185,21 @@
 	
 	
 	/** ------------------------------------------------ */
+	/**  Get single groups name                          */
+	/** ------------------------------------------------ */
+	vm.getGroupName = function(meetingObj) {
+		
+		for (var i = 0; i < vm.msgpUserAll.length; i++) {
+			if (vm.msgpUserAll[i].msgpGroupId == meetingObj.groupId) {
+				return vm.msgpUserAll[i].msgpGroupName;
+				break;
+			}
+		}
+		return "";
+	}	
+	
+	
+	/** ------------------------------------------------ */
 	/** This runs when you click search button in group 
 	    search tab                                       */
 	/** ------------------------------------------------ */
