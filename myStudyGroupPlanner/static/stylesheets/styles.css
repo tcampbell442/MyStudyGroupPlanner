@@ -97,7 +97,6 @@ select {
   right:30px;
 }
 
-
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
@@ -132,7 +131,7 @@ td{
 }
 
 .container{
-  margin-left: 250px;
+  margin-top: -25px;
 }
 
 .messageGroup{
@@ -148,9 +147,17 @@ td{
   margin-bottom: 35px;
 }
 
+.homeTabs{
+  height: 600px;
+  padding: 10px;
+  background: #f5e773;
+  border-style: ridge;
+  border-width: 10px;
+  border-color: #50aa7f;
+}
+
 .homeCalendar{
   height:250px;
-  width: 300px;
   background: #f5e773;
   border-style: groove;
   border-width: 10px;
@@ -186,7 +193,7 @@ td{
   background: #f5e773;
   border-style: groove;
   border-width: 10px;
-  border-color: green;
+  border-color: #1b7e4e;
   overflow: hidden;
   overflow-y: scroll;
 }
@@ -212,7 +219,7 @@ td{
 }
 
 .groupSearchDetail{
-  padding: 10px;
+  padding: 20px;
   height: 450px;
   width: 800px;
   overflow: hidden;
