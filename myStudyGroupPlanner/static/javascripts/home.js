@@ -43,8 +43,14 @@
 	vm.selectedSectionIDCreate = null;
 	vm.selectedSubjectHolderCreate = null;
 
+
     /** store current user (Account) object */
     vm.thisUser = Authentication.getAuthenticatedAccount();
+
+	/** used to ng-include calendar HTML*/
+	vm.calendarHTML = '';
+	/** used to include meetingModal.html */
+	vm.meetingModalHTML = '/static/templates/meetingModal.html';
 
 	vm.date = new Date();
 	vm.status = "";
@@ -80,20 +86,13 @@
     }
 
 
-	/** Hardcoded Search tab data.  CHANGE TO DJANGO MODEL DATA */
-	// vm.selectedSubject = "";
-	// vm.subjects = ["Art", "Business", "English", "Geography", "History", "Math", "Music", "Science"];
-	// vm.selectedClass = "";
-	// vm.classes = ["CMSC101", "CMSC102", "CMSC201", "CMSC202", "CMSC313", "CMSC331", "CMSC447"];
-	// vm.selectedSection;
-	// vm.sections = [1,2,3,4];
-
-
 	/** used to ng-include calendar HTML*/
 	vm.calendarHTML = '';
 	/** used to store meeting objects for meetings user is involved with */
 	vm.currentMeetings = [];
 	vm.filteredMeetings = [];
+	vm.meetingToModify = {};
+	vm.firstMeetingFiltering = true;
 	/** used to store string of comma seperated meeting start_time dd/mm formatted */
 	vm.meetings = "";
 	
@@ -288,6 +287,7 @@
 	
 		vm.meetings = "";
 		vm.currentMeetings = [];
+		vm.filteredMeetings = [];
 		
 		/** temporary list of meeting ids */
 		var uniqueMeetingIds = [];
@@ -302,40 +302,18 @@
 			if (vm.msgpUserAll[i].msgpUserId == vm.thisUser.id && 
 					vm.msgpUserAll[i].msgpMeetingId != null) {
 				
-				/** this if statement ensures same meeting is not saved multiple times.
-				    Ever user attending the meeting will have a msgpUser table entry
-				    with the same meeting id field */
-				if (uniqueMeetingIds.indexOf(vm.msgpUserAll[i].msgpMeetingId) <= -1) {
-				
-					/** get meeting info from meeting table */
-					vm.promiseList.push($http({method: 'GET',
-					url: '/api/meeting/' + vm.msgpUserAll[i].msgpMeetingId + '/'})
-					.then(function(meetingResponse){
-					
-						uniqueMeetingIds.push(meetingResponse.data.id);
-						/** add meeting object to groups meetings list, to be used in meetings window */
-						vm.currentMeetings.push(meetingResponse.data);
-						vm.filteredMeetings.push(meetingResponse.data);
-					
-						/** Setup vm.meetings String for pickadate calendar to know what days meetings are scheduled
-						pickadate modified to splice string at ',' and make a list of strings formatted like 'mm/dd/yyyy' */
-						
-						day = String(meetingResponse.data.start_time).substring(8,10);
-						month = String(meetingResponse.data.start_time).substring(5,7);
-						year = String(meetingResponse.data.start_time).substring(0,4);
-						
+				/** get meeting info from meeting table */
+				vm.promiseList.push($http({method: 'GET',
+				url: '/api/meeting/' + vm.msgpUserAll[i].msgpMeetingId + '/'})
+				.then(function(meetingResponse){
 
-						day = parseInt(day);
-						month = parseInt(month);
-						month -= 1;
-						
-						vm.meetings += "" + month + "/" + day + "/" + year + ",";
-						
-					},
-					function(meetingResponse){
-						
-					}));
-				}
+					vm.currentMeetings.push(meetingResponse.data);
+					vm.filteredMeetings.push(meetingResponse.data);
+
+				},
+				function(meetingResponse){
+					
+				}));
 			}
 		} /** END for loop */
 		
@@ -344,6 +322,36 @@
 		/** LOAD CALENDAR AFTER LOADING MEETINGS INFO !!! 
 		    WAITS FOR ALL PROMISES FROM MEETING GET REQUESTS*/
 		$q.all(vm.promiseList).then(function(waitResponse){
+			
+			for (var i = vm.currentMeetings.length-1; i >=0; i--) {
+				if (uniqueMeetingIds.indexOf(vm.currentMeetings[i].id) <= -1) {
+					
+					uniqueMeetingIds.push(vm.currentMeetings[i].id);
+					
+					/** Setup vm.meetings String for pickadate calendar to know what days meetings are scheduled
+					pickadate modified to splice string at ',' and make a list of strings formatted like 'mm/dd/yyyy' */
+
+					day = String(vm.currentMeetings[i].start_time).substring(8,10);
+					month = String(vm.currentMeetings[i].start_time).substring(5,7);
+					year = String(vm.currentMeetings[i].start_time).substring(0,4);
+
+
+					day = parseInt(day);
+					month = parseInt(month);
+					month -= 1;
+
+					vm.meetings += "" + month + "/" + day + "/" + year + ",";
+					
+				}
+				else {
+					vm.currentMeetings.splice(i,1);
+					vm.filteredMeetings.splice(i,1);
+				}
+			}
+		
+		
+			vm.filterMeetingsOnClick();
+		
 			vm.calendarHTML = '/static/templates/calendar.html';		
 		});		
 			
@@ -361,6 +369,7 @@
 		var selectedDay;
 		var selectedMonth;
 		var selectedYear;
+		
 		vm.filteredMeetings = [];
 		
 		for (var i = vm.currentMeetings.length-1; i >=0; i--) {
@@ -368,14 +377,116 @@
 			day = String(vm.currentMeetings[i].start_time).substring(8,10);
 			month = String(vm.currentMeetings[i].start_time).substring(5,7);
 			year = String(vm.currentMeetings[i].start_time).substring(0,4);
-			selectedDay = String(vm.date).substring(3,5);
-			selectedMonth = String(vm.date).substring(0,2);
-			selectedYear = String(vm.date).substring(6,10);
+			
+			if (vm.firstMeetingFiltering == false) {
+				selectedDay = String(vm.date).substring(3,5);
+				selectedMonth = String(vm.date).substring(0,2);
+				selectedYear = String(vm.date).substring(6,10);
+			}
+			else {
+				var tempTimeString = vm.date.toISOString();
+				selectedDay = tempTimeString.substring(8,10);
+				selectedMonth = tempTimeString.substring(5,7);
+				selectedYear = tempTimeString.substring(0,4);
+			}
 			/**alert("|" + day + month + year + ":" + selectedDay + selectedMonth + selectedYear + "|");*/
 			if (day == selectedDay && month == selectedMonth && year == selectedYear)
 				vm.filteredMeetings.push(vm.currentMeetings[i]);
 		}
+		vm.firstMeetingFiltering = false;
 	}
+	
+	
+	
+	/**------------------------------------------*/
+	/** Check if current user is in meeting		 
+		return true or false					 */
+	/**------------------------------------------*/
+	vm.isUserAttendMeeting = function(meeting) {
+		
+		var meetingIds = [];
+		/**
+		for (var i = 0; i < vm.currentGroupMeetings.length; i++) {
+			meetingIds.push(vm.currentGroupMeetings[i].id);
+		}*/
+		for (var i = 0; i < vm.msgpUserAll.length; i++) {
+			if (vm.msgpUserAll[i].msgpMeetingId == meeting.id) {
+				if (vm.msgpUserAll[i].msgpUserId == vm.thisUser.id)
+					return true;
+			}	
+		}
+		return false;
+	}
+	
+	
+	vm.userAttendMeeting = function(meeting) {
+		/** Doesn't do anything */
+	}
+	
+	
+	/**------------------------------------------*/
+	/** User no longer attending meeting, either
+	    -1 to meeting attendance or delete meeting*/
+	/**------------------------------------------*/
+	vm.userNotAttendMeeting = function(meeting) {	
+		
+		/** Delete meeting if current members attending is 1 */
+		if (meeting.users_attending <= 1) {
+			$http({method: 'DELETE',
+	  		   url: '/api/meeting/' + meeting.id + '/',
+	  		})
+	  		.then(function(deleteMeetingResponse){
+				/** success */
+				for (var i = 0; i < vm.filteredMeetings.length; i++) {
+					if (vm.filteredMeetings[i].id == meeting.id)
+						vm.filteredMeetings.splice(i,1);
+				}
+	  		},
+	  		function(deleteMeetingResponse){
+	  			/** request failed */
+	  		});
+		}
+		else {
+
+			var newAttendingCount = meeting.users_attending;
+			newAttendingCount -= 1;
+
+			/** Update meeting users_attending column by subtracting 1 */
+			$http({method: 'PATCH',
+				url: '/api/meeting/' + meeting.id + '/',
+				data: {
+					users_attending: newAttendingCount
+				}
+			})
+			.then(function(patchResponse){
+				/** success */
+			},
+			function(patchResponse){
+				/** request failed */
+			});
+		}
+		/** Delete msgpUser entry associated with that user and meeting */
+		for (var i = vm.msgpUserAll.length-1; i >= 0; i--) {
+			if (vm.msgpUserAll[i].msgpMeetingId == meeting.id) {
+				if (vm.msgpUserAll[i].msgpUserId == vm.thisUser.id) {
+					/** delete msgpUser table entry */
+					$http({method: 'DELETE',
+					   url: '/api/msgpUser/' + vm.msgpUserAll[i].id + '/',
+					})
+					.then(function(deleteMSGPUserResponse){
+						/** Load/update all entries from the msgpUser table
+						as there is a new one now.  This function update meetings too*/
+						vm.getGroups();
+					},
+					function(deleteMSGPUserResponse){
+						/** request failed */
+					});
+				}
+			}
+		}
+		
+	}		
+	
 	
 	
 	/** ------------------------------------------------ */

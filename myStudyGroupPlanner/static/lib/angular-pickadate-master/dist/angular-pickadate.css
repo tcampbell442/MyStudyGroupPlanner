@@ -48,7 +48,8 @@
     color: white; }    
     
   .pickadate-cell .pickadate-today {
-    background-color: #eaeaea; }
+    background-color: #eaeaea;
+    color: #666666; }
   .pickadate-cell .pickadate-active {
     background-color: #b52a00;
     color: white; }
