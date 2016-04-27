@@ -47,6 +47,11 @@
     background-color: #38B05C;
     color: white; }    
     
+  .pickadate-cell .CMSC447-old-meetings-scheduled {
+  	background-color: #347046;
+    color: white; }
+  }  
+    
   .pickadate-cell .pickadate-today {
     background-color: #eaeaea;
     color: #666666; }

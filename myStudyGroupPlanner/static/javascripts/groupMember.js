@@ -770,6 +770,14 @@
   		})
   		.then(function(meetingResponse){
 
+			/** clear meeting data */
+			vm.meetingTitle = "";
+			vm.selectedBuilding = "";
+			vm.selectedRoom ="";
+			vm.startTime = new Date();
+			vm.endTime = new Date();
+			vm.meetingComments = "";
+
   			/** Upon successful post, need to add new entry to msgpUser table */
   			$http({method: 'POST',
 			url: '/api/msgpUser/',

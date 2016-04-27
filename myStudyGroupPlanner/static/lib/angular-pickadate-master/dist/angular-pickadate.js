@@ -17,6 +17,7 @@
   
   /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
   var meetings = []; /** GLOBAL VARIABLE */
+  var todaysDate = new Date();
   /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
 
   angular.module('pickadate', [])
@@ -375,9 +376,16 @@
               date.classNames = [date.enabled ? 'pickadate-enabled' : 'pickadate-disabled'];
               
               /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */	
+              
 			  for (var i = 0; i < meetings.length; i++) {
-			  	if (meetings[i] == "" + date.date.getMonth() + "/" + date.date.getDate() + "/" + date.date.getFullYear())    
-			  		date.classNames.push('CMSC447-meetings-scheduled');
+			  	if (meetings[i] == "" + date.date.getMonth() + "/" + date.date.getDate() + "/" + date.date.getFullYear()) {  
+			  		
+					if (parseInt(meetings[i].substring(0,2)) <= parseInt(todaysDate.getMonth()) && parseInt(meetings[i].substring(2,4)) < parseInt(todaysDate.getDate()))
+						date.classNames.push('CMSC447-old-meetings-scheduled');
+					else
+						date.classNames.push('CMSC447-meetings-scheduled');
+			  	}
+			  	
 			  } 
 			  /** --------------------- ADDED CODE BY CMSC471 GROUP 2--------------------- */
 
