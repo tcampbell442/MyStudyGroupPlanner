@@ -44,6 +44,7 @@
 
 	vm.reports = [];
 
+	notAdminRedirect();
 
 	vm.selectTab = function(setTab){
 	    vm.tab = setTab;
@@ -391,6 +392,20 @@
 	// vm.username = 'username1';
 
 	//activate();
+		function notAdminRedirect() {
+			var authenticatedAccount = Authentication.getAuthenticatedAccount();
+	   		var isAdmin = Authentication.getAuthenticatedAccount().is_admin;
+			//var is_admin = $routeParams.username.is_admin;
+			//alert(isAdmin);
+
+			if(!authenticatedAccount){
+				$location.url('/');
+			}else{
+				if(!isAdmin){
+					$location.url('/');
+				}
+			}
+	   }
     }
 
    /*
@@ -398,24 +413,23 @@
     * @desc Actions to be performed when this controller is instantiated.
     * @memberOf myStudyGroupPlanner.
     */
-    /*function activate() {
-	var authenticatedAccount = Authentication.getAuthenticatedAccount();
-	var username = authenticatedAccount.username
-	//var is_admin = $routeParams.username.is_admin;
 
-	// Redirect if not logged in
-	if (!authenticatedAccount) {
-	    //console.log('authenticated user is' + authenticatedAccount');
-            $location.url('/');
-            //Snackbar.error('You are not authorized to view this page.');
-	} else {
-            // Redirect if logged in, but not the owner of this profile.
-            if ((username.toLowerCase()).indexOf("admin") == -1) {
-		//console.log('is the user an admin: ' + authenticatedAccount.is_admin);
-		$location.url('/');
-		//Snackbar.error('You are not authorized to view this page.');
-            }
-	}
-    }*/
+ 
+	// var authenticatedAccount = Authentication.getAuthenticatedAccount();
+	// var isAdmin = authenticatedAccount.is_admin
+	// //var is_admin = $routeParams.username.is_admin;
+
+	// // Redirect if not logged in
+	// //console.log(isAdmin);
+
+	// if (!authenticatedAccount) {
+ //            $location.url('/');
+	// } else {
+ //            // Redirect if not admin in, but not the owner of this profile.
+ //            if ((!isAdmin) {
+	// 			$location.url('/');
+ //            }
+	// }
+ //    }
 
 })();
