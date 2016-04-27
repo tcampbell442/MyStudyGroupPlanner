@@ -716,6 +716,8 @@
 	/**------------------------------------------*/
   vm.getMessage = function()
   {
+    var div = $(".chat");
+    div.scrollTop(div.prop('scrollHeight'));
     $http({method: 'GET',
        url: '/api/chat/'})
        .then(function(response){
@@ -737,6 +739,8 @@
     url: '/api/chat/',
     data: {
       message: vm.chatFields.message,
+      userId: vm.thisUser.id,
+      groupId: vm.groupId
       }
     })
     .then(function(response){

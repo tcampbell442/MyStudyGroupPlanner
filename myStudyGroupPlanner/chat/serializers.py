@@ -7,5 +7,6 @@ class ChatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
         field = ('userId',
+                 'groupId',
                  'message',
                  'dateTime')
