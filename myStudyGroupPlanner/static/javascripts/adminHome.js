@@ -43,10 +43,8 @@
 	vm.tab = 1;
 
 	vm.reports = [];
-	vm.meetings = [];
-	vm.groups = [];
-	vm.msgpUsers = [];
-	vm.chats = [];
+
+	notAdminRedirect();
 
 	vm.selectTab = function(setTab){
 	    vm.tab = setTab;
@@ -71,7 +69,7 @@
 			document.getElementById("roomLabel").style.visibility = "visible";
 
 		 for(var i = 0; i < vm.buildings.length; i++){
-
+		 	
 			if(vm.buildings[i].name == vm.selectedBuilding){
 				vm.selectedBuildingID = vm.buildings[i].id;
 		 	}
@@ -114,7 +112,7 @@
 
 		}
 	}
-
+	
 	vm.makeBuilding = function(){
 		vm.buildingAbrv = vm.newBuilding.substring(0,3);
 		$http({method: 'POST',
@@ -231,7 +229,7 @@
 
 
 		 for(var i = 0; i < vm.subjects.length; i++){
-
+		 	
 			if(vm.subjects[i].subject == vm.selectedSubject){
 				vm.selectedSubjectsID = vm.subjects[i].id;
 		 	}
@@ -302,7 +300,7 @@
 
 			//alert(vm.filteredClasses);
 			for(var i = 0; i < vm.filteredClasses.length; i++){
-
+		 	
 			if(vm.filteredClasses[i].subjectsClass == vm.selectedClass){
 				vm.selectedClassID = vm.filteredClasses[i].id;
 		 	}
@@ -387,110 +385,6 @@
 		});
 	}
 
-
-		$http({method: 'GET',
-			url: '/api/group/'
-			}).then(function(response){
-				vm.groups = response.data;
-			},
-			function(response){
-		});
-
-
-
-		$http({method: 'GET',
-			url: '/api/meeting/'
-			}).then(function(response){
-				vm.meetings = response.data;
-			},
-			function(response){
-		});
-
-
-
-		$http({method: 'GET',
-			url: '/api/msgpUser/'
-			}).then(function(response){
-				vm.msgpUsers = response.data;
-			},
-			function(response){
-		});
-
-
-
-		$http({method: 'GET',
-			url: '/api/chat/'
-			}).then(function(response){
-				vm.chats = response.data;
-			},
-			function(response){
-		});
-
-
-
-	vm.resetDatabase = function()
-{
-
-
-	var report_length = vm.reports.length;
-	var meeting_length = vm.meetings.length;
-	var group_length = vm.groups.length;
-	var chat_length = vm.chats.length;
-	var msgpuser_length = vm.msgpUsers.length;
-
-
-	for (var i=0; i< msgpuser_length; i++)
-	{
-		$http({method: 'DELETE',
-			url: '/api/msgpUser/'+ vm.msgpUsers[i].id + '/',
-			}).then(function(response){
-			},
-			function(response){
-		});
-	}
-
-	for (var i=0; i< group_length; i++)
-	{
-		$http({method: 'DELETE',
-			url: '/api/group/'+ vm.groups[i].id + '/',
-			}).then(function(response){
-			},
-			function(response){
-		});
-	}
-
-	for (var i=0; i< chat_length; i++)
-	{
-		$http({method: 'DELETE',
-			url: '/api/chat/'+ vm.chats[i].id + '/',
-			}).then(function(response){
-			},
-			function(response){
-		});
-	}
-
-	for (var i=0; i< meeting_length; i++)
-	{
-		$http({method: 'DELETE',
-			url: '/api/meeting/'+ vm.meetings[i].id + '/',
-			}).then(function(response){
-			},
-			function(response){
-		});
-	}
-
-	for (var i=0; i< report_length; i++)
-	{
-		$http({method: 'DELETE',
-			url: '/api/report/'+ vm.reports[i].id + '/',
-			}).then(function(response){
-			},
-			function(response){
-		});
-	}
-
-}
-
 	// vm.usernameTemp = "";
 
 	//vm.buildings = ["Sherman", "ITE", "Engineering", "Biology"];
@@ -498,6 +392,20 @@
 	// vm.username = 'username1';
 
 	//activate();
+		function notAdminRedirect() {
+			var authenticatedAccount = Authentication.getAuthenticatedAccount();
+	   		var isAdmin = Authentication.getAuthenticatedAccount().is_admin;
+			//var is_admin = $routeParams.username.is_admin;
+			//alert(isAdmin);
+
+			if(!authenticatedAccount){
+				$location.url('/');
+			}else{
+				if(!isAdmin){
+					$location.url('/');
+				}
+			}
+	   }
     }
 
    /*
@@ -505,24 +413,23 @@
     * @desc Actions to be performed when this controller is instantiated.
     * @memberOf myStudyGroupPlanner.
     */
-    /*function activate() {
-	var authenticatedAccount = Authentication.getAuthenticatedAccount();
-	var username = authenticatedAccount.username
-	//var is_admin = $routeParams.username.is_admin;
 
-	// Redirect if not logged in
-	if (!authenticatedAccount) {
-	    //console.log('authenticated user is' + authenticatedAccount');
-            $location.url('/');
-            //Snackbar.error('You are not authorized to view this page.');
-	} else {
-            // Redirect if logged in, but not the owner of this profile.
-            if ((username.toLowerCase()).indexOf("admin") == -1) {
-		//console.log('is the user an admin: ' + authenticatedAccount.is_admin);
-		$location.url('/');
-		//Snackbar.error('You are not authorized to view this page.');
-            }
-	}
-    }*/
+ 
+	// var authenticatedAccount = Authentication.getAuthenticatedAccount();
+	// var isAdmin = authenticatedAccount.is_admin
+	// //var is_admin = $routeParams.username.is_admin;
+
+	// // Redirect if not logged in
+	// //console.log(isAdmin);
+
+	// if (!authenticatedAccount) {
+ //            $location.url('/');
+	// } else {
+ //            // Redirect if not admin in, but not the owner of this profile.
+ //            if ((!isAdmin) {
+	// 			$location.url('/');
+ //            }
+	// }
+ //    }
 
 })();
