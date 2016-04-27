@@ -43,7 +43,10 @@
 	vm.tab = 1;
 
 	vm.reports = [];
-
+	vm.meetings = [];
+	vm.groups = [];
+	vm.msgpUsers = [];
+	vm.chats = [];
 
 	vm.selectTab = function(setTab){
 	    vm.tab = setTab;
@@ -68,7 +71,7 @@
 			document.getElementById("roomLabel").style.visibility = "visible";
 
 		 for(var i = 0; i < vm.buildings.length; i++){
-		 	
+
 			if(vm.buildings[i].name == vm.selectedBuilding){
 				vm.selectedBuildingID = vm.buildings[i].id;
 		 	}
@@ -111,7 +114,7 @@
 
 		}
 	}
-	
+
 	vm.makeBuilding = function(){
 		vm.buildingAbrv = vm.newBuilding.substring(0,3);
 		$http({method: 'POST',
@@ -228,7 +231,7 @@
 
 
 		 for(var i = 0; i < vm.subjects.length; i++){
-		 	
+
 			if(vm.subjects[i].subject == vm.selectedSubject){
 				vm.selectedSubjectsID = vm.subjects[i].id;
 		 	}
@@ -299,7 +302,7 @@
 
 			//alert(vm.filteredClasses);
 			for(var i = 0; i < vm.filteredClasses.length; i++){
-		 	
+
 			if(vm.filteredClasses[i].subjectsClass == vm.selectedClass){
 				vm.selectedClassID = vm.filteredClasses[i].id;
 		 	}
@@ -383,6 +386,110 @@
 			// vm.roomStatus = "Failed to create Room.";
 		});
 	}
+
+
+		$http({method: 'GET',
+			url: '/api/group/'
+			}).then(function(response){
+				vm.groups = response.data;
+			},
+			function(response){
+		});
+
+
+
+		$http({method: 'GET',
+			url: '/api/meeting/'
+			}).then(function(response){
+				vm.meetings = response.data;
+			},
+			function(response){
+		});
+
+
+
+		$http({method: 'GET',
+			url: '/api/msgpUser/'
+			}).then(function(response){
+				vm.msgpUsers = response.data;
+			},
+			function(response){
+		});
+
+
+
+		$http({method: 'GET',
+			url: '/api/chat/'
+			}).then(function(response){
+				vm.chats = response.data;
+			},
+			function(response){
+		});
+
+
+
+	vm.resetDatabase = function()
+{
+
+
+	var report_length = vm.reports.length;
+	var meeting_length = vm.meetings.length;
+	var group_length = vm.groups.length;
+	var chat_length = vm.chats.length;
+	var msgpuser_length = vm.msgpUsers.length;
+
+
+	for (var i=0; i< msgpuser_length; i++)
+	{
+		$http({method: 'DELETE',
+			url: '/api/msgpUser/'+ vm.msgpUsers[i].id + '/',
+			}).then(function(response){
+			},
+			function(response){
+		});
+	}
+
+	for (var i=0; i< group_length; i++)
+	{
+		$http({method: 'DELETE',
+			url: '/api/group/'+ vm.groups[i].id + '/',
+			}).then(function(response){
+			},
+			function(response){
+		});
+	}
+
+	for (var i=0; i< chat_length; i++)
+	{
+		$http({method: 'DELETE',
+			url: '/api/chat/'+ vm.chats[i].id + '/',
+			}).then(function(response){
+			},
+			function(response){
+		});
+	}
+
+	for (var i=0; i< meeting_length; i++)
+	{
+		$http({method: 'DELETE',
+			url: '/api/meeting/'+ vm.meetings[i].id + '/',
+			}).then(function(response){
+			},
+			function(response){
+		});
+	}
+
+	for (var i=0; i< report_length; i++)
+	{
+		$http({method: 'DELETE',
+			url: '/api/report/'+ vm.reports[i].id + '/',
+			}).then(function(response){
+			},
+			function(response){
+		});
+	}
+
+}
 
 	// vm.usernameTemp = "";
 

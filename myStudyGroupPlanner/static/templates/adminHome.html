@@ -74,7 +74,7 @@
 
     <div ng-show="vm.isSelected(2)">
       <div>
-	<label>Building: </label> 
+	<label>Building: </label>
 	<select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
           <option value="" disabled selected hidden>Buildings</option>
           <option ng-repeat="building in vm.buildings">{{building["name"]|truncate}}</option>
@@ -104,7 +104,7 @@
     <!-- classes -->
     <div ng-show="vm.isSelected(3)">
       <div>
-	<label>Subject: </label> 
+	<label>Subject: </label>
 	<select ng-model="vm.selectedSubject" ng-change="vm.updateSubject()" id="subjectSelect">
           <option value="" disabled selected hidden>Subjects</option>
           <option ng-repeat="subject in vm.subjects">{{subject["subject"]|truncate}}</option>
@@ -179,7 +179,7 @@
 	    </div>
 	    <div class="modal-body">
 	      <h4>Are you sure you want to delete the database and its contents?</h4>
-	      <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+	      <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.resetDatabase()">Yes</button>
 	      <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
 	    </div>
 	  </div>
