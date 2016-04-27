@@ -149,15 +149,21 @@ td{
 }
 
 .homeCalendar{
-  height:230px;
-  border: 3px solid black;
-  padding:5px
+  height:250px;
+  width: 300px;
+  background: #f5e773;
+  border-style: groove;
+  border-width: 10px;
+  border-color: #b5a526;
 }
 
 .meetingDetail{
-  border: 3px solid black;
-  padding: 10px;
   height: 150px;
+  width: 300px;
+  background: #f5e773;
+  border-style: groove;
+  border-width: 10px;
+  border-color: #b54626;
   overflow: hidden;
   overflow-y: scroll;
 }
@@ -174,9 +180,13 @@ td{
 }
 
 .currentGrps{
-  border: 3px solid black;
-  padding: 10px;
   height: 150px;
+  width: 300px;
+  padding: 5px;
+  background: #f5e773;
+  border-style: groove;
+  border-width: 10px;
+  border-color: green;
   overflow: hidden;
   overflow-y: scroll;
 }
