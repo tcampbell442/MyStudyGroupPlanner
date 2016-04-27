@@ -13,8 +13,12 @@
 	    </li>
 	  </ul>
 	</div>
+<<<<<<< HEAD
+	
+=======
 <!-- <<<<<<< HEAD -->
 
+>>>>>>> ca5edc379b2297fb02207acadb37f8e828e70ccc
 	<div class="row">
 	  <div class="col-md-12">
 	    <!--SEARCH TAB-->
@@ -40,6 +44,8 @@
 		  </center>
 		</div>
 
+<<<<<<< HEAD
+=======
 <!-- ======= -->
       </div>
       <div class="col-md-8"></div>
@@ -92,6 +98,7 @@
 		  <option ng-repeat="Section in vm.filteredSectionsCreate">{{Section.section}}</option>
 		</select>
 >>>>>>> 26875ffb2e850419f307feefdbd2ba9b42dc18e7
+>>>>>>> ca5edc379b2297fb02207acadb37f8e828e70ccc
 	      </div>
 	      <!-- CREATE GROUP TAB -->
 	      <div class="createTabs" ng-show="vm.isSelected(2)">
@@ -166,44 +173,50 @@
 	</div>
       </div>
 
-	<div class="col-md-4">
-	  <!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->
-	  <div class="information">
-	    <!--GROUPS-->
-	    <div class="currentGrps">
-	      <h3>My Groups</h3>
+      <div class="col-md-4">
+	<!--RIGHT COLUMN CONTENT:  CURRENT GROUPS/CALENDAR/UPCOMING MEETINGS-->
+	<div class="information">
+	  <!--GROUPS-->
+	  <div class="currentGrps">
+	    <h3>My Groups</h3>
 
-	      <ul ng-repeat="group in vm.msgpUserAll | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}" style="list-style: none; padding:0px;">
-		<li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
-	      </ul>
+	    <ul ng-repeat="group in vm.msgpUserAll | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}" style="list-style: none; padding:0px;">
+	      <li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
+	    </ul>
 
 
-	    </div class="homeCalendar">
-	    <br>
-	    <!--CALENDAR-->
-	    <div class="homeCalendar">
+	  </div class="homeCalendar">
+	  <br>
+	  <!--CALENDAR-->
+	  <div class="homeCalendar">
 
-	      <div ng-include="vm.calendarHTML"></div>
+	    <div ng-include="vm.calendarHTML"></div>
 
+<<<<<<< HEAD
+	  </div>
+	  
+	  <br>
+=======
 	    </div>
 
 	    <br>
+>>>>>>> ca5edc379b2297fb02207acadb37f8e828e70ccc
 
-	    <!--MEETINGS-->
-	    <div class="meetingDetail">
-	      <ul ng-repeat="meetingInfo in vm.filteredMeetings | orderBy:'start_time'" style="list-style: none; padding:0px;">
-		<li style="font-size:1.5em"><a href="" data-toggle="modal" data-target="#joinMeetingModal" ng-click="vm.meetingToModify=meetingInfo"><strong>{{meetingInfo["title"]}}</strong></a></li>
-		<li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
-		<li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
-		<li>Group: {{vm.getGroupName(meetingInfo)}}, Attendence: {{meetingInfo["users_attending"]}}</li>
-		<li>{{meetingInfo["comment"]}}</li>
-	      </ul>
-	    </div>
+	  <!--MEETINGS-->
+	  <div class="meetingDetail">
+	    <ul ng-repeat="meetingInfo in vm.filteredMeetings | orderBy:'start_time'" style="list-style: none; padding:0px;">
+	      <li style="font-size:1.5em"><a href="" data-toggle="modal" data-target="#joinMeetingModal" ng-click="vm.meetingToModify=meetingInfo"><strong>{{meetingInfo["title"]}}</strong></a></li>
+	      <li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
+	      <li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
+	      <li>Group: {{vm.getGroupName(meetingInfo)}}, Attendence: {{meetingInfo["users_attending"]}}</li>
+	      <li>{{meetingInfo["comment"]}}</li>
+	    </ul>
 	  </div>
 	</div>
       </div>
     </div>
   </div>
+</div>
 
   <!-- JOIN/LEAVE MEETING MODAL ------------------------- -->
   <div ng-include="vm.meetingModalHTML"></div>
