@@ -552,6 +552,8 @@
 	/**------------------------------------------*/
 	/** Chat GET AND POST functions              */
 	/**------------------------------------------*/
+  vm.getMessage = function()
+  {
     $http({method: 'GET',
        url: '/api/chat/'})
        .then(function(response){
@@ -560,23 +562,32 @@
        function(response){
      });
 
-    vm.sendMessage = function()
-    {
-      var user = Authentication.getAuthenticatedAccount();
+     $timeout(function(){
+       vm.getMessage();
+     }, 1000)
+  }
 
-      $http({method: 'POST',
-      url: '/api/chat/',
-      data: {
-        message: vm.chatFields.message,
-        }
-      })
-      .then(function(response){
-        vm.status = "Report submitted";
-      },
-      function(response){
-        vm.status = "Failed to submit report.";
-      });
-    }
+  vm.getMessage();
+
+  vm.sendMessage = function()
+  {
+    $http({method: 'POST',
+    url: '/api/chat/',
+    data: {
+      message: vm.chatFields.message,
+      }
+    })
+    .then(function(response){
+      $http({method: 'GET',
+         url: '/api/chat/'})
+         .then(function(response){
+           vm.messages = response.data;
+         },
+         function(response){
+       });
+    });
+    $('#comments').val('');
+  }
 
 
 	/**------------------------------------------*/
