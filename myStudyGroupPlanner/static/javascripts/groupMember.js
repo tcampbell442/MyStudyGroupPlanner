@@ -55,6 +55,7 @@
 	vm.endTime = new Date();
 
 	vm.meetingComments = "";
+	vm.meetingCreationStatus = "";
 
 	vm.buildings = ["Information Technology of Engineering",
 		           "Sherman Hall","Arts and Humanities",
@@ -104,6 +105,12 @@
 		vm.endTime.setMinutes(0);
 		vm.endTime.setSeconds(0);
 		vm.endTime.setMilliseconds(0);
+		
+		vm.meetingTitle = "";
+		vm.selectedBuilding = "";
+		vm.selectedRoom ="";
+		vm.meetingComments = "";
+		vm.meetingCreationStatus = "";
 	}
 
 
@@ -424,6 +431,100 @@
 
 	} /** END vm.leaveGroup() */
 
+
+
+	/** ------------------------------------------------ */
+	/** Validates requested meeting time for selected
+	    building + room.  Blocks times into hours 
+	    regardless of the requested start/end minutes    */
+	/** ------------------------------------------------ */
+	vm.restrictMeetingOverlap = function() {
+		
+		if (parseInt(vm.startTime.getDate()) <= parseInt(vm.endTime.getDate()) && (parseInt(vm.endTime.getDate()) - parseInt(vm.startTime.getDate())) <= 1 && parseInt(vm.startTime.getHours()) < parseInt(vm.endTime.getHours())) {
+		
+			$http({method: 'GET',
+				url: '/api/meeting/'})
+			.then(function(meetingResponse){
+			
+				var validTime = true;
+			
+				var requestedStartHour;
+				var requestedEndHour;
+				var tempStartHour;
+				var tempEndHour;
+				var requestedStartDate;
+				var tempStartDate;
+				var conflictMessage = "Timing Conflict: Meeting already scheduled for room# ";
+				var correctedStartTime = "";
+				var correctedEndTime = "";
+				
+				
+				for (var i = 0; i < meetingResponse.data.length; i++) {
+				
+					/**alert("" + String(meetingResponse.data[i].building) + " " + String(vm.selectedBuilding) + "-" + String(meetingResponse.data[i].room_num) + " " + String(vm.selectedRoom) );*/
+					
+					/** Check if building and room num are the same */
+					if (meetingResponse.data[i].building == vm.selectedBuilding && meetingResponse.data[i].room_num == vm.selectedRoom) {
+						
+							requestedStartDate = parseInt(vm.startTime.getDate());
+							tempStartDate = parseInt(String(meetingResponse.data[i].start_time).substring(8,10));
+						
+						/** check if start dates are the same */
+						if (requestedStartDate == tempStartDate) {
+						
+							requestedStartHour = parseInt(vm.startTime.getHours());
+							requestedEndHour = parseInt(vm.endTime.getHours());
+							tempStartHour = parseInt(String(meetingResponse.data[i].start_time).substring(11,13)) - 4;
+							tempEndHour = parseInt(String(meetingResponse.data[i].end_time).substring(11,13)) - 4;
+							
+							if (tempStartHour >= 12 && tempStartHour < 24)
+								correctedStartTime = "" + String(tempStartHour - 12) + "pm";
+							else
+								correctedStartTime = "" + String(tempStartHour) + "am";
+							if (tempEndHour >= 12 && tempEndHour < 24)
+								correctedEndTime = "" + String(tempEndHour - 12) + "pm";
+							else
+								correctedEndTime = "" + String(tempEndHour) + "am";
+							
+							conflictMessage += vm.selectedRoom + " from " + correctedStartTime + " to " + correctedEndTime;
+							/**alert("" + String(requestedStartHour) + " " + String(requestedEndHour) + " " + String(tempStartHour) + " " + String(tempEndHour));*/
+				
+							/** Check the four cases where 1hr block timing conflicts occur */
+							if (requestedStartHour >= tempStartHour && requestedEndHour <= tempEndHour) {
+								validTime = false;
+								break;
+							}
+							else if (requestedEndHour > tempStartHour && requestedEndHour <= tempEndHour) {
+								validTime = false;
+								break;
+							}
+							else if (requestedStartHour >= tempStartHour && requestedStartHour <= tempEndHour) {
+								validTime = false;
+								break;
+							}
+							else if (requestedStartHour <= tempStartHour && requestedEndHour > tempStartHour) {	
+								validTime = false;
+								break;
+							}
+						}
+					}
+				}
+			
+				if (validTime == true)
+					vm.createMeeting([true, "Meeting Created.  Click close to exit."]);
+				else
+					vm.createMeeting([false, conflictMessage]);
+			},
+			function(meetingResponse){
+				vm.createMeeting([false, "Error."]);
+			});
+		
+		}
+		/** invalid input */
+		else
+			vm.createMeeting([false, "Invalid date/time selected."]);
+
+	}	
 
 
 
@@ -751,61 +852,60 @@
 	/**------------------------------------------*/
 	/** Meeting POST function                    */
 	/**------------------------------------------*/
-	vm.createMeeting = function() {
+	vm.createMeeting = function(meetingValidation) {
 		/**var startTime = $filter('date')(vm.startTime, 'H:mm');*/
 		/**vm.test = $filter('date')(vm.startTime, 'MM/dd/yyyy hh:mm');*/
 
-		$http({method: 'POST',
-  		url: '/api/meeting/',
-  		data: {
-  			title: vm.meetingTitle,
-			building: vm.selectedBuilding,
-			room_num: vm.selectedRoom,
-			start_time: vm.startTime,
-			end_time: vm.endTime,
-			users_attending: 1,
-			groupId: vm.groupId,
-			comment: vm.meetingComments
-  			}
-  		})
-  		.then(function(meetingResponse){
+		if (meetingValidation[0] == true) {
+			$http({method: 'POST',
+	  		url: '/api/meeting/',
+	  		data: {
+	  			title: vm.meetingTitle,
+				building: vm.selectedBuilding,
+				room_num: vm.selectedRoom,
+				start_time: vm.startTime,
+				end_time: vm.endTime,
+				users_attending: 1,
+				groupId: vm.groupId,
+				comment: vm.meetingComments
+	  			}
+	  		})
+	  		.then(function(meetingResponse){
 
-			/** clear meeting data */
-			vm.meetingTitle = "";
-			vm.selectedBuilding = "";
-			vm.selectedRoom ="";
-			vm.startTime = new Date();
-			vm.endTime = new Date();
-			vm.meetingComments = "";
+	  			/** Upon successful post, need to add new entry to msgpUser table */
+	  			$http({method: 'POST',
+				url: '/api/msgpUser/',
+				data: {
+					msgpUserId: vm.thisUser.id,
+					msgpUsername: vm.thisUser.username,
+					msgpGroupId: vm.groupInfo.id,
+					msgpGroupName: vm.groupInfo.groupName,
+					msgpMeetingId: meetingResponse.data.id
+					}
+				})
+				.then(function(msgpUserResponse){
+					/** msgpUser POST success */
+					vm.meetingCreationStatus = meetingValidation[1];		
+					
+					/** Load/update all entries from the msgpUser table
+						as there is a new one now*/
+					vm.getGroupsData();
 
-  			/** Upon successful post, need to add new entry to msgpUser table */
-  			$http({method: 'POST',
-			url: '/api/msgpUser/',
-			data: {
-				msgpUserId: vm.thisUser.id,
-				msgpUsername: vm.thisUser.username,
-				msgpGroupId: vm.groupInfo.id,
-				msgpGroupName: vm.groupInfo.groupName,
-				msgpMeetingId: meetingResponse.data.id
-				}
-			})
-			.then(function(msgpUserResponse){
-				/** msgpUser POST success */
+				},
+				function(msgpUserResponse){
+					/**msgpUser POST failed*/
+					vm.meetingCreationStatus = "Error creating meeting!";
+				});
 
-				/** Load/update all entries from the msgpUser table
-				    as there is a new one now*/
-				vm.getGroupsData();
-
-			},
-			function(msgpUserResponse){
-				/**msgpUser POST failed*/
-			});
-
-  		},
-  		function(meetingResponse){
-  			/** meeting POST failed */
-  		});
-
+	  		},
+	  		function(meetingResponse){
+	  			/** meeting POST failed */
+	  			vm.meetingCreationStatus = "Error creating meeting!";
+	  		});
+  		}
+  		else
+  			vm.meetingCreationStatus = meetingValidation[1];
+		
 	} /** END meeting function */
 
 
