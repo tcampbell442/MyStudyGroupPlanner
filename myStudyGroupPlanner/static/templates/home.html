@@ -131,15 +131,19 @@
 	  <!--MEETINGS-->
 	  <div class="meetingDetail">
 	    <ul ng-repeat="meetingInfo in vm.filteredMeetings | orderBy:-start_time" style="list-style: none; padding:0px;">
-	      <li style="font-size:1.5em"><strong>{{meetingInfo["title"]}}</strong></li>
-	      <li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
-	      <li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
-	      <li>Group: {{meetingInfo["groupName"]}}, Attendence: {{meetingInfo["users_attending"]}}</li>
-	      <li>{{meetingInfo["comment"]}}</li>
-	    </ul>
+			<li style="font-size:1.5em"><a href="" data-toggle="modal" data-target="#joinMeetingModal" ng-click="vm.meetingToModify=meetingInfo"><strong>{{meetingInfo["title"]}}</strong></a></li>
+			<li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
+			<li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
+			<li>Group: {{meetingInfo["groupName"]}}, Attendence: {{meetingInfo["users_attending"]}}</li>
+			<li>{{meetingInfo["comment"]}}</li>
+		  </ul>
 	  </div>
 	</div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- JOIN/LEAVE MEETING MODAL ------------------------- -->
+<div ng-include="vm.meetingModalHTML"></div>
+<!-- -------------------------------------------------  -->

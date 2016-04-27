@@ -28,7 +28,7 @@
     <div class="upcoming_events" ng-show="vm.userAMember">
       <div class="meetings">
 	<ul ng-repeat="meetingInfo in vm.filteredMeetings | orderBy:-start_time" style="list-style: none; padding:0px;">
-	  <li style="font-size:1.5em"><strong>{{meetingInfo["title"]}}</strong></li>
+	  <li style="font-size:1.5em"><a href="" data-toggle="modal" data-target="#joinMeetingModal" ng-click="vm.meetingToModify=meetingInfo"><strong>{{meetingInfo["title"]}}</strong></a></li>
 	  <li>{{meetingInfo["start_time"] | date:'hh:mma'}} - {{meetingInfo["end_time"] | date:'hh:mma'}}</li>
 	  <li>{{meetingInfo["building"]}}, room# {{meetingInfo["room_num"]}}</li>
 	  <li>Attendence: {{meetingInfo["users_attending"]}}</li>
@@ -37,6 +37,19 @@
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+<!-- JOIN/LEAVE MEETING MODAL ------------------------- -->
+<div ng-include="vm.meetingModalHTML"></div>
+<!-- -------------------------------------------------  -->
+
 
 
   <div class="container" ng-show="vm.isCreator">
@@ -117,7 +130,7 @@
       <tr ng-repeat="member in vm.groupUsers">
 	<td>{{member.msgpUsername}}</td>
 	<td>
-	  <button type="button" class="btn btn-warning btn-info btn-xs" data-toggle="modal" data-target="#reportModal">Report</button>
+	  <button type="button" class="btn btn-warning btn-info btn-xs" data-toggle="modal" data-target="#reportModal" ng-hide="{{member.msgpUserId==vm.thisUser.id}}">Report</button>
 	  <div id="reportModal" class="modal fade" role="dialog">
 	    <div class="modal-dialog">
 
