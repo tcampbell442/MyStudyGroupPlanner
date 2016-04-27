@@ -737,6 +737,8 @@
     url: '/api/chat/',
     data: {
       message: vm.chatFields.message,
+      userId: vm.thisUser.id,
+      groupId: vm.groupId
       }
     })
     .then(function(response){

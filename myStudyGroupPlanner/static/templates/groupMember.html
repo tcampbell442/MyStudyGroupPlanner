@@ -7,9 +7,9 @@
   <h1>{{vm.groupInfo.groupName}}</h1>
   <div class="chatBoard">
     <div class="chat">
-      <div ng-repeat="msg in vm.messages">
-				<p>{{vm.thisUser.username}}: {{msg.message}}&nbsp&nbsp&nbsp&nbsp<i>{{msg.dateTime}}</i></p>
-      </div>
+			<div ng-repeat="msg in vm.messages | filter:{groupId: vm.groupId}">
+			        <p><b>{{vm.thisUser.username}}</b>: {{msg.message}}&nbsp&nbsp&nbsp&nbsp<i>{{msg.dateTime}}</i></p>
+			      </div>
       <form role="form">
 	<textarea name="comments" id="comments" ng-model="vm.chatFields.message">
 	  Type a message....
