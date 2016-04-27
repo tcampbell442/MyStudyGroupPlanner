@@ -1,9 +1,9 @@
 <div style="float:left; width:550px; margin:60px;">
   <div class="container">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
 	<div>
-	  <ul class="nav nav-pills">
+	  <ul class="nav nav-pills nav-justified nav-filter">
 	    <li ng-class="{ active:vm.isSelected(1)}">
 	      <a href="/adminHome" ng-click="vm.selectTab(1)">View Report</a>
 	    </li>
@@ -23,7 +23,6 @@
 	  <br>
 	</div>
       </div>
-      <div class="col-md-4"></div>
     </div>
 
     <div class="row">
@@ -166,7 +165,7 @@
     </div>
 
     <div ng-show="vm.isSelected(5)">
-      <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteAllModal">Delete Database</button>
+      <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-target="#deleteAllModal">Delete Database</button>
 
       <!-- Modal -->
       <div id="deleteAllModal" class="modal fade" role="dialog">
