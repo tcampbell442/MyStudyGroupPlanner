@@ -76,6 +76,21 @@ select {
   margin: 8px 10px;
 }
 
+.calendar{
+  padding: 5px;
+  background: #f5e773;
+  border-style: groove;
+  border-width: 10px;
+  border-color: #b5a526;
+}
+
+.upcoming_events{
+  background: #f5e773;
+  border-style: groove;
+  border-width: 10px;
+  border-color: #b54626;
+}
+
 .homeCalendar {
   border: 3px solid black;
   padding: 10px;
@@ -209,8 +224,12 @@ td{
 .chat{
   height:330px;
   width:600px;
-  border:3px solid black;
+  background: #f5e773;
+  border-style: ridge;
+  border-width: 10px;
+  border-color: #50aa7f;
   overflow-y: scroll;
+  padding-left: 3px;
 }
 
 .chatBoard{
