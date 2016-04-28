@@ -387,7 +387,49 @@
 								vm.leaveGroupSuccess = false;
 							});
 					}
+					
+					
+					/** delete all meetings that were still associated with this group */
+					for (var i = 0; i < meetingsToDelete.length; i++) {
 
+						/** delete meeting table entry */
+							$http({method: 'DELETE',
+							   url: '/api/meeting/' + meetingsToDelete[i] + '/',
+							})
+							.then(function(deleteMeetingResponse2){
+
+							},
+							function(deleteMeetingResponse2){
+								/** request failed */
+								vm.leaveGroupSuccess = false;
+							});
+					}
+					
+					$http({method: 'GET',
+						url: '/api/chat/'})
+					.then(function(chatResponse){
+						
+						/** delete all chat messages that were associated with this group */
+						for (var i = 0; i < chatResponse.data.length; i++) {
+
+						/** delete meeting table entry */
+							$http({method: 'DELETE',
+							   url: '/api/chat/' + chatResponse.data[i].id + '/',
+							})
+							.then(function(deleteMeetingResponse2){
+
+							},
+							function(deleteMeetingResponse2){
+								/** request failed */
+							});
+					}
+						
+					},
+					function(chatResponse){
+					
+					});
+					
+					
 		  			/** redirect to homepage if no errors and user leaving is current user*/
 					if (vm.leaveGroupSuccess)
 						if (vm.thisUser.id == vm.removeUserObj.id)
@@ -835,7 +877,8 @@
      });
 
      $timeout(function(){
-       vm.getMessage();
+     	if (vm.groupId == $routeParams.groupId)	
+     		vm.getMessage();
      }, 1000)
   }
 
