@@ -45,7 +45,7 @@
 
   <div class="container" ng-show="vm.isCreator">
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#meetingModal">Create Meeting</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#meetingModal" ng-click="createMeeting()">Create Meeting</button>
     <!-- Modal -->
     <div class="modal fade" id="meetingModal" role="dialog">
       <div class="modal-dialog">
@@ -82,15 +82,15 @@
 	      </div>
 	      Location:
 	      <div class="locationSelection">
-		<select ng-model="vm.selectedBuilding">
+		<select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
 		  <option value="" disabled selected hidden>Select Building</option>
-		  <option ng-repeat="building in vm.buildings">{{building}}</option>
+		   <option ng-repeat="building in vm.buildings">{{building["name"]|truncate}}</option>
 		</select>
 	      </div>
 	      <div class="locationSelection">
-		<select ng-model="vm.selectedRoom">
+		<select ng-model="vm.selectedRoom" ng-change="vm.updateRoom()" id="roomSelect" style="visibility: hidden;">
 		  <option value="" disabled selected hidden>Select Room</option>
-		  <option ng-repeat="room in vm.rooms">{{room}}</option>
+		  <option ng-repeat="room in vm.filteredRooms">{{room.room_num | truncate}}</option>
 		</select>
 	      </div>
 	      Comment:

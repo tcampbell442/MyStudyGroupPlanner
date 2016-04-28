@@ -408,28 +408,5 @@
 	   }
     }
 
-   /*
-    * @name activate
-    * @desc Actions to be performed when this controller is instantiated.
-    * @memberOf myStudyGroupPlanner.
-    */
-
- 
-	// var authenticatedAccount = Authentication.getAuthenticatedAccount();
-	// var isAdmin = authenticatedAccount.is_admin
-	// //var is_admin = $routeParams.username.is_admin;
-
-	// // Redirect if not logged in
-	// //console.log(isAdmin);
-
-	// if (!authenticatedAccount) {
- //            $location.url('/');
-	// } else {
- //            // Redirect if not admin in, but not the owner of this profile.
- //            if ((!isAdmin) {
-	// 			$location.url('/');
- //            }
-	// }
- //    }
 
 })();

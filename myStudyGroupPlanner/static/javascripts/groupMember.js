@@ -26,6 +26,10 @@
     /** stores meetings day/month start date info in comma seperated string */
     vm.meetings = "";
 
+    /** meetins buildings variables*/
+    vm.rooms = [];
+	vm.filteredRooms = [];
+
     /** Will need to know current user for chat/reports/leave group ***NOT CURRENTLY BEING USED IN CHAT/REPORTING*** */
     vm.thisUser = Authentication.getAuthenticatedAccount();
     /** used to set which user to remove when you click the remove button */
@@ -57,10 +61,10 @@
 	vm.meetingComments = "";
 	vm.meetingCreationStatus = "";
 
-	vm.buildings = ["Information Technology of Engineering",
-		           "Sherman Hall","Arts and Humanities",
-		           "Biological Science"];
-	vm.rooms = ["102","202","303","505"];
+	// vm.buildings = ["Information Technology of Engineering",
+	// 	           "Sherman Hall","Arts and Humanities",
+	// 	           "Biological Science"];
+	// vm.rooms = ["102","202","303","505"];
     /** ------------------------------------ */
 
 
@@ -918,6 +922,54 @@
   			vm.meetingCreationStatus = meetingValidation[1];
 		
 	} /** END meeting function */
+
+
+	//poulate buildings functions
+	vm.updateBuilding = function() {
+
+	vm.rooms = [];
+	vm.filteredRooms = [];
+	vm.selectedRoom = "";
+
+		if(vm.selectedBuilding != ""){
+			document.getElementById("roomSelect").style.visibility = "visible";
+
+
+		 for(var i = 0; i < vm.buildings.length; i++){
+		 	
+			if(vm.buildings[i].name == vm.selectedBuilding){
+				vm.selectedBuildingID = vm.buildings[i].id;
+		 	}
+		 }
+
+		$http({method: 'GET',
+		       url: '/api/building/room/'
+		      }).then(function(response){
+			  	vm.rooms = response.data;
+			  	for(var i =0; i <vm.rooms.length; i++){
+					if(vm.rooms[i].building == vm.selectedBuildingID){
+					vm.filteredRooms.push(vm.rooms[i]);
+				}
+				}
+		      },
+			  function(response){
+			   });
+
+		}
+
+
+	}
+
+	vm.createMeeting = function(){
+		$http({method: 'GET',
+	       url: '/api/building/'
+	      }).then(function(response){
+		  vm.buildings = response.data;
+	      },
+		  function(response){
+		   });
+	}
+
 
 
 	/** Functions to run on page load */
