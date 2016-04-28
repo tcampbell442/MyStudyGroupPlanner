@@ -8,7 +8,7 @@
   <div class="chatBoard">
     <div class="chat">
 			<div ng-repeat="msg in vm.messages | filter:{groupId: vm.groupId}">
-			        <p><b>{{vm.thisUser.username}}</b>: {{msg.message}}&nbsp&nbsp&nbsp&nbsp<i>{{msg.dateTime}}</i></p>
+			        <p><i>({{msg.dateTime | date:'M/d-h:mma'}}) </i><b>{{vm.thisUser.username}}</b>: {{msg.message}}&nbsp&nbsp&nbsp&nbsp</p>
 			      </div>
       <form role="form">
 	<textarea name="comments" id="comments" ng-model="vm.chatFields.message">

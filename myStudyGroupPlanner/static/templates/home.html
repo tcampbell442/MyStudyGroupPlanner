@@ -120,8 +120,8 @@
 	  <div class="currentGrps">
 	    <h3>My Groups</h3>
 
-	    <ul ng-repeat="group in vm.msgpUserAll | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}" style="list-style: none; padding:0px;">
-	      <li><a href="/groupMember/{{group['msgpGroupId']}}">{{ group["msgpGroupName"] }}</a></li>
+	    <ul ng-repeat="group in vm.msgpUserAll | filter:{msgpUserId:vm.thisUser.id} | filter:{msgpMeetingId:null}">
+	      <li><a href="/groupMember/{{group['msgpGroupId']}}"><h4><strong>{{ group["msgpGroupName"] }}</strong></h4></a></li>
 	    </ul>
 
 

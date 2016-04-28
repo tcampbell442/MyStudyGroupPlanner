@@ -907,6 +907,9 @@
          url: '/api/chat/'})
          .then(function(response){
            vm.messages = response.data;
+           
+           if (vm.messages.length > 50)
+           	vm.messages.splice(1,50);
          },
          function(response){
        });
