@@ -96,6 +96,9 @@
 	/**------------------------------------------*/
 	vm.setDefualtMeetingInfo = function() {
 
+		vm.startTime = new Date();
+		vm.endTime = new Date();
+
 		vm.startTime.setHours(12);
 		vm.startTime.setMinutes(0);
 		vm.startTime.setSeconds(0);
