@@ -899,7 +899,8 @@
     data: {
       message: vm.chatFields.message,
       userId: vm.thisUser.id,
-      groupId: vm.groupId
+      groupId: vm.groupId,
+      userName: vm.thisUser.username
       }
     })
     .then(function(response){
@@ -907,7 +908,7 @@
          url: '/api/chat/'})
          .then(function(response){
            vm.messages = response.data;
-           
+
            if (vm.messages.length > 50)
            	vm.messages.splice(1,50);
          },
