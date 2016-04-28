@@ -77,7 +77,7 @@
 	<label>Building: </label>
 	<select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
           <option value="" disabled selected hidden>Buildings</option>
-          <option ng-repeat="building in vm.buildings">{{building["name"]|truncate}}</option>
+          <option ng-repeat="building in vm.buildings">{{building["name"]}}</option>
           <option value="addBuilding">{{vm.addNewBuilding | truncate}}</option>
 	</select>
 	<input id= "newBuilding" type="textbox" ng-model="vm.newBuilding" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
@@ -91,7 +91,7 @@
 	<label id= "roomLabel" style="visibility: hidden;">Room Number: </label>
 	<select ng-model="vm.selectedRoom" ng-change="vm.updateRoom()" id="roomSelect" style="visibility: hidden;">
           <option value="" disabled selected hidden>Rooms</option>
-          <option ng-repeat="room in vm.filteredRooms">{{room.room_num | truncate}}</option>
+          <option ng-repeat="room in vm.filteredRooms">{{room.room_num}}</option>
           <option value="addRoom">{{vm.addNewRoom | truncate}}</option>
 	</select>
 	<input id= "newRoom" type="textbox" ng-model="vm.newRoom" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
@@ -107,7 +107,7 @@
 	<label>Subject: </label>
 	<select ng-model="vm.selectedSubject" ng-change="vm.updateSubject()" id="subjectSelect">
           <option value="" disabled selected hidden>Subjects</option>
-          <option ng-repeat="subject in vm.subjects">{{subject["subject"]|truncate:14}}</option>
+          <option ng-repeat="subject in vm.subjects">{{subject["subject"]}}</option>
           <option value="addSubject">{{vm.addNewSubject | truncate}}</option>
 	</select>
 	<input id= "newSubject" type="textbox" ng-model="vm.newSubject" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>
@@ -121,7 +121,7 @@
 	<label id= "classLabel" style="visibility: hidden;">Class: </label>
 	<select ng-model="vm.selectedClass" ng-change="vm.updateClass()" id="classSelect" style="visibility: hidden;">
           <option value="" disabled selected hidden>Classes</option>
-          <option ng-repeat="Class in vm.filteredClasses">{{Class.subjectsClass | truncate}}</option>
+          <option ng-repeat="Class in vm.filteredClasses">{{Class.subjectsClass}}</option>
           <option value="addClass">{{vm.addNewClass | truncate}}</option>
 	</select>
 	<input id= "newClass" type="textbox" ng-model="vm.newClass" style="height:26px; margin-left:5px; padding-left:3px; visibility: hidden;"/>

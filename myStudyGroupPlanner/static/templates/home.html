@@ -25,11 +25,11 @@
 		  <center>
 		    <div><select ng-model="vm.selectedSubject" ng-change="vm.updateSubject()" id="subjectSelect">
 			<option value="" disabled selected hidden>Subject</option>
-			<option ng-repeat="subject in vm.subjects">{{subject["subject"]|truncate:14}}</option>
+			<option ng-repeat="subject in vm.subjects">{{subject["subject"]}}</option>
 		    </select></div>
 		    <div><select ng-model="vm.selectedClass" ng-change="vm.updateClass()" id="classSelect" style="visibility: hidden;">
 			<option value="" disabled selected hidden>Class</option>
-			<option ng-repeat="Class in vm.filteredClasses">{{Class.subjectsClass | truncate}}</option>
+			<option ng-repeat="Class in vm.filteredClasses">{{Class.subjectsClass}}</option>
 		    </select></div>
 		    <div><select ng-model="vm.selectedSection" ng-change="vm.updateSection()" id="sectionSelect" style="visibility: hidden;">
 			<option value="" disabled selected hidden>Section</option>
@@ -50,11 +50,11 @@
 		  <div>
 		    <select ng-model="vm.groupFields.groupSubject" ng-change="vm.updateSubjectCreate()" id="subjectSelect">
 		      <option value="" disabled selected hidden>Subject</option>
-		      <option ng-repeat="subject in vm.subjectsCreate">{{subject["subject"]|truncate:14}}</option>
+		      <option ng-repeat="subject in vm.subjectsCreate">{{subject["subject"]}}</option>
 		    </select>
 		    <select ng-model="vm.groupFields.groupClass" ng-change="vm.updateClassCreate()" id="classSelectCreate" style="visibility: hidden;">
 		      <option value="" disabled selected hidden>Class</option>
-		      <option ng-repeat="Class in vm.filteredClassesCreate">{{Class.subjectsClass | truncate}}</option>
+		      <option ng-repeat="Class in vm.filteredClassesCreate">{{Class.subjectsClass}}</option>
 		    </select>
 		    <select ng-model="vm.groupFields.groupSection" ng-change="vm.updateSectionCreate()" id="sectionSelectCreate" style="visibility: hidden;">
 		      <option value="" disabled selected hidden>Section</option>

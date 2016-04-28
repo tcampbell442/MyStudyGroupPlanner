@@ -84,7 +84,7 @@
 	      <div class="locationSelection">
 		<select ng-model="vm.selectedBuilding" ng-change="vm.updateBuilding()" id="buildingSelect">
 		  <option value="" disabled selected hidden>Select Building</option>
-		   <option ng-repeat="building in vm.buildings">{{building["name"]|truncate}}</option>
+		   <option ng-repeat="building in vm.buildings">{{building["name"]}}</option>
 		</select>
 	      </div>
 	      <div class="locationSelection">
