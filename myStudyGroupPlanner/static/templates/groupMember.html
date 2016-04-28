@@ -38,14 +38,14 @@
   </div>
 
 
-<!-- JOIN/LEAVE MEETING MODAL ------------------------- -->
+<!-- JOIN/LEAVE MEETING MODAL -->
 <div ng-include="vm.meetingModalHTML"></div>
-<!-- -------------------------------------------------  -->
+<!--   -->
 
 
   <div class="container" ng-show="vm.isCreator">
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#meetingModal" ng-click="createMeeting()">Create Meeting</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#meetingModal">Create Meeting</button>
     <!-- Modal -->
     <div class="modal fade" id="meetingModal" role="dialog">
       <div class="modal-dialog">

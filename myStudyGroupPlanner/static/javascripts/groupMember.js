@@ -17,6 +17,9 @@
   function GroupMemberController($location, $scope, Authentication, $http, $routeParams, $filter, $timeout, $q) {
 
     var vm = this;
+    //meetins room variables
+    vm.rooms = [];
+	vm.filteredRooms = [];
 
     /** used to load calendar.html, refreshed after loading meetings info */
     vm.calendarHTML = '';
@@ -393,6 +396,48 @@
 							});
 					}
 
+
+					/** delete all meetings that were still associated with this group */
+					for (var i = 0; i < meetingsToDelete.length; i++) {
+
+						/** delete meeting table entry */
+							$http({method: 'DELETE',
+							   url: '/api/meeting/' + meetingsToDelete[i] + '/',
+							})
+							.then(function(deleteMeetingResponse2){
+
+							},
+							function(deleteMeetingResponse2){
+								/** request failed */
+								vm.leaveGroupSuccess = false;
+							});
+					}
+
+					$http({method: 'GET',
+						url: '/api/chat/'})
+					.then(function(chatResponse){
+
+						/** delete all chat messages that were associated with this group */
+						for (var i = 0; i < chatResponse.data.length; i++) {
+
+						/** delete meeting table entry */
+							$http({method: 'DELETE',
+							   url: '/api/chat/' + chatResponse.data[i].id + '/',
+							})
+							.then(function(deleteMeetingResponse2){
+
+							},
+							function(deleteMeetingResponse2){
+								/** request failed */
+							});
+					}
+
+					},
+					function(chatResponse){
+
+					});
+
+
 		  			/** redirect to homepage if no errors and user leaving is current user*/
 					if (vm.leaveGroupSuccess)
 						if (vm.thisUser.id == vm.removeUserObj.id)
@@ -453,7 +498,6 @@
 	vm.restrictMeetingOverlap = function() {
 
 		if (parseInt(vm.startTime.getDate()) <= parseInt(vm.endTime.getDate()) && (parseInt(vm.endTime.getDate()) - parseInt(vm.startTime.getDate())) <= 1 && parseInt(vm.startTime.getHours()) < parseInt(vm.endTime.getHours())) {
-
 			$http({method: 'GET',
 				url: '/api/meeting/'})
 			.then(function(meetingResponse){
@@ -533,8 +577,9 @@
 
 		}
 		/** invalid input */
-		else
+		else{
 			vm.createMeeting([false, "Invalid date/time selected."]);
+		}
 
 	}
 
@@ -840,7 +885,8 @@
      });
 
      $timeout(function(){
-       vm.getMessage();
+     	if (vm.groupId == $routeParams.groupId)
+     		vm.getMessage();
      }, 1000)
   }
 
@@ -928,8 +974,7 @@
 
 	} /** END meeting function */
 
-
-	//poulate buildings functions
+	//meeting buildings functions
 	vm.updateBuilding = function() {
 
 	vm.rooms = [];
@@ -964,8 +1009,6 @@
 
 
 	}
-
-	vm.createMeeting = function(){
 		$http({method: 'GET',
 	       url: '/api/building/'
 	      }).then(function(response){
@@ -973,9 +1016,9 @@
 	      },
 		  function(response){
 		   });
-	}
+	// vm.getBuilding = function(){
 
-
+	// }
 
 	/** Functions to run on page load */
 	/** ----------------------------------------------------------- */
