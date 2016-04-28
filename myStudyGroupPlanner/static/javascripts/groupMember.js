@@ -47,6 +47,7 @@
 	vm.filteredMeetings = [];
 	vm.meetingToModify = {};
 
+  vm.curre_username = "";
     /** GROUP CREATOR ONLY VARIABLES */
     /** ------------------------------------ */
 	vm.isCreator = false;
@@ -60,6 +61,7 @@
 
 	vm.meetingComments = "";
 	vm.meetingCreationStatus = "";
+
 
 	// vm.buildings = ["Information Technology of Engineering",
 	// 	           "Sherman Hall","Arts and Humanities",
@@ -112,7 +114,7 @@
 		vm.endTime.setMinutes(0);
 		vm.endTime.setSeconds(0);
 		vm.endTime.setMilliseconds(0);
-		
+
 		vm.meetingTitle = "";
 		vm.selectedBuilding = "";
 		vm.selectedRoom ="";
@@ -120,6 +122,9 @@
 		vm.meetingCreationStatus = "";
 	}
 
+  vm.getUsername = function(username){
+    vm.curre_username = username;
+  }
 
 	/**------------------------------------------*/
 	/** Gets all listings in the msgpUser table
@@ -442,19 +447,19 @@
 
 	/** ------------------------------------------------ */
 	/** Validates requested meeting time for selected
-	    building + room.  Blocks times into hours 
+	    building + room.  Blocks times into hours
 	    regardless of the requested start/end minutes    */
 	/** ------------------------------------------------ */
 	vm.restrictMeetingOverlap = function() {
-		
+
 		if (parseInt(vm.startTime.getDate()) <= parseInt(vm.endTime.getDate()) && (parseInt(vm.endTime.getDate()) - parseInt(vm.startTime.getDate())) <= 1 && parseInt(vm.startTime.getHours()) < parseInt(vm.endTime.getHours())) {
-		
+
 			$http({method: 'GET',
 				url: '/api/meeting/'})
 			.then(function(meetingResponse){
-			
+
 				var validTime = true;
-			
+
 				var requestedStartHour;
 				var requestedEndHour;
 				var tempStartHour;
@@ -464,26 +469,26 @@
 				var conflictMessage = "Timing Conflict: Meeting already scheduled for room# ";
 				var correctedStartTime = "";
 				var correctedEndTime = "";
-				
-				
+
+
 				for (var i = 0; i < meetingResponse.data.length; i++) {
-				
+
 					/**alert("" + String(meetingResponse.data[i].building) + " " + String(vm.selectedBuilding) + "-" + String(meetingResponse.data[i].room_num) + " " + String(vm.selectedRoom) );*/
-					
+
 					/** Check if building and room num are the same */
 					if (meetingResponse.data[i].building == vm.selectedBuilding && meetingResponse.data[i].room_num == vm.selectedRoom) {
-						
+
 							requestedStartDate = parseInt(vm.startTime.getDate());
 							tempStartDate = parseInt(String(meetingResponse.data[i].start_time).substring(8,10));
-						
+
 						/** check if start dates are the same */
 						if (requestedStartDate == tempStartDate) {
-						
+
 							requestedStartHour = parseInt(vm.startTime.getHours());
 							requestedEndHour = parseInt(vm.endTime.getHours());
 							tempStartHour = parseInt(String(meetingResponse.data[i].start_time).substring(11,13)) - 4;
 							tempEndHour = parseInt(String(meetingResponse.data[i].end_time).substring(11,13)) - 4;
-							
+
 							if (tempStartHour >= 12 && tempStartHour < 24)
 								correctedStartTime = "" + String(tempStartHour - 12) + "pm";
 							else
@@ -492,10 +497,10 @@
 								correctedEndTime = "" + String(tempEndHour - 12) + "pm";
 							else
 								correctedEndTime = "" + String(tempEndHour) + "am";
-							
+
 							conflictMessage += vm.selectedRoom + " from " + correctedStartTime + " to " + correctedEndTime;
 							/**alert("" + String(requestedStartHour) + " " + String(requestedEndHour) + " " + String(tempStartHour) + " " + String(tempEndHour));*/
-				
+
 							/** Check the four cases where 1hr block timing conflicts occur */
 							if (requestedStartHour >= tempStartHour && requestedEndHour <= tempEndHour) {
 								validTime = false;
@@ -509,14 +514,14 @@
 								validTime = false;
 								break;
 							}
-							else if (requestedStartHour <= tempStartHour && requestedEndHour > tempStartHour) {	
+							else if (requestedStartHour <= tempStartHour && requestedEndHour > tempStartHour) {
 								validTime = false;
 								break;
 							}
 						}
 					}
 				}
-			
+
 				if (validTime == true)
 					vm.createMeeting([true, "Meeting Created.  Click close to exit."]);
 				else
@@ -525,13 +530,13 @@
 			function(meetingResponse){
 				vm.createMeeting([false, "Error."]);
 			});
-		
+
 		}
 		/** invalid input */
 		else
 			vm.createMeeting([false, "Invalid date/time selected."]);
 
-	}	
+	}
 
 
 
@@ -900,8 +905,8 @@
 				})
 				.then(function(msgpUserResponse){
 					/** msgpUser POST success */
-					vm.meetingCreationStatus = meetingValidation[1];		
-					
+					vm.meetingCreationStatus = meetingValidation[1];
+
 					/** Load/update all entries from the msgpUser table
 						as there is a new one now*/
 					vm.getGroupsData();
@@ -920,7 +925,7 @@
   		}
   		else
   			vm.meetingCreationStatus = meetingValidation[1];
-		
+
 	} /** END meeting function */
 
 
@@ -936,7 +941,7 @@
 
 
 		 for(var i = 0; i < vm.buildings.length; i++){
-		 	
+
 			if(vm.buildings[i].name == vm.selectedBuilding){
 				vm.selectedBuildingID = vm.buildings[i].id;
 		 	}
