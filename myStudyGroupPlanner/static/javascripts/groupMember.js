@@ -17,6 +17,9 @@
   function GroupMemberController($location, $scope, Authentication, $http, $routeParams, $filter, $timeout, $q) {
 
     var vm = this;
+    //meetins room variables
+    vm.rooms = [];
+	vm.filteredRooms = [];
 
     /** used to load calendar.html, refreshed after loading meetings info */
     vm.calendarHTML = '';
@@ -488,9 +491,8 @@
 	    regardless of the requested start/end minutes    */
 	/** ------------------------------------------------ */
 	vm.restrictMeetingOverlap = function() {
-		
+
 		if (parseInt(vm.startTime.getDate()) <= parseInt(vm.endTime.getDate()) && (parseInt(vm.endTime.getDate()) - parseInt(vm.startTime.getDate())) <= 1 && parseInt(vm.startTime.getHours()) < parseInt(vm.endTime.getHours())) {
-		
 			$http({method: 'GET',
 				url: '/api/meeting/'})
 			.then(function(meetingResponse){
@@ -570,8 +572,9 @@
 		
 		}
 		/** invalid input */
-		else
+		else{
 			vm.createMeeting([false, "Invalid date/time selected."]);
+		}
 
 	}	
 
@@ -966,8 +969,7 @@
 		
 	} /** END meeting function */
 
-
-	//poulate buildings functions
+	//meeting buildings functions
 	vm.updateBuilding = function() {
 
 	vm.rooms = [];
@@ -1002,8 +1004,6 @@
 
 
 	}
-
-	vm.createMeeting = function(){
 		$http({method: 'GET',
 	       url: '/api/building/'
 	      }).then(function(response){
@@ -1011,9 +1011,9 @@
 	      },
 		  function(response){
 		   });
-	}
+	// vm.getBuilding = function(){
 
-
+	// }
 
 	/** Functions to run on page load */
 	/** ----------------------------------------------------------- */
