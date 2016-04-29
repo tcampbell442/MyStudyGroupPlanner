@@ -247,6 +247,8 @@
 	vm.setUserLeavingGroup = function(userObj) {
 		if (userObj != null)
 			vm.removeUserObj = {"id":userObj.msgpUserId, "username":userObj.msgpUsername};
+		else
+			vm.removeUserObj = {"id":vm.thisUser.id, "username":vm.thisUser.username};
 	}
 
 	/**------------------------------------------*/
@@ -324,7 +326,7 @@
 			  		   url: '/api/msgpUser/' + vm.msgpUserAll[i].id + '/',
 			  		})
 			  		.then(function(deleteMSGPUserResponse1){
-						vm.msgpUserAll.splice(i,1);
+						/**vm.msgpUserAll.splice(i,1);   ***THIS CAUSED OTHER USERS TO NOT BE DROPPED*** */
 			  		},
 			  		function(deleteMSGPUserResponse1){
 			  			/** request failed */
@@ -352,7 +354,7 @@
 		  			/** contains list of ids of meetings associated with this group, used to
 		  			    delete them from meeting table after deleting all msgpUser related entries */
 		  			var meetingsToDelete = [];
-
+					
 		  			/** delete all msgpUser table entries associated with this now deleted group. */
 		  			for (var i = vm.msgpUserAll.length-1; i >= 0; i--) {
 
@@ -380,6 +382,7 @@
 		  				} /** END if */
 		  			} /** END for loop */
 
+
 		  			/** delete all meetings that were still associated with this group */
 					for (var i = 0; i < meetingsToDelete.length; i++) {
 
@@ -397,39 +400,25 @@
 					}
 
 
-					/** delete all meetings that were still associated with this group */
-					for (var i = 0; i < meetingsToDelete.length; i++) {
-
-						/** delete meeting table entry */
-							$http({method: 'DELETE',
-							   url: '/api/meeting/' + meetingsToDelete[i] + '/',
-							})
-							.then(function(deleteMeetingResponse2){
-
-							},
-							function(deleteMeetingResponse2){
-								/** request failed */
-								vm.leaveGroupSuccess = false;
-							});
-					}
-
 					$http({method: 'GET',
 						url: '/api/chat/'})
 					.then(function(chatResponse){
 
 						/** delete all chat messages that were associated with this group */
 						for (var i = 0; i < chatResponse.data.length; i++) {
+							
+							if (chatResponse.data[i].groupId == vm.groupId) {
+							/** delete meeting table entry */
+								$http({method: 'DELETE',
+								   url: '/api/chat/' + chatResponse.data[i].id + '/',
+								})
+								.then(function(deleteMeetingResponse2){
 
-						/** delete meeting table entry */
-							$http({method: 'DELETE',
-							   url: '/api/chat/' + chatResponse.data[i].id + '/',
-							})
-							.then(function(deleteMeetingResponse2){
-
-							},
-							function(deleteMeetingResponse2){
-								/** request failed */
-							});
+								},
+								function(deleteMeetingResponse2){
+									/** request failed */
+								});
+							}
 					}
 
 					},
@@ -437,7 +426,7 @@
 
 					});
 
-
+					
 		  			/** redirect to homepage if no errors and user leaving is current user*/
 					if (vm.leaveGroupSuccess)
 						if (vm.thisUser.id == vm.removeUserObj.id)
@@ -880,6 +869,7 @@
        url: '/api/chat/'})
        .then(function(response){
          vm.messages = response.data;
+
        },
        function(response){
      });
@@ -909,8 +899,6 @@
          .then(function(response){
            vm.messages = response.data;
 
-           if (vm.messages.length > 50)
-           	vm.messages.splice(1,50);
          },
          function(response){
        });

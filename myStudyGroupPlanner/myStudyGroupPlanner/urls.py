@@ -48,7 +48,7 @@ urlpatterns = patterns(
     url(r'^api/report/$', ReportList.as_view(), name='reportList'),
 	url(r'^api/report/(?P<pk>[0-9]+)/$', ReportDetail.as_view(), name='reportDetail'),
 
-    url(r'^api/chat/$', ChatList.as_view(), name='chatList'),
+	url(r'^api/chat/$', ChatList.as_view(), name='chatList'),
     url(r'^api/chat/(?P<pk>[0-9]+)/$', ChatDetail.as_view(), name='chatDetail'),
 
     url(r'^api/v1/', include(router.urls)),

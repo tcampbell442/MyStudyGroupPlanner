@@ -97,7 +97,7 @@
 	</div>
 
 	<div class="leaveGroup" ng-show="vm.userAMember">
-	  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#leaveModal">Leave Group</button>
+	  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#leaveModal" ng-click="vm.setUserLeavingGroup()">Leave Group</button>
 	  <!-- Modal -->
 	  <div class="modal fade" id="leaveModal" role="dialog">
 	    <div class="modal-dialog">
