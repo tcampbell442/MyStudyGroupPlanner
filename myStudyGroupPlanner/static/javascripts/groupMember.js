@@ -865,11 +865,12 @@
   {
     var div = $(".chat");
     div.scrollTop(div.prop('scrollHeight'));
-    $http({method: 'GET',
+    var temp = $http({method: 'GET',
        url: '/api/chat/'})
        .then(function(response){
          vm.messages = response.data;
-
+         response = null;
+		 temp = null;
        },
        function(response){
      });
@@ -877,7 +878,8 @@
      $timeout(function(){
      	if (vm.groupId == $routeParams.groupId)
      		vm.getMessage();
-     }, 1000)
+     	
+     }, 1250)
   }
 
   vm.getMessage();
