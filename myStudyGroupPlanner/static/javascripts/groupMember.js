@@ -486,116 +486,120 @@
 	/** ------------------------------------------------ */
 	vm.restrictMeetingOverlap = function() {
 
-		/**alert("" + parseInt(vm.startTime.getDate()) + " " + parseInt(vm.endTime.getDate()));*/
-
-		if (parseInt(vm.startTime.getDate()) <= parseInt(vm.endTime.getDate()) && 
-		   	parseInt(vm.endTime.getDate()) - parseInt(vm.startTime.getDate()) <= 1 &&
-		   			 vm.startTime.getHours() != vm.endTime.getHours() &&
-		   			 	(
-		   			 		parseInt(vm.endTime.getHours()) > parseInt(vm.startTime.getHours()) && 
-		   			 		parseInt(vm.endTime.getDate()) == parseInt(vm.startTime.getDate())
-		   			 	)
-		   	) {
+		/**alert("" + parseInt(vm.startTime.getDate()) + " " + parseInt(vm.endTime.getDate()));
+		alert("" + parseInt(vm.startTime.getHours()) + " " + parseInt(vm.endTime.getHours()));*/
+		
+		if (vm.startTime.getDate() <= vm.endTime.getDate() && 
+		   	vm.endTime.getDate() - vm.startTime.getDate() <= 1 &&
+		   			 vm.startTime.getHours() != vm.endTime.getHours()) {
 		   	
+		   	if ( (vm.endTime.getHours() < vm.startTime.getHours() && vm.endTime.getDate() > vm.startTime.getDate())  || 
+		   		 (vm.endTime.getHours() > vm.startTime.getHours() && vm.endTime.getDate() == vm.startTime.getDate())
+		   	
+		   	) {
+		   			 	
 		   		
 		   			
-			$http({method: 'GET',
-				url: '/api/meeting/'})
-			.then(function(meetingResponse){
+					$http({method: 'GET',
+						url: '/api/meeting/'})
+					.then(function(meetingResponse){
 
-				var validTime = true;
+						var validTime = true;
 
-				var requestedStartHour;
-				var requestedEndHour;
-				var tempStartHour;
-				var tempEndHour;
-				var requestedStartDate;
-				var tempStartDate;
-				var requestedEndDate;
-				var tempEndDate;
-				var conflictMessage = "Timing Conflict: Meeting already scheduled for room# ";
-				var correctedStartTime = "";
-				var correctedEndTime = "";
-				vm.meetingCreationStatus = "";
+						var requestedStartHour;
+						var requestedEndHour;
+						var tempStartHour;
+						var tempEndHour;
+						var requestedStartDate;
+						var tempStartDate;
+						var requestedEndDate;
+						var tempEndDate;
+						var conflictMessage = "Timing Conflict: Meeting already scheduled for room# ";
+						var correctedStartTime = "";
+						var correctedEndTime = "";
+						vm.meetingCreationStatus = "";
 
 				
-				for (var i = 0; i < meetingResponse.data.length; i++) {
+						for (var i = 0; i < meetingResponse.data.length; i++) {
 
-					/** Check if building and room num are the same */
-					if (meetingResponse.data[i].building == vm.selectedBuilding && meetingResponse.data[i].room_num == vm.selectedRoom) {
+							/** Check if building and room num are the same */
+							if (meetingResponse.data[i].building == vm.selectedBuilding && meetingResponse.data[i].room_num == vm.selectedRoom) {
 
-							requestedStartDate = parseInt(vm.startTime.getDate());
-							tempStartDate = parseInt(String(meetingResponse.data[i].start_time).substring(8,10));
-							requestedEndDate = parseInt(vm.endTime.getDate());
-							tempEndDate = parseInt(String(meetingResponse.data[i].end_time).substring(8,10));
+									requestedStartDate = parseInt(vm.startTime.getDate());
+									tempStartDate = parseInt(String(meetingResponse.data[i].start_time).substring(8,10));
+									requestedEndDate = parseInt(vm.endTime.getDate());
+									tempEndDate = parseInt(String(meetingResponse.data[i].end_time).substring(8,10));
 
-						/** check if start dates are the same */
-						if (requestedStartDate == tempStartDate && requestedEndDate == tempEndDate) {
+								/** check if start dates are the same */
+								if (requestedStartDate == tempStartDate && requestedEndDate == tempEndDate) {
 
-							requestedStartHour = parseInt(vm.startTime.getHours());
-							requestedEndHour = parseInt(vm.endTime.getHours());
-							tempStartHour = parseInt(String(meetingResponse.data[i].start_time).substring(11,13)) - 4;
-							tempEndHour = parseInt(String(meetingResponse.data[i].end_time).substring(11,13)) - 4;
+									requestedStartHour = parseInt(vm.startTime.getHours());
+									requestedEndHour = parseInt(vm.endTime.getHours());
+									tempStartHour = parseInt(String(meetingResponse.data[i].start_time).substring(11,13)) - 4;
+									tempEndHour = parseInt(String(meetingResponse.data[i].end_time).substring(11,13)) - 4;
 							
 							
-							if (tempStartHour > 12 && tempStartHour < 24)
-								correctedStartTime = "" + String(tempStartHour - 12) + "pm";
-							else
-								correctedStartTime = "" + String(tempStartHour) + "am";
-							if (tempEndHour > 12 && tempEndHour < 24)
-								correctedEndTime = "" + String(tempEndHour - 12) + "pm";
-							else
-								correctedEndTime = "" + String(tempEndHour) + "am";
-							if (tempStartHour == 12)
-								correctedStartTime = "12pm";
-							if (tempEndHour == 12)
-								correctedEndTime = "12pm";
-							if (tempStartHour == 0 || tempStartHour == 24)
-								correctedStartTime = "12am";
-							if (tempEndHour == 0 || tempEndHour == 24)
-								correctedEndTime = "12am";
-							if (tempStartHour < 0)
-								correctedStartTime = "" + String(tempStartHour + 12) + "am";
+									if (tempStartHour > 12 && tempStartHour < 24)
+										correctedStartTime = "" + String(tempStartHour - 12) + "pm";
+									else
+										correctedStartTime = "" + String(tempStartHour) + "am";
+									if (tempEndHour > 12 && tempEndHour < 24)
+										correctedEndTime = "" + String(tempEndHour - 12) + "pm";
+									else
+										correctedEndTime = "" + String(tempEndHour) + "am";
+									if (tempStartHour == 12)
+										correctedStartTime = "12pm";
+									if (tempEndHour == 12)
+										correctedEndTime = "12pm";
+									if (tempStartHour == 0 || tempStartHour == 24)
+										correctedStartTime = "12am";
+									if (tempEndHour == 0 || tempEndHour == 24)
+										correctedEndTime = "12am";
+									if (tempStartHour < 0)
+										correctedStartTime = "" + String(tempStartHour + 12) + "am";
 							
-							/**alert("" + String(requestedStartHour) + ">=" + String(tempStartHour) + " " + String(requestedEndHour) + "<=" + String(tempEndHour));*/
+									/**alert("" + String(requestedStartHour) + ">=" + String(tempStartHour) + " " + String(requestedEndHour) + "<=" + String(tempEndHour));*/
 							
-							/** Check the four cases where 1hr block timing conflicts occur */
-							if (requestedStartHour >= tempStartHour && requestedEndHour <= tempEndHour) {
-								validTime = false;
-								break;
-							}
-							else if (requestedEndHour > tempStartHour && requestedEndHour <= tempEndHour) {
-								validTime = false;
-								break;
-							}
-							else if (requestedStartHour >= tempStartHour && requestedStartHour < tempEndHour) {
-								validTime = false;
-								break;
-							}
-							else if (requestedStartHour <= tempStartHour && requestedEndHour > tempStartHour) {
-								validTime = false;
-								break;
+									/** Check the four cases where 1hr block timing conflicts occur */
+									if (requestedStartHour >= tempStartHour && requestedEndHour <= tempEndHour) {
+										validTime = false;
+										break;
+									}
+									else if (requestedEndHour > tempStartHour && requestedEndHour <= tempEndHour) {
+										validTime = false;
+										break;
+									}
+									else if (requestedStartHour >= tempStartHour && requestedStartHour < tempEndHour) {
+										validTime = false;
+										break;
+									}
+									else if (requestedStartHour <= tempStartHour && requestedEndHour > tempStartHour) {
+										validTime = false;
+										break;
+									}
+								}
 							}
 						}
-					}
-				}
 
-				if (validTime == true)
-					vm.createMeeting([true, "Meeting Created.  Click close to exit."]);
-				else {
-					conflictMessage += vm.selectedRoom + " from " + correctedStartTime + " to " + correctedEndTime;
-					vm.createMeeting([false, conflictMessage]);
-				}
-			},
-			function(meetingResponse){
-				vm.createMeeting([false, "Error."]);
-			});
-
-		}
+						if (validTime == true)
+							vm.createMeeting([true, "Meeting Created.  Click close to exit."]);
+						else {
+							conflictMessage += vm.selectedRoom + " from " + correctedStartTime + " to " + correctedEndTime;
+							vm.createMeeting([false, conflictMessage]);
+						}
+					},
+					function(meetingResponse){
+						vm.createMeeting([false, "Error."]);
+					});
+					
 		/** invalid input */
-		else{
+					
+			} /** END 2nd IF */
+			else
+				vm.createMeeting([false, "Invalid date/time selected."]);
+		} /** END 1st IF */
+		else
 			vm.createMeeting([false, "Invalid date/time selected."]);
-		}
 
 	}
 
