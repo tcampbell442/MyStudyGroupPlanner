@@ -486,7 +486,13 @@
 	/** ------------------------------------------------ */
 	vm.restrictMeetingOverlap = function() {
 
-		if (parseInt(vm.startTime.getDate()) <= parseInt(vm.endTime.getDate()) && (parseInt(vm.endTime.getDate()) - parseInt(vm.startTime.getDate())) <= 1 && parseInt(vm.startTime.getHours()) < parseInt(vm.endTime.getHours())) {
+		/**alert("" + parseInt(vm.startTime.getDate()) + " " + parseInt(vm.endTime.getDate()));*/
+
+		if (parseInt(vm.startTime.getDate()) <= parseInt(vm.endTime.getDate()) && 
+		   	parseInt(vm.endTime.getDate()) - parseInt(vm.startTime.getDate()) <= 1 &&
+		   			 vm.startTime.getHours() != vm.endTime.getHours()
+		   	) {
+		   			
 			$http({method: 'GET',
 				url: '/api/meeting/'})
 			.then(function(meetingResponse){
@@ -499,41 +505,54 @@
 				var tempEndHour;
 				var requestedStartDate;
 				var tempStartDate;
+				var requestedEndDate;
+				var tempEndDate;
 				var conflictMessage = "Timing Conflict: Meeting already scheduled for room# ";
 				var correctedStartTime = "";
 				var correctedEndTime = "";
+				vm.meetingCreationStatus = "";
 
-
+				
 				for (var i = 0; i < meetingResponse.data.length; i++) {
-
-					/**alert("" + String(meetingResponse.data[i].building) + " " + String(vm.selectedBuilding) + "-" + String(meetingResponse.data[i].room_num) + " " + String(vm.selectedRoom) );*/
 
 					/** Check if building and room num are the same */
 					if (meetingResponse.data[i].building == vm.selectedBuilding && meetingResponse.data[i].room_num == vm.selectedRoom) {
 
 							requestedStartDate = parseInt(vm.startTime.getDate());
 							tempStartDate = parseInt(String(meetingResponse.data[i].start_time).substring(8,10));
+							requestedEndDate = parseInt(vm.endTime.getDate());
+							tempEndDate = parseInt(String(meetingResponse.data[i].end_time).substring(8,10));
 
 						/** check if start dates are the same */
-						if (requestedStartDate == tempStartDate) {
+						if (requestedStartDate == tempStartDate && requestedEndDate == tempEndDate) {
 
 							requestedStartHour = parseInt(vm.startTime.getHours());
 							requestedEndHour = parseInt(vm.endTime.getHours());
 							tempStartHour = parseInt(String(meetingResponse.data[i].start_time).substring(11,13)) - 4;
 							tempEndHour = parseInt(String(meetingResponse.data[i].end_time).substring(11,13)) - 4;
-
-							if (tempStartHour >= 12 && tempStartHour < 24)
+							
+							
+							if (tempStartHour > 12 && tempStartHour < 24)
 								correctedStartTime = "" + String(tempStartHour - 12) + "pm";
 							else
 								correctedStartTime = "" + String(tempStartHour) + "am";
-							if (tempEndHour >= 12 && tempEndHour < 24)
+							if (tempEndHour > 12 && tempEndHour < 24)
 								correctedEndTime = "" + String(tempEndHour - 12) + "pm";
 							else
 								correctedEndTime = "" + String(tempEndHour) + "am";
-
-							conflictMessage += vm.selectedRoom + " from " + correctedStartTime + " to " + correctedEndTime;
-							/**alert("" + String(requestedStartHour) + " " + String(requestedEndHour) + " " + String(tempStartHour) + " " + String(tempEndHour));*/
-
+							if (tempStartHour == 12)
+								correctedStartTime = "12pm";
+							if (tempEndHour == 12)
+								correctedEndTime = "12pm";
+							if (tempStartHour == 0 || tempStartHour == 24)
+								correctedStartTime = "12am";
+							if (tempEndHour == 0 || tempEndHour == 24)
+								correctedEndTime = "12am";
+							if (tempStartHour < 0)
+								correctedStartTime = "" + String(tempStartHour + 12) + "am";
+							
+							/**alert("" + String(requestedStartHour) + ">=" + String(tempStartHour) + " " + String(requestedEndHour) + "<=" + String(tempEndHour));*/
+							
 							/** Check the four cases where 1hr block timing conflicts occur */
 							if (requestedStartHour >= tempStartHour && requestedEndHour <= tempEndHour) {
 								validTime = false;
@@ -543,7 +562,7 @@
 								validTime = false;
 								break;
 							}
-							else if (requestedStartHour >= tempStartHour && requestedStartHour <= tempEndHour) {
+							else if (requestedStartHour >= tempStartHour && requestedStartHour < tempEndHour) {
 								validTime = false;
 								break;
 							}
@@ -557,8 +576,10 @@
 
 				if (validTime == true)
 					vm.createMeeting([true, "Meeting Created.  Click close to exit."]);
-				else
+				else {
+					conflictMessage += vm.selectedRoom + " from " + correctedStartTime + " to " + correctedEndTime;
 					vm.createMeeting([false, conflictMessage]);
+				}
 			},
 			function(meetingResponse){
 				vm.createMeeting([false, "Error."]);
@@ -629,6 +650,8 @@
 					/** Setup vm.meetings String for pickadate calendar to know what days meetings are scheduled
 					pickadate modified to splice string at ',' and make a list of strings formatted like 'mm/dd/yyyy' */
 
+					/**alert("" + String(vm.currentGroupMeetings[i].start_time).substring(8,10) + "  " + String(vm.currentGroupMeetings[i].end_time).substring(8,10))*/
+
 					day = String(vm.currentGroupMeetings[i].start_time).substring(8,10);
 					month = String(vm.currentGroupMeetings[i].start_time).substring(5,7);
 					year = String(vm.currentGroupMeetings[i].start_time).substring(0,4);
@@ -637,8 +660,14 @@
 					day = parseInt(day);
 					month = parseInt(month);
 					month -= 1;
+					
+					/** correct date from django storing the time with an offset of 4 hours for some reason...
+					for example, start time of 11pm gets stored as 3am next day.  Time corrected elsewhere */
+					if (parseInt(String(vm.currentGroupMeetings[i].start_time).substring(11,13)) <= 3)
+						day -= 1;
 
 					vm.meetings += "" + month + "/" + day + "/" + year + ",";
+					/**alert("" + month + "/" + day + "/" + year);*/
 
 				}
 				else {
@@ -672,9 +701,14 @@
 
 		for (var i = vm.currentGroupMeetings.length-1; i >=0; i--) {
 
-			day = String(vm.currentGroupMeetings[i].start_time).substring(8,10);
+			day = parseInt(String(vm.currentGroupMeetings[i].start_time).substring(8,10));
 			month = String(vm.currentGroupMeetings[i].start_time).substring(5,7);
 			year = String(vm.currentGroupMeetings[i].start_time).substring(0,4);
+			
+			/** correct date from django storing the time with an offset of 4 hours for some reason...
+			    for example, start time of 11pm gets stored as 3am next day.  Time corrected elsewhere */
+			if (parseInt(String(vm.currentGroupMeetings[i].start_time).substring(11,13)) <= 3)
+				day -= 1;
 
 			if (vm.firstMeetingFiltering == false) {
 				selectedDay = String(vm.date).substring(3,5);
@@ -914,8 +948,10 @@
 	/**------------------------------------------*/
 	vm.createMeeting = function(meetingValidation) {
 		/**var startTime = $filter('date')(vm.startTime, 'H:mm');*/
-		/**vm.test = $filter('date')(vm.startTime, 'MM/dd/yyyy hh:mm');*/
-
+		/**vm.test = $filter('date')(vm.startTime, 'MM/dd/yyyy hh:mm');*/		
+		
+		/**alert("" + vm.startTime + " " + vm.endTime);*/
+		
 		if (meetingValidation[0] == true) {
 			$http({method: 'POST',
 	  		url: '/api/meeting/',

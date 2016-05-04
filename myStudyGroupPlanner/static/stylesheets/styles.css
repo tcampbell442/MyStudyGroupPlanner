@@ -89,6 +89,8 @@ select {
   border-style: groove;
   border-width: 10px;
   border-color: #b54626;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .homeCalendar {

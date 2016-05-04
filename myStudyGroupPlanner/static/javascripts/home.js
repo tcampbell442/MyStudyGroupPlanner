@@ -354,6 +354,11 @@
 					day = parseInt(day);
 					month = parseInt(month);
 					month -= 1;
+					
+					/** correct date from django storing the time with an offset of 4 hours for some reason...
+					for example, start time of 11pm gets stored as 3am next day.  Time corrected elsewhere */
+					if (parseInt(String(vm.currentMeetings[i].start_time).substring(11,13)) <= 3)
+						day -= 1;
 
 					vm.meetings += "" + month + "/" + day + "/" + year + ",";
 					
@@ -392,6 +397,11 @@
 			day = String(vm.currentMeetings[i].start_time).substring(8,10);
 			month = String(vm.currentMeetings[i].start_time).substring(5,7);
 			year = String(vm.currentMeetings[i].start_time).substring(0,4);
+			
+			/** correct date from django storing the time with an offset of 4 hours for some reason...
+			for example, start time of 11pm gets stored as 3am next day.  Time corrected elsewhere */
+			if (parseInt(String(vm.currentMeetings[i].start_time).substring(11,13)) <= 3)
+				day -= 1;
 			
 			if (vm.firstMeetingFiltering == false) {
 				selectedDay = String(vm.date).substring(3,5);
