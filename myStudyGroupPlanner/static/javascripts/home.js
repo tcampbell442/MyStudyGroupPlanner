@@ -399,7 +399,7 @@
 			year = String(vm.currentMeetings[i].start_time).substring(0,4);
 			
 			/** correct date from django storing the time with an offset of 4 hours for some reason...
-			for example, start time of 11pm gets stored as 3am next day.  Time corrected elsewhere */
+			    for example, start time of 11pm gets stored as 3am next day.  Time corrected elsewhere */
 			if (parseInt(String(vm.currentMeetings[i].start_time).substring(11,13)) <= 3)
 				day -= 1;
 			
@@ -409,10 +409,9 @@
 				selectedYear = String(vm.date).substring(6,10);
 			}
 			else {
-				var tempTimeString = vm.date.toISOString();
-				selectedDay = tempTimeString.substring(8,10);
-				selectedMonth = tempTimeString.substring(5,7);
-				selectedYear = tempTimeString.substring(0,4);
+				selectedDay = vm.date.getDate();
+				selectedMonth = vm.date.getMonth() + 1;
+				selectedYear = vm.date.getFullYear();
 			}
 			/**alert("|" + day + month + year + ":" + selectedDay + selectedMonth + selectedYear + "|");*/
 			if (day == selectedDay && month == selectedMonth && year == selectedYear)

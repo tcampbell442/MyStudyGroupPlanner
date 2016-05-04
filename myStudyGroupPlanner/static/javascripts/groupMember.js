@@ -716,10 +716,9 @@
 				selectedYear = String(vm.date).substring(6,10);
 			}
 			else {
-				var tempTimeString = vm.date.toISOString();
-				selectedDay = tempTimeString.substring(8,10);
-				selectedMonth = tempTimeString.substring(5,7);
-				selectedYear = tempTimeString.substring(0,4);
+				selectedDay = vm.date.getDate();
+				selectedMonth = vm.date.getMonth() + 1;
+				selectedYear = vm.date.getFullYear();
 			}
 			/**alert("|" + day + month + year + ":" + selectedDay + selectedMonth + selectedYear + "|");*/
 			if (day == selectedDay && month == selectedMonth && year == selectedYear)
