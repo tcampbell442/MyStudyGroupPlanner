@@ -490,8 +490,14 @@
 
 		if (parseInt(vm.startTime.getDate()) <= parseInt(vm.endTime.getDate()) && 
 		   	parseInt(vm.endTime.getDate()) - parseInt(vm.startTime.getDate()) <= 1 &&
-		   			 vm.startTime.getHours() != vm.endTime.getHours()
+		   			 vm.startTime.getHours() != vm.endTime.getHours() &&
+		   			 	(
+		   			 		parseInt(vm.endTime.getHours()) > parseInt(vm.startTime.getHours()) && 
+		   			 		parseInt(vm.endTime.getDate()) == parseInt(vm.startTime.getDate())
+		   			 	)
 		   	) {
+		   	
+		   		
 		   			
 			$http({method: 'GET',
 				url: '/api/meeting/'})
@@ -734,12 +740,7 @@
 		return true or false					 */
 	/**------------------------------------------*/
 	vm.isUserAttendMeeting = function(meeting) {
-
-		var meetingIds = [];
-		/**
-		for (var i = 0; i < vm.currentGroupMeetings.length; i++) {
-			meetingIds.push(vm.currentGroupMeetings[i].id);
-		}*/
+			
 		for (var i = 0; i < vm.msgpUserAll.length; i++) {
 			if (vm.msgpUserAll[i].msgpMeetingId == meeting.id) {
 				if (vm.msgpUserAll[i].msgpUserId == vm.thisUser.id)
